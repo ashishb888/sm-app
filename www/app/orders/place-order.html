@@ -1,0 +1,43 @@
+<ion-view view-title="Place order">
+  <ion-content class="">
+    <!--<div class="topper">
+    </div>-->
+    <div class="list" ng-hide="ordersCtrl.orderDate === null">
+      <div class="item item-text-wrap bold">
+        {{ordersCtrl.orderDate}}
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Roti
+        </div>
+        <select ng-model="ordersCtrl.po.roti">
+          <option ng-repeat="r in ordersCtrl.rotiArr">{{r}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Bhaji
+        </div>
+        <select ng-model="ordersCtrl.po.bhaji">
+          <option ng-repeat="b in ordersCtrl.bhajiArr">{{b}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-click="ordersCtrl.placeOrder();">
+          Place order
+        </button>
+      </div>
+    </div>
+    <div class="card" ng-show="ordersCtrl.orderDate === null">
+      <div class="item item-divider">
+        Order's times
+      </div>
+      <div class="item item-text-wrap">
+        Lunch 5pm - 8pm
+      </div>
+      <div class="item item-text-wrap">
+        Dinner 10am - 3pm
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

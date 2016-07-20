@@ -1,0 +1,16 @@
+{
+  "name": "sangli-matrimony",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ],
+  "proxies": [{
+    "path": "/api/",
+    "proxyUrl": "http://10.1.1.82:8000"
+   }]
+}

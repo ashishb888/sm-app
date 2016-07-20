@@ -1,0 +1,30 @@
+<ion-view side="right" view-title="Sign out" title="Sign out" hide-nav-bar="false">
+  <ion-content class="">
+    <div class="topper">
+    </div>
+    <div class="list">
+      <div class="item item-text-wrap bold">
+        {{ordersCtrl.orderDate}}
+      </div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Roti
+        </div>
+        <select ng-model="ordersCtrl.po.roti">
+          <option ng-repeat="r in ordersCtrl.rotiArr">{{r}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Bhaji
+        </div>
+        <select ng-model="ordersCtrl.po.bhaji">
+          <option ng-repeat="b in ordersCtrl.bhajiArr">{{b}}</option>
+        </select>
+      </label>
+      <button class="button button-full button-assertive" ng-click="ordersCtrl.placeOrder();">
+        Place order
+      </button>
+    </div>
+  </ion-content>
+</ion-view>
