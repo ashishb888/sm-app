@@ -1,0 +1,33 @@
+<ion-view view-title="Profile">
+  <ion-content class="">
+    <div class="card">
+      <div class="item item-body">
+        <img class="full-image" src="img/sm-2.png" ng-click="pc.showImagesModal()">
+        <h2>Marty McFly</h2>
+        <p>November 05, 1955</p>
+        <div class="card margin-auto">
+          <div class="item item-divider">
+            About her
+          </div>
+          <div class="item item-text-wrap">
+            This is a basic Card with some text.
+          </div>
+        </div>
+        <h2 class="">About her</h2>
+      </div>
+    </div>
+  </ion-content>
+
+  <script id="image-modal.html" type="text/ng-template">
+                <div class="modal image-modal transparent"
+                     ng-click="pc.hideImagesModal()">
+                  <ion-slide-box on-slide-changed="slideChanged(index)"
+                                 show-pager="false">
+                    <ion-slide ng-repeat="oImage in aImages">
+                      <img ng-src="{{oImage.src}}" class="fullscreen-image" />
+                      <p class="info">{{oImage.msg}}</p>
+                    </ion-slide>
+                  </ion-slide-box>
+                </div>
+            </script>
+</ion-view>
