@@ -312,7 +312,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages'])
       url: '/settings',
       views: {
         'menuContent': {
-          templateUrl: 'app/settings/settings.html'
+          templateUrl: 'app/settings/settings.html',
+          controller: 'SettingsCtrl as sc'
         }
       }
     })
@@ -330,6 +331,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages'])
       views: {
         'menuContent': {
           templateUrl: 'app/profiles/images.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
+    .state('menu.pprofiles', {
+      url: '/pprofiles',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/pprofiles.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
+    .state('menu.eprofile', {
+      url: '/eprofile',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/eprofile.html',
           controller: 'ProfilesCtrl as pc'
         }
       }
