@@ -23,7 +23,8 @@ angular.module('starter').constant('starterConfig', (function() {
   var hfStates = {
     address: "address",
     placeorder: "menu.placeorder",
-    signin: "signin"
+    signin: "signin",
+    profiles: "menu.profiles"
   };
   var screenTitles = {
     signin: "Sign in",

@@ -300,6 +300,40 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages'])
         }
       }
     })
+    .state('menu.profiles', {
+      url: '/profiles',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/profiles.html'
+        }
+      }
+    })
+    .state('menu.settings', {
+      url: '/settings',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/settings/settings.html'
+        }
+      }
+    })
+    .state('menu.profile', {
+      url: '/profile',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/profile.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
+    .state('menu.images', {
+      url: '/images',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/images.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
     .state('address', {
       url: '/address',
       templateUrl: 'app/address/address.html',

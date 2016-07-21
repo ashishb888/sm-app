@@ -43,6 +43,9 @@
     function signin() {
       logger.debug("signin starts");
 
+      $state.go(sc.hfStates.profiles);
+      return;
+
       if (!utilService.isAppOnlineService()) {
         utilService.appAlert(sc.msgs.noConnMsg);
         return;
