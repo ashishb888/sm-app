@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ngCordova": "^0.1.27-alpha",
-    "angular-messages": "^1.5.7"
+    "angular-messages": "^1.5.7",
+    "datepicker-for-ionic": "^1.1.7"
   }
 }

@@ -1,12 +1,151 @@
 <ion-view view-title="Edit profile">
     <ion-content>
-        <div class="list card">
-          Edit profile
+      <div class="button-bar txt-xx-small-font">
+        <button class="button txt-xx-small-font" ng-click="pc.showpInfoForm()">Personal</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Family</button>
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Occupation</button>
+      </div>
+      <!-- Update persional information -->
+      <form name="pInfoForm" novalidate ng-show="pc.isPInfoForm">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Full name</span>
+          <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+          <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
+            <div ng-message="required">Name is required.</div>
+            <div ng-message="minlength">Name must be at least 5 characters long.</div>
+            <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+          </div>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Date of birth</span>
+          <input type="date" name="dob" placeholder="Date of birth" ng-model="signupCtrl.sf.dob" ng-required="true" ng-minlength="5" ng-maxlength="20">
+          <div class="app-error" ng-messages="pInfoForm.dob.$error" ng-if="pInfoForm.dob.$dirty">
+            <div ng-message="required">Date of birth is required.</div>
+          </div>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Gender
+          </div>
+          <select ng-model="pc.pif.gender">
+            <option ng-repeat="g in pc.genderArr">{{g}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Weight</span>
+          <input type="number" name="weight" placeholder="Weight" ng-model="signupCtrl.sf.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
+          <div class="app-error" ng-messages="pInfoForm.weight.$error" ng-if="pInfoForm.weight.$dirty">
+            <div ng-message="required">Weight is required.</div>
+            <div ng-message="minlength">Weight must be at least 2 digits long.</div>
+            <div ng-message="maxlength">Weight can be at most 3 digits long.</div>
+          </div>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Height
+          </div>
+          <select ng-model="pc.pif.height">
+            <option ng-repeat="h in pc.heightArr">{{h}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Complexion
+          </div>
+          <select ng-model="pc.pif.complexion">
+            <option ng-repeat="c in pc.complexionArr">{{c}}</option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Body type
+          </div>
+          <select ng-model="pc.pif.bodyType">
+            <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
+          </select>
+        </label>
+        <!--<label class="item item-input item-select">
+          <div class="input-label">
+            Martital status
+          </div>
+          <select ng-model="pc.pif.martitalStatus">
+            <option ng-repeat="mt in pc.martitalStatusArr">{{mt}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Physical status
+          </div>
+          <select ng-model="pc.pif.physicalStatus">
+            <option ng-repeat="pt in pc.physicalStatusArr">{{pt}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Eating habits
+          </div>
+          <select ng-model="pc.pif.eatingHabit">
+            <option ng-repeat="eh in pc.eatingHabitArr">{{eh}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Drinking habits
+          </div>
+          <select ng-model="pc.pif.drinkingHabit">
+            <option ng-repeat="dh in pc.drinkingHabitArr">{{dh}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Smoking habits
+          </div>
+          <select ng-model="pc.pif.smokingHabit">
+            <option ng-repeat="sh in pc.smokingHabitArr">{{sh}}</option>
+          </select>
+        </label>-->
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Sub-caste
+          </div>
+          <select ng-model="pc.pif.subCaste">
+            <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+          </select>
+        </label>
+        <div class="padding">
+          <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="signupCtrl.signup()">
+            Update profile
+          </button>
         </div>
+      </form>
+
+      <!-- Photo upload form -->
+      <form name="photoForm" novalidate ng-show="pc.isPhotoForm ">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Full name</span>
+          <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+          <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
+            <div ng-message="required">Name is required.</div>
+            <div ng-message="minlength">Name must be at least 5 characters long.</div>
+            <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+          </div>
+        </label>
+
+        <div class="padding">
+          <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="signupCtrl.signup()">
+            Update profile
+          </button>
+        </div>
+      </form>
     </ion-content>
-    <div class="bar bar-footer">
-        <button class="button ">Left</button>
-        <div class="title">Edit profile</div>
-        <button class="button ">Right</button>
-    </div>
+    <!--<div class="bar bar-footer">
+      <div class="button-bar txt-xx-small-font">
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Personal</button>
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePhoneForm()">Photos</button>
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Family</button>
+        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Occupation</button>
+      </div>
+    </div>-->
 </ion-view>

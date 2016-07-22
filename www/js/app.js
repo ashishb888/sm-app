@@ -25,7 +25,7 @@ var urls = {
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'ngMessages'])
+angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'ionic-datepicker'])
 
 .run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService, $state) {
   $ionicPlatform.ready(function() {

@@ -9822,6 +9822,9 @@ a.button {
 .topper {
   margin-top: 10%; }
 
+.bottomer {
+  margin-bottom: 30px !important; }
+
 .c-center, .logo {
   margin: auto; }
 
@@ -9917,3 +9920,6 @@ p.info {
     transition: opacity 300ms ease-in-out;
     background-color: #000;
     opacity: 0; } }
+
+.txt-xx-small-font {
+  font-size: xx-small !important; }
