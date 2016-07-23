@@ -1,0 +1,30 @@
+<ion-view view-title="Edit profile">
+  <ion-content class="">
+    <div class="card">
+      <form name="eMyProfileForm" novalidate>
+        <div class="item item-body">
+          <img class="full-image" src="img/sm-2.png" ng-click="pc.showImagesModal()">
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-click="signupCtrl.signup()">
+              Add new image
+            </button>
+          </div>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Full name</span>
+            <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+            <div class="app-error" ng-messages="eMyProfileForm.fullName.$error" ng-if="eMyProfileForm.fullName.$dirty">
+              <div ng-message="required">Name is required.</div>
+              <div ng-message="minlength">Name must be at least 5 characters long.</div>
+              <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+            </div>
+          </label>
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-disabled="eMyProfileForm.$invalid" ng-click="signupCtrl.signup()">
+              Update profile
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

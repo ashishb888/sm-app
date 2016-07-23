@@ -1,149 +1,293 @@
 <ion-view view-title="Edit profile">
-    <ion-content>
+    <ion-content scroll="false">
       <div class="button-bar txt-xx-small-font">
         <button class="button txt-xx-small-font" ng-click="pc.showpInfoForm()">Personal</button>
         <button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>
-        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Family</button>
-        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Occupation</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showFamilyForm()">Family</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showOccupationForm()">Occupation</button>
       </div>
-      <!-- Update persional information -->
-      <form name="pInfoForm" novalidate ng-show="pc.isPInfoForm">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Full name</span>
-          <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
-          <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
-            <div ng-message="required">Name is required.</div>
-            <div ng-message="minlength">Name must be at least 5 characters long.</div>
-            <div ng-message="maxlength">Name can be at most 20 characters long.</div>
-          </div>
-        </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Date of birth</span>
-          <input type="date" name="dob" placeholder="Date of birth" ng-model="signupCtrl.sf.dob" ng-required="true" ng-minlength="5" ng-maxlength="20">
-          <div class="app-error" ng-messages="pInfoForm.dob.$error" ng-if="pInfoForm.dob.$dirty">
-            <div ng-message="required">Date of birth is required.</div>
-          </div>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Gender
-          </div>
-          <select ng-model="pc.pif.gender">
-            <option ng-repeat="g in pc.genderArr">{{g}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Weight</span>
-          <input type="number" name="weight" placeholder="Weight" ng-model="signupCtrl.sf.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
-          <div class="app-error" ng-messages="pInfoForm.weight.$error" ng-if="pInfoForm.weight.$dirty">
-            <div ng-message="required">Weight is required.</div>
-            <div ng-message="minlength">Weight must be at least 2 digits long.</div>
-            <div ng-message="maxlength">Weight can be at most 3 digits long.</div>
-          </div>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Height
-          </div>
-          <select ng-model="pc.pif.height">
-            <option ng-repeat="h in pc.heightArr">{{h}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Complexion
-          </div>
-          <select ng-model="pc.pif.complexion">
-            <option ng-repeat="c in pc.complexionArr">{{c}}</option>
-          </select>
-        </label>
+      <ion-scroll direction="y">
+        <!-- Update persional information -->
+        <form name="pInfoForm" novalidate ng-show="pc.isPInfoForm">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Full name</span>
+            <input type="text" name="fullName" placeholder="Full name" ng-model="pc.pif.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+            <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
+              <div ng-message="required">Name is required.</div>
+              <div ng-message="minlength">Name must be at least 5 characters long.</div>
+              <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Date of birth</span>
+            <input type="date" name="dob" placeholder="Date of birth" ng-model="pc.pif.dob" ng-required="true" ng-minlength="5" ng-maxlength="20">
+            <div class="app-error" ng-messages="pInfoForm.dob.$error" ng-if="pInfoForm.dob.$dirty">
+              <div ng-message="required">Date of birth is required.</div>
+            </div>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Gender
+            </div>
+            <select ng-model="pc.pif.gender">
+              <option ng-repeat="g in pc.genderArr">{{g}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Weight</span>
+            <input type="number" name="weight" placeholder="Weight" ng-model="pc.pif.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
+            <div class="app-error" ng-messages="pInfoForm.weight.$error" ng-if="pInfoForm.weight.$dirty">
+              <div ng-message="required">Weight is required.</div>
+              <div ng-message="minlength">Weight must be at least 2 digits long.</div>
+              <div ng-message="maxlength">Weight can be at most 3 digits long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Height
+            </div>
+            <select ng-model="pc.pif.height">
+              <option ng-repeat="h in pc.heightArr">{{h}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Complexion
+            </div>
+            <select ng-model="pc.pif.complexion">
+              <option ng-repeat="c in pc.complexionArr">{{c}}</option>
+            </select>
+          </label>
 
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Body type
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Body type
+            </div>
+            <select ng-model="pc.pif.bodyType">
+              <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
+            </select>
+          </label>
+          <!--<label class="item item-input item-select">
+            <div class="input-label">
+              Martital status
+            </div>
+            <select ng-model="pc.pif.martitalStatus">
+              <option ng-repeat="mt in pc.martitalStatusArr">{{mt}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Physical status
+            </div>
+            <select ng-model="pc.pif.physicalStatus">
+              <option ng-repeat="pt in pc.physicalStatusArr">{{pt}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Eating habits
+            </div>
+            <select ng-model="pc.pif.eatingHabit">
+              <option ng-repeat="eh in pc.eatingHabitArr">{{eh}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Drinking habits
+            </div>
+            <select ng-model="pc.pif.drinkingHabit">
+              <option ng-repeat="dh in pc.drinkingHabitArr">{{dh}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Smoking habits
+            </div>
+            <select ng-model="pc.pif.smokingHabit">
+              <option ng-repeat="sh in pc.smokingHabitArr">{{sh}}</option>
+            </select>
+          </label>-->
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Sub-caste
+            </div>
+            <select ng-model="pc.pif.subCaste">
+              <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+            </select>
+          </label>
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="pc.signup()">
+              Update profile
+            </button>
           </div>
-          <select ng-model="pc.pif.bodyType">
-            <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
-          </select>
-        </label>
-        <!--<label class="item item-input item-select">
-          <div class="input-label">
-            Martital status
-          </div>
-          <select ng-model="pc.pif.martitalStatus">
-            <option ng-repeat="mt in pc.martitalStatusArr">{{mt}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Physical status
-          </div>
-          <select ng-model="pc.pif.physicalStatus">
-            <option ng-repeat="pt in pc.physicalStatusArr">{{pt}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Eating habits
-          </div>
-          <select ng-model="pc.pif.eatingHabit">
-            <option ng-repeat="eh in pc.eatingHabitArr">{{eh}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Drinking habits
-          </div>
-          <select ng-model="pc.pif.drinkingHabit">
-            <option ng-repeat="dh in pc.drinkingHabitArr">{{dh}}</option>
-          </select>
-        </label>
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Smoking habits
-          </div>
-          <select ng-model="pc.pif.smokingHabit">
-            <option ng-repeat="sh in pc.smokingHabitArr">{{sh}}</option>
-          </select>
-        </label>-->
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Sub-caste
-          </div>
-          <select ng-model="pc.pif.subCaste">
-            <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
-          </select>
-        </label>
-        <div class="padding">
-          <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="signupCtrl.signup()">
-            Update profile
-          </button>
-        </div>
-      </form>
+        </form>
 
-      <!-- Photo upload form -->
-      <form name="photoForm" novalidate ng-show="pc.isPhotoForm ">
-        <label class="item item-input item-floating-label">
-          <span class="input-label">Full name</span>
-          <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
-          <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
-            <div ng-message="required">Name is required.</div>
-            <div ng-message="minlength">Name must be at least 5 characters long.</div>
-            <div ng-message="maxlength">Name can be at most 20 characters long.</div>
-          </div>
-        </label>
+        <!-- Photo upload form -->
+        <form name="photoForm" novalidate ng-show="pc.isPhotoForm ">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Full name</span>
+            <input type="text" name="fullName" placeholder="Full name" ng-model="pc.pif.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+            <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
+              <div ng-message="required">Name is required.</div>
+              <div ng-message="minlength">Name must be at least 5 characters long.</div>
+              <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+            </div>
+          </label>
 
-        <div class="padding">
-          <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="signupCtrl.signup()">
-            Update profile
-          </button>
-        </div>
-      </form>
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="pc.signup()">
+              Upload images
+            </button>
+          </div>
+        </form>
+
+        <!-- Family form -->
+        <form name="familyForm" novalidate ng-show="pc.isFamilyForm ">
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Family type
+            </div>
+            <select ng-model="pc.ff.familyType">
+              <option ng-repeat="ft in pc.familyTypeArr">{{ft}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Family values
+            </div>
+            <select ng-model="pc.ff.familyValues">
+              <option ng-repeat="fv in pc.familyValuesArr">{{fv}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Family status
+            </div>
+            <select ng-model="pc.ff.familyStatus">
+              <option ng-repeat="fs in pc.familyStatusArr">{{fs}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Father name</span>
+            <input type="text" name="fatherName" placeholder="Father name" ng-model="pc.ff.fatherName" ng-required="true" ng-minlength="5" ng-maxlength="30">
+            <div class="app-error" ng-messages="familyForm.fatherName.$error" ng-if="familyForm.fatherName.$dirty">
+              <div ng-message="required">Father name is required.</div>
+              <div ng-message="minlength">Father name must be at least 5 characters long.</div>
+              <div ng-message="maxlength">Father name can be at most 30 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Mother name</span>
+            <input type="text" name="motherName" placeholder="Mother name" ng-model="pc.ff.motherName" ng-required="true" ng-minlength="5" ng-maxlength="30">
+            <div class="app-error" ng-messages="familyForm.motherName.$error" ng-if="familyForm.motherName.$dirty">
+              <div ng-message="required">Mother name is required.</div>
+              <div ng-message="minlength">Mother name must be at least 5 characters long.</div>
+              <div ng-message="maxlength">Mother name can be at most 30 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Brother(s)</span>
+            <input type="number" name="nBrothers" placeholder="Brother(s)" ng-model="pc.ff.nBrothers" ng-required="true" ng-minlength="1" ng-maxlength="2">
+            <div class="app-error" ng-messages="familyForm.nBrothers.$error" ng-if="familyForm.nBrothers.$dirty">
+              <div ng-message="required">Brother(s) is required.</div>
+              <div ng-message="minlength">Brother(s) must be at least 1 characters long.</div>
+              <div ng-message="maxlength">Brother(s) can be at most 2 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Sister(s)</span>
+            <input type="number" name="nSisters" placeholder="Sister(s)" ng-model="pc.ff.nSisters" ng-required="true" ng-minlength="1" ng-maxlength="2">
+            <div class="app-error" ng-messages="familyForm.nSisters.$error" ng-if="familyForm.nSisters.$dirty">
+              <div ng-message="required">Sister(s) is required.</div>
+              <div ng-message="minlength">Sister(s) must be at least 1 characters long.</div>
+              <div ng-message="maxlength">Sister(s) can be at most 2 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Uncle(s)</span>
+            <input type="number" name="nUncles" placeholder="Uncle(s)" ng-model="pc.ff.nUncles" ng-required="true" ng-minlength="1" ng-maxlength="2">
+            <div class="app-error" ng-messages="familyForm.nUncles.$error" ng-if="familyForm.nUncles.$dirty">
+              <div ng-message="required">Uncle(s) is required.</div>
+              <div ng-message="minlength">Uncle(s) must be at least 1 characters long.</div>
+              <div ng-message="maxlength">Uncle(s) can be at most 2 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Aunt(s)</span>
+            <input type="number" name="nAunts" placeholder="Aunt(s)" ng-model="pc.ff.nAunts" ng-required="true" ng-minlength="1" ng-maxlength="2">
+            <div class="app-error" ng-messages="familyForm.nAunts.$error" ng-if="familyForm.nAunts.$dirty">
+              <div ng-message="required">Aunt(s) is required.</div>
+              <div ng-message="minlength">Aunt(s) must be at least 1 characters long.</div>
+              <div ng-message="maxlength">Aunt(s) can be at most 2 characters long.</div>
+            </div>
+          </label>
+
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-disabled="familyForm.$invalid" ng-click="pc.signup()">
+              Update
+            </button>
+          </div>
+        </form>
+
+        <!-- Occupation form -->
+        <form name="occupationForm" novalidate ng-show="pc.isOccupationForm">
+          <!--<label class="item item-input item-select">
+            <div class="input-label">
+              Higher education
+            </div>
+            <select ng-model="pc.of.hEducation">
+              <option ng-repeat="e in pc.hEducationArr">{{e}}</option>
+            </select>
+          </label>-->
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Higher education</span>
+            <input type="text" name="hEducation" placeholder="Higher education" ng-model="pc.of.hEducation" ng-required="true" ng-minlength="2" ng-maxlength="20">
+            <div class="app-error" ng-messages="occupationForm.hEducation.$error" ng-if="occupationForm.hEducation.$dirty">
+              <div ng-message="required">Higher education is required.</div>
+              <div ng-message="minlength">Higher education must be at least 2 characters long.</div>
+              <div ng-message="maxlength">Higher education can be at most 20 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Occupation
+            </div>
+            <select ng-model="pc.of.occupation">
+                <option ng-repeat="o in pc.occupationArr">{{o}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">{{pc.of.occupation}} description</span>
+            <input type="text" name="occupationDesc" placeholder="{{pc.of.occupation}} description" ng-model="pc.of.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
+            <div class="app-error" ng-messages="occupationForm.occupationDesc.$error" ng-if="occupationForm.occupationDesc.$dirty">
+              <div ng-message="required">{{pc.of.occupation}} description is required.</div>
+              <div ng-message="minlength">{{pc.of.occupation}} description must be at least 2 characters long.</div>
+              <div ng-message="maxlength">{{pc.of.occupation}} description can be at most 100 characters long.</div>
+            </div>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Annual income</span>
+            <input type="number" name="aIncome" placeholder="Annual income" ng-model="pc.of.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
+            <div class="app-error" ng-messages="occupationForm.aIncome.$error" ng-if="occupationForm.aIncome.$dirty">
+              <div ng-message="required">Annual income is required.</div>
+              <div ng-message="minlength">Annual income must be at least 2 characters long.</div>
+              <div ng-message="maxlength">Annual income can be at most 20 characters long.</div>
+            </div>
+          </label>
+
+          <div class="padding">
+            <button class="button button-full button-assertive" ng-disabled="occupationForm.$invalid" ng-click="pc.signup()">
+              Update
+            </button>
+          </div>
+        </form>
+      </ion-scroll>
+
     </ion-content>
     <!--<div class="bar bar-footer">
       <div class="button-bar txt-xx-small-font">
-        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Personal</button>
-        <button class="button txt-xx-small-font" ng-click="sc.showUpdatePhoneForm()">Photos</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showpInfoForm()">Personal</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>
         <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Family</button>
         <button class="button txt-xx-small-font" ng-click="sc.showUpdatePasswordForm()">Occupation</button>
       </div>

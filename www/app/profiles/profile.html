@@ -17,17 +17,4 @@
       </div>
     </div>
   </ion-content>
-
-  <script id="image-modal.html" type="text/ng-template">
-                <div class="modal image-modal transparent"
-                     ng-click="pc.hideImagesModal()">
-                  <ion-slide-box on-slide-changed="slideChanged(index)"
-                                 show-pager="false">
-                    <ion-slide ng-repeat="oImage in aImages">
-                      <img ng-src="{{oImage.src}}" class="fullscreen-image" />
-                      <p class="info">{{oImage.msg}}</p>
-                    </ion-slide>
-                  </ion-slide-box>
-                </div>
-            </script>
 </ion-view>

@@ -1,14 +1,15 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService'];
 
-  function ProfilesCtrl(sc, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal) {
+  function ProfilesCtrl(sc, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
     // Variables section
     var pc = this;
+    // Personal info form
     pc.pif = {};
     pc.genderArr = ["Male", "Female"];
     pc.pif.gender = pc.genderArr[0];
@@ -29,9 +30,34 @@
     pc.pif.smokingHabit = pc.smokingHabitArr[0];
     pc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
     pc.pif.subCaste = pc.subCasteArr[0];
+    pc.pif.dob = new Date();
+
+    // Form hide/show
     pc.isPInfoForm = true;
     pc.isPhotoForm = false;
     pc.isFamilyForm = false;
+    pc.isOccupationForm = false;
+
+    // Occupation form
+    pc.of = {};
+    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "BE", "BTech", "Ded", "Bed"];
+    pc.occupationArr = ["Job", "Farm", "Business"];
+    pc.of.occupation = pc.occupationArr[0];
+
+    // Family form
+    pc.ff = {};
+    pc.familyTypeArr = ["Joint family", "Nuclear family"];
+    pc.ff.familyType = pc.familyTypeArr[0];
+    pc.familyValuesArr = ["Traditional", "Moderate"];
+    pc.ff.familyValues = pc.familyValuesArr[0];
+    pc.familyStatusArr = ["Middle class", "Upper middle class"];
+    pc.ff.familyStatus = pc.familyStatusArr[0];
+
+    // Photo form
+    pc.pf = {};
+    pc.imgs = {};
+    pc.imgs.imgURIs = [];
+    pc.imgs.imgBase64s = [];
 
     // Function section
     var initHeightArr = initHeightArr;
@@ -40,6 +66,8 @@
     pc.showpInfoForm = showpInfoForm;
     pc.showPhotoForm = showPhotoForm;
     pc.showFamilyForm = showFamilyForm;
+    pc.showOccupationForm = showOccupationForm;
+    pc.clickImage = clickImage;
 
     $scope.aImages = [{
       	'src' : 'img/sm-1.jpg',
@@ -96,18 +124,40 @@
       pc.isPInfoForm = true;
       pc.isPhotoForm = false;
       pc.isFamilyForm = false;
+      pc.isOccupationForm = false;
     }
 
     function showPhotoForm() {
       pc.isPhotoForm = true;
       pc.isPInfoForm = false;
       pc.isFamilyForm = false;
+      pc.isOccupationForm = false;
     }
 
     function showFamilyForm() {
       pc.isFamilyForm = true;
       pc.isPhotoForm = false;
       pc.isPInfoForm = false;
+      pc.isOccupationForm = false;
+    }
+
+    function showOccupationForm() {
+      pc.isOccupationForm = true;
+      pc.isFamilyForm = false;
+      pc.isPhotoForm = false;
+      pc.isPInfoForm = false;
+    }
+
+    /* Captures images. Calls clickImage function of cameraService to capture images */
+    function clickImage() {
+        logger.debug("clickImage() function");
+
+        var promise = cameraService.clickImage();
+
+        promise.then(function (imageData) {
+          pc.imgs.imgURIs.push(imageData.uri);
+          pc.imgs.imgBase64s.push(imageData.base64);
+        });
     }
 
     function initHeightArr() {
