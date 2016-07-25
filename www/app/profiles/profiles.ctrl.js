@@ -37,10 +37,12 @@
     pc.isPhotoForm = false;
     pc.isFamilyForm = false;
     pc.isOccupationForm = false;
+    pc.isAddressForm = false;
 
     // Occupation form
     pc.of = {};
-    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "BE", "BTech", "Ded", "Bed"];
+    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc"];
+    pc.of.hEducation = pc.hEducationArr[0];
     pc.occupationArr = ["Job", "Farm", "Business"];
     pc.of.occupation = pc.occupationArr[0];
 
@@ -59,15 +61,30 @@
     pc.imgs.imgURIs = [];
     pc.imgs.imgBase64s = [];
 
+    // Address form
+    pc.af = {};
+    pc.districtArr = ["A"];
+    pc.af.district = pc.districtArr[0];
+    pc.taluqaArr = ["A", "B"];
+    pc.af.taluqa = pc.taluqaArr[0];
+    pc.townArr = ["A", "B", "C"];
+    pc.af.town = pc.townArr[0];
+
+    pc.dp = {};
+    pc.dp.uri = "img/sm-2.png";
+    pc.dp.base64;
+
     // Function section
     var initHeightArr = initHeightArr;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
-    pc.showpInfoForm = showpInfoForm;
+    pc.showPInfoForm = showPInfoForm;
     pc.showPhotoForm = showPhotoForm;
     pc.showFamilyForm = showFamilyForm;
     pc.showOccupationForm = showOccupationForm;
+    pc.showAddressForm = showAddressForm;
     pc.clickImage = clickImage;
+    pc.changeDP = changeDP;
 
     $scope.aImages = [{
       	'src' : 'img/sm-1.jpg',
@@ -108,7 +125,7 @@
 
     // Cleanup the modal when we're done with it!
     // Execute action on hide modal
-    $scope.$on('modal.hide', function() {
+    $scope.$on('modal.hidden', function() {
       console.log('Modal is hidden!');
       // Execute action
     });
@@ -120,11 +137,12 @@
       console.log('Modal is shown!');
     });
 
-    function showpInfoForm() {
+    function showPInfoForm() {
       pc.isPInfoForm = true;
       pc.isPhotoForm = false;
       pc.isFamilyForm = false;
       pc.isOccupationForm = false;
+      pc.isAddressForm = false;
     }
 
     function showPhotoForm() {
@@ -132,6 +150,7 @@
       pc.isPInfoForm = false;
       pc.isFamilyForm = false;
       pc.isOccupationForm = false;
+      pc.isAddressForm = false;
     }
 
     function showFamilyForm() {
@@ -139,6 +158,7 @@
       pc.isPhotoForm = false;
       pc.isPInfoForm = false;
       pc.isOccupationForm = false;
+      pc.isAddressForm = false;
     }
 
     function showOccupationForm() {
@@ -146,6 +166,30 @@
       pc.isFamilyForm = false;
       pc.isPhotoForm = false;
       pc.isPInfoForm = false;
+      pc.isAddressForm = false;
+    }
+
+    function showAddressForm() {
+      pc.isAddressForm = true;
+      pc.isOccupationForm = false;
+      pc.isFamilyForm = false;
+      pc.isPhotoForm = false;
+      pc.isPInfoForm = false;
+    }
+
+    function changeDP(srcType) {
+      try {
+        logger.debug("changeDP function");
+        var promise = cameraService.clickImage(srcType);
+
+        promise.then(function (imageData) {
+          pc.dp.uri = imageData.uri;
+          //pc.dp.base64 = imageData.base64;
+        });
+
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     /* Captures images. Calls clickImage function of cameraService to capture images */

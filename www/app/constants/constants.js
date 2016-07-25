@@ -85,6 +85,11 @@ angular.module('starter').constant('starterConfig', (function() {
       unavail: "UNAVAIL"
   };
 
+  var picSrc = {
+    camera: "camera",
+    galary: "galary"
+  }
+
   switch (env) {
     case envLs.prod:
       ws = urls.prod;
@@ -113,7 +118,8 @@ angular.module('starter').constant('starterConfig', (function() {
     modal: modal,
     pullRefresher: pullRefresher,
     dbConfig: dbConfig,
-    operatorStatus: operatorStatus
+    operatorStatus: operatorStatus,
+    picSrc: picSrc
   };
 
 })());

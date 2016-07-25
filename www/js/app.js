@@ -238,7 +238,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'ionic-datepicker
     .state("signup", {
       url: "/signup",
       templateUrl: "app/signup/signup.html",
-      controller: "SignupCtrl as signupCtrl"
+      controller: "SignupCtrl as sc"
     })
     .state("forgotpassword", {
       url: "/forgotpassword",

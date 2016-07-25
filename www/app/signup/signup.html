@@ -16,6 +16,14 @@
             <div ng-message="maxlength">Name can be at most 20 characters long.</div>
           </div>
         </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Gender
+          </div>
+          <select ng-model="sc.sf.gender">
+            <option ng-repeat="g in sc.genderArr">{{g}}</option>
+          </select>
+        </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Mobile number</span>
           <input type="tel" name="phone" placeholder="Mobile number" ng-model="signupCtrl.sf.phone" ng-required="true" ng-minlength="10" ng-maxlength="10">
