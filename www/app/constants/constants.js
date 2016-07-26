@@ -90,6 +90,12 @@ angular.module('starter').constant('starterConfig', (function() {
     galary: "galary"
   }
 
+  var picType = {
+    own: "own",
+    home: "home",
+    dp: "dp"
+  }
+
   switch (env) {
     case envLs.prod:
       ws = urls.prod;
@@ -119,7 +125,8 @@ angular.module('starter').constant('starterConfig', (function() {
     pullRefresher: pullRefresher,
     dbConfig: dbConfig,
     operatorStatus: operatorStatus,
-    picSrc: picSrc
+    picSrc: picSrc,
+    picType: picType
   };
 
 })());

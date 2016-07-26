@@ -1,8 +1,8 @@
 (function() {
   angular.module('starter').factory('utilService', utilService);
-  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state', '$log', '$q', '$cordovaNetwork'];
+  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state', '$log', '$q', '$cordovaNetwork', '$cordovaFile'];
 
-  function utilService($ionicPopup, sc, $http, $state, $log, $q, $cordovaNetwork) {
+  function utilService($ionicPopup, sc, $http, $state, $log, $q, $cordovaNetwork, $cordovaFile) {
     // Variables section
     var us = this;
     var logger = $log;
@@ -120,6 +120,19 @@
       });
     }
 
+    function base64(path, fileNm) {
+      try {
+        return $cordovaFile.readAsDataURL(path, fileNm)
+          .then(function(fileData) {
+            logger.debug("fileData: " + fileData);
+            return fileData.split(',').pop();
+          }, function(error) {
+            logger.error("error: " + JSON.stringify(error));
+          });
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function initDB(dbName, dbVersion, dbDescription, dbSize) {
       logger.debug("initDB service");

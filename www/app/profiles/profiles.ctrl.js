@@ -3,7 +3,7 @@
 
   ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService'];
 
-  function ProfilesCtrl(sc, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -38,6 +38,9 @@
     pc.isFamilyForm = false;
     pc.isOccupationForm = false;
     pc.isAddressForm = false;
+    // Image upload
+    pc.isOwnPhotoForm = true;
+    pc.isHomePhotoForm = false;
 
     // Occupation form
     pc.of = {};
@@ -60,6 +63,17 @@
     pc.imgs = {};
     pc.imgs.imgURIs = [];
     pc.imgs.imgBase64s = [];
+    pc.ownImages = {};
+    pc.ownImages.uri = [];
+    pc.ownImages.base64 = [];
+    pc.ownImages.index = 0;
+    pc.homeImages = {};
+    pc.homeImages.uri = [];
+    pc.homeImages.base64 = [];
+    pc.homeImages.index = 0;
+    pc.homeImagesLimit = 5;
+    pc.ownImagesLimit = 5;
+    //pc.ownImages.uri.push("img/sm-1.jpg");
 
     // Address form
     pc.af = {};
@@ -73,9 +87,11 @@
     pc.dp = {};
     pc.dp.uri = "img/sm-2.png";
     pc.dp.base64;
+    pc.modalImgsArr = [];
 
     // Function section
     var initHeightArr = initHeightArr;
+    var getImages = getImages;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
     pc.showPInfoForm = showPInfoForm;
@@ -83,28 +99,41 @@
     pc.showFamilyForm = showFamilyForm;
     pc.showOccupationForm = showOccupationForm;
     pc.showAddressForm = showAddressForm;
+    pc.showOwnPhotoForm = showOwnPhotoForm;
+    pc.showHomePhotoForm = showHomePhotoForm;
     pc.clickImage = clickImage;
     pc.changeDP = changeDP;
+    pc.uploadHomeImages = uploadHomeImages;
+    pc.uploadOwnImages = uploadOwnImages;
+    pc.setModalImgs = setModalImgs;
+    pc.largeImg = largeImg;
+    pc.removeImg = removeImg;
+    pc.addImgs = addImgs;
+
+    pc.ownImages.uri.push('img/sm-1.jpg');
+    pc.ownImages.uri.push('img/sm-2.png');
+    pc.ownImages.uri.push('img/a.jpg');
+    pc.ownImages.uri.push('img/c.jpg');
+    pc.ownImages.uri.push('img/b.jpg');
 
     $scope.aImages = [{
-      	'src' : 'img/sm-1.jpg',
-      	'msg' : 'swipe/tap'
-    	}, {
-        'src' : 'img/sm-2.png',
-        'msg' : ''
-      }, {
-        'src' : 'img/sm-1.jpg',
-        'msg' : ''
-    },
-    {
-      	'src' : 'img/a.jpg',
-      	'msg' : ''
-    	}, {
-        'src' : 'img/b.jpg',
-        'msg' : ''
-      }, {
-        'src' : 'img/c.jpg',
-        'msg' : ''
+      'src': 'img/sm-1.jpg',
+      'msg': 'swipe/tap'
+    }, {
+      'src': 'img/sm-2.png',
+      'msg': ''
+    }, {
+      'src': 'img/sm-1.jpg',
+      'msg': ''
+    }, {
+      'src': 'img/a.jpg',
+      'msg': ''
+    }, {
+      'src': 'img/b.jpg',
+      'msg': ''
+    }, {
+      'src': 'img/c.jpg',
+      'msg': ''
     }];
 
     $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
@@ -114,8 +143,8 @@
       pc.imagesModal = modal;
     });
 
-    function showImagesModal() {
-      $ionicSlideBoxDelegate.slide(0);
+    function showImagesModal(index) {
+      $ionicSlideBoxDelegate.slide(index);
       pc.imagesModal.show();
     }
 
@@ -177,14 +206,28 @@
       pc.isPInfoForm = false;
     }
 
+    function showOwnPhotoForm() {
+      pc.isOwnPhotoForm = true;
+      pc.isHomePhotoForm = false;
+    }
+
+    function showHomePhotoForm() {
+      pc.isOwnPhotoForm = false;
+      pc.isHomePhotoForm = true;
+    }
+
     function changeDP(srcType) {
       try {
         logger.debug("changeDP function");
-        var promise = cameraService.clickImage(srcType);
+        var promise = getImages(srcType);
 
-        promise.then(function (imageData) {
+        promise.then(function(imageData) {
+          logger.debug("imageData: " + JSON.stringify(imageData));
+          /*for (var i = 0; i < imageData.uri.length; i++) {
+            pc.ownImages.uri.push(imageData.uri[i])
+          }*/
           pc.dp.uri = imageData.uri;
-          //pc.dp.base64 = imageData.base64;
+          pc.dp.base64 = imageData.base64;
         });
 
       } catch (exception) {
@@ -192,23 +235,162 @@
       }
     }
 
+    function addImgs(type, srcType) {
+      try {
+        logger.debug("addImgs function");
+
+        var promise;
+
+        switch (type) {
+          case sConfig.picType.own:
+            promise = getImages(srcType, pc.ownImagesLimit - pc.ownImages.uri.length);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              for (var i = 0; i < imageData.uri.length; i++) {
+                pc.ownImages.uri.push(imageData.uri[i]);
+              }
+
+            });
+            break;
+          case sConfig.picType.home:
+            promise = getImages(srcType, pc.homeImagesLimit - pc.homeImages.uri.length);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              for (var i = 0; i < imageData.uri.length; i++) {
+                pc.homeImages.uri.push(imageData.uri[i]);
+              }
+            });
+            break;
+        }
+        var promise = getImages(srcType, 5 - pc.homeImages.uri.length);
+
+
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function uploadHomeImages(srcType) {
+      try {
+        logger.debug("uploadHomeImages function");
+        var promise = getImages(srcType, 5 - pc.homeImages.uri.length);
+
+        promise.then(function(imageData) {
+          logger.debug("imageData: " + JSON.stringify(imageData));
+          for (var i = 0; i < imageData.uri.length; i++) {
+            pc.homeImages.uri.push(imageData.uri[i])
+          }
+        });
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function uploadOwnImages(srcType) {
+      try {
+        logger.debug("uploadOwnImages function");
+        var promise = getImages(srcType, 5 - pc.ownImages.uri.length);
+
+        promise.then(function(imageData) {
+          logger.debug("imageData: " + JSON.stringify(imageData));
+          for (var i = 0; i < imageData.uri.length; i++) {
+            pc.ownImages.uri.push(imageData.uri[i])
+          }
+        });
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function removeImg(type, img) {
+      try {
+        logger.debug("removeImg function");
+        switch (type) {
+          case sConfig.picType.own:
+            pc.ownImages.uri.splice(pc.ownImages.uri.indexOf(img), 1);
+            break;
+          case sConfig.picType.home:
+            pc.homeImages.uri.splice(pc.homeImages.uri.indexOf(img), 1);
+            break;
+        }
+        pc.ownImages.uri.splice(pc.ownImages.uri.indexOf(img), 1);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getImages(srcType, nImgs) {
+      try {
+        logger.debug("getImages function");
+
+        switch (srcType) {
+          case sConfig.picSrc.camera:
+            return cameraService.clickImage(srcType);
+            break;
+          case sConfig.picSrc.galary:
+            return cameraService.selectImage(nImgs);
+            break;
+          default:
+            return cameraService.clickImage(srcType);
+        }
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     /* Captures images. Calls clickImage function of cameraService to capture images */
     function clickImage() {
-        logger.debug("clickImage() function");
+      logger.debug("clickImage() function");
 
-        var promise = cameraService.clickImage();
+      var promise = cameraService.clickImage();
 
-        promise.then(function (imageData) {
-          pc.imgs.imgURIs.push(imageData.uri);
-          pc.imgs.imgBase64s.push(imageData.base64);
-        });
+      promise.then(function(imageData) {
+        pc.imgs.imgURIs.push(imageData.uri);
+        pc.imgs.imgBase64s.push(imageData.base64);
+      });
+    }
+
+    function setModalImgs(imgs) {
+      try {
+        logger.debug("setModalImgs function");
+        pc.modalImgsArr = imgs;
+        pc.showImagesModal();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function largeImg(type, img) {
+      try {
+        logger.debug("largeImg function");
+
+        var index = 0;
+
+        switch (type) {
+          case sConfig.picType.own:
+            pc.modalImgsArr = pc.ownImages.uri;
+            index = pc.ownImages.uri.indexOf(img);
+            break;
+          case sConfig.picType.home:
+            pc.modalImgsArr = pc.homeImages.uri;
+            index = pc.homeImages.uri.indexOf(img);
+            break;
+          case sConfig.picType.dp:
+            pc.modalImgsArr[0] = pc.dp.uri;
+            break;
+        }
+        pc.showImagesModal(index);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+
     }
 
     function initHeightArr() {
       logger.debug("initHeightArr function");
       for (var i = 4; i < 10; i++) {
         for (var j = 0; j < 12; j++) {
-          if (j===0) {
+          if (j === 0) {
             pc.heightArr.push(i + " ft ");
             continue;
           }

@@ -1,61 +1,94 @@
 <ion-view view-title="Images">
-  <ion-content class="">
-    <ion-slide-box on-slide-changed="slideHasChanged($index)">
-      <!--<ion-slide>
-        <div class="box blue">
-          <h1>BLUE</h1></div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box yellow">
-          <h1>YELLOW</h1></div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box pink">
-          <h1>PINK</h1></div>
-      </ion-slide>-->
-      <!--<ion-slide ng-repeat="oImage in aImages">
-        <img ng-src="{{oImage.src}}"/>
-        <p class="info">{{oImage.msg}}</p>
+  <ion-content class="has-footer">
+    <form name="ownPhotoForm" novalidate ng-show="pc.isOwnPhotoForm">
+      <div class="padding" ng-show="pc.ownImages.uri.length == 0 || pc.ownImages.uri.length < pc.ownImagesLimit">
+        <i class="icon icon ion-camera float-left" ng-click="pc.addImgs('own', 'camera')"></i>
+        <i class="icon ion-image float-right" ng-click="pc.addImgs('own', 'galary')"></i>
+      </div>
+      <div class="padding">
 
-      </ion-slide>
-      </ion-slide-box>-->
+      </div>
+      <div class="item item-body txt-ctr-align" ng-show="pc.ownImages.uri.length == 0">
+        <img src="img/noimg.jpg">
+        <!--<div class="padding">
+          <i class="icon icon ion-camera float-left" ng-click="pc.uploadOwnImages('camera')"></i>
+          <i class="icon ion-image float-right" ng-click="pc.uploadOwnImages('galary')"></i>
+        </div>-->
+      </div>
+      <div class="item item-body" ng-repeat="img in pc.ownImages.uri">
+        <img class="full-image" src="{{img}}" ng-click="pc.largeImg('own', img)">
+        <div class="padding">
+          <i class="icon ion-trash-b float-right" ng-click="pc.removeImg('own', img)"></i>
+        </div>
+      </div>
+      <!--<div class="item item-body">
+        <img class="full-image" src="{{pc.dp.uri}}" ng-click="pc.showImagesModal()">
+        <div class="padding">
+          <i class="icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
+          <span class="m-left30">Self photos</span>
+          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+        </div>
+        <div class="">
+          <button class="button button-full button-assertive" ng-disabled="eMyProfileForm.$invalid" ng-click="signupCtrl.signup()">
+            Upload
+          </button>
+        </div>
+      </div>-->
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="pc.ownImages.uri.length == 0" ng-click="signupCtrl.signup()">
+          Upload
+        </button>
+      </div>
+    </form>
+    <!-- Home photos -->
+    <form name="homePhotoForm" novalidate ng-show="pc.isHomePhotoForm">
+      <div class="padding" ng-show="pc.homeImages.uri.length == 0 || pc.homeImages.uri.length < pc.homeImagesLimit">
+        <i class="icon icon ion-camera float-left" ng-click="pc.addImgs('home', 'camera')"></i>
+        <i class="icon ion-image float-right" ng-click="pc.addImgs('home', 'galary')"></i>
+      </div>
+      <div class="padding">
 
-      <!--<ion-slide-box on-slide-changed="slideHasChanged($index)">
-            <ion-slide >
-              Hello
-            </ion-slide>
-      </ion-slide-box>-->
-
-
-          <div class="card">
-              <div class="item item-divider">
-                  Fullscreen images + Slide Box
-              </div>
-              <div class="item item-text-wrap">
-                  <div class="button-bar">
-                      <a class="button" ng-click="openModal()">Show images from start</a>
-                  </div>
-              </div>
-              <div class="item item-text-wrap">
-                  <div class="button-bar">
-                      <a class="button" ng-click="goToSlide(1)">Show second imagen</a>
-                      <a class="button" ng-click="goToSlide(2)">Show third imagen</a>
-                  </div>
-              </div>
-          </div>
-
-
-          <script id="image-modal.html" type="text/ng-template">
-                        <div class="modal image-modal transparent"
-                             ng-click="closeModal()">
-                          <ion-slide-box on-slide-changed="slideChanged(index)"
-                                         show-pager="false">
-                            <ion-slide ng-repeat="oImage in aImages">
-                              <img ng-src="{{oImage.src}}" class="fullscreen-image" />
-                              <p class="info">{{oImage.msg}}</p>
-                            </ion-slide>
-                          </ion-slide-box>
-                        </div>
-                    </script>
+      </div>
+      <div class="item item-body txt-ctr-align" ng-show="pc.homeImages.uri.length == 0">
+        <img src="img/noimg.jpg">
+        <!--<div class="padding">
+          <i class="icon icon ion-camera float-left" ng-click="pc.uploadHomeImages('camera')"></i>
+          <i class="icon ion-image float-right" ng-click="pc.uploadHomeImages('galary')"></i>
+        </div>-->
+      </div>
+      <div class="item item-body" ng-repeat="img in pc.homeImages.uri">
+        <img class="full-image" src="{{img}}" ng-click="pc.largeImg('home', img)">
+        <div class="padding">
+          <i class="icon ion-trash-b float-right" ng-click="pc.removeImg('home', img)"></i>
+        </div>
+      </div>
+      <!--<div class="item item-body" ng-repeat="img in pc.ownImages.uri">
+        <img class="full-image" src="{{img}}" ng-click="pc.showImagesModal()">
+        <div class="padding">
+          <i class="icon icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
+          <i class="icon ion-trash-b"></i>
+          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+        </div>
+      </div>-->
+      <!--<div class="item item-body">
+        <img class="full-image" src="{{pc.dp.uri}}" ng-click="pc.showImagesModal()">
+        <div class="padding">
+          <i class="icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
+          <span class="m-left30">Home photos</span>
+          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+        </div>-->
+        <div class="padding">
+          <button class="button button-full button-assertive" ng-click="signupCtrl.signup()">
+            Upload
+          </button>
+        </div>
+      </div>
+    </form>
   </ion-content>
+  <div class="bar bar-footer">
+    <div class="button-bar txt-xx-small-font">
+      <button class="button txt-xx-small-font" ng-click="pc.showOwnPhotoForm()">Personal</button>
+      <button class="button txt-xx-small-font" ng-click="pc.showHomePhotoForm()">Home</button>
+    </div>
+  </div>
 </ion-view>
