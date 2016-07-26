@@ -1,4 +1,10 @@
 <ion-view view-title="Edit profile">
+  <ion-nav-buttons side="right">
+    <div class="button" ng-click="pc.uploadData()">
+      <i class="xlarge ion-upload"></i>
+    </div>
+
+  </ion-nav-buttons>
   <ion-content class="has-footer">
     <!--<div class="button-bar txt-xx-small-font">
         <button class="button txt-xx-small-font" ng-click="pc.showpInfoForm()">Personal</button>
@@ -313,13 +319,15 @@
     </form>
   </ion-content>
   <div class="bar bar-footer">
-    <div class="button-bar txt-xx-small-font">
-      <button class="button txt-xx-small-font" ng-click="pc.showPInfoForm()">Personal</button>
-      <button class="button txt-xx-small-font" ng-click="pc.showAddressForm()">Address</button>
-      <!--<button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>-->
-      <button class="button txt-xx-small-font" ui-sref="menu.images">Photos</button>
-      <button class="button txt-xx-small-font" ng-click="pc.showFamilyForm()">Family</button>
-      <button class="button txt-xx-small-font" ng-click="pc.showOccupationForm()">Occupation</button>
+    <div class="button-bar txt-ctr-align">
+      <ion-scroll zooming="true" direction="x" class="w100">
+        <button class="button txt-xx-small-font" ng-click="pc.showPInfoForm()">Personal</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showAddressForm()">Address</button>
+        <!--<button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>-->
+        <button class="button txt-xx-small-font" ui-sref="menu.images">Photos</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showFamilyForm()">Family</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showOccupationForm()">Occupation</button>
+      </ion-scroll>
     </div>
   </div>
 </ion-view>

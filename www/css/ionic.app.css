@@ -9863,7 +9863,7 @@ a.button {
   text-align: left; }
 
 .txt-ctr-align {
-  text-align: center; }
+  text-align: center !important; }
 
 .txt-underline, .signin-links, .signin-su, .signin-fp {
   text-decoration: underline; }
@@ -9932,3 +9932,6 @@ p.info {
 
 .m-left30 {
   margin-left: 30% !important; }
+
+.w100 {
+  width: 100% !important; }

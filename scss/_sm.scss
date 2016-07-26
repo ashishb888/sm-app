@@ -58,7 +58,7 @@
 }
 
 .txt-ctr-align {
-  text-align: center;
+  text-align: center !important;
 }
 
 .txt-underline {
@@ -157,4 +157,8 @@ p.info {
 
 .m-left30 {
   margin-left: 30% !important;
+}
+
+.w100 {
+  width: 100% !important;
 }

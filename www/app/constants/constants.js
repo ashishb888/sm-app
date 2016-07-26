@@ -88,13 +88,20 @@ angular.module('starter').constant('starterConfig', (function() {
   var picSrc = {
     camera: "camera",
     galary: "galary"
-  }
-
+  };
   var picType = {
     own: "own",
     home: "home",
     dp: "dp"
-  }
+  };
+  var dataOf = {
+    pinfo: "pinfo",
+    address: "address",
+    pown: "pown",
+    phome: "phome",
+    family: "family",
+    occupation: "occupation"
+  };
 
   switch (env) {
     case envLs.prod:
@@ -126,7 +133,8 @@ angular.module('starter').constant('starterConfig', (function() {
     dbConfig: dbConfig,
     operatorStatus: operatorStatus,
     picSrc: picSrc,
-    picType: picType
+    picType: picType,
+    dataOf: dataOf
   };
 
 })());

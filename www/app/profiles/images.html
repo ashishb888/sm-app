@@ -1,9 +1,14 @@
 <ion-view view-title="Images">
+  <ion-nav-buttons side="right">
+    <div class="button" ng-click="pc.uploadData()">
+      <i class="xlarge ion-upload"></i>
+    </div>
+  </ion-nav-buttons>
   <ion-content class="has-footer">
     <form name="ownPhotoForm" novalidate ng-show="pc.isOwnPhotoForm">
       <div class="padding" ng-show="pc.ownImages.uri.length == 0 || pc.ownImages.uri.length < pc.ownImagesLimit">
-        <i class="icon icon ion-camera float-left" ng-click="pc.addImgs('own', 'camera')"></i>
-        <i class="icon ion-image float-right" ng-click="pc.addImgs('own', 'galary')"></i>
+        <i class="icon icon ion-camera float-left xlarge" ng-click="pc.addImgs('own', 'camera')"></i>
+        <i class="icon ion-images float-right xlarge" ng-click="pc.addImgs('own', 'galary')"></i>
       </div>
       <div class="padding">
 
@@ -12,13 +17,13 @@
         <img src="img/noimg.jpg">
         <!--<div class="padding">
           <i class="icon icon ion-camera float-left" ng-click="pc.uploadOwnImages('camera')"></i>
-          <i class="icon ion-image float-right" ng-click="pc.uploadOwnImages('galary')"></i>
+          <i class="icon ion-images float-right" ng-click="pc.uploadOwnImages('galary')"></i>
         </div>-->
       </div>
       <div class="item item-body" ng-repeat="img in pc.ownImages.uri">
         <img class="full-image" src="{{img}}" ng-click="pc.largeImg('own', img)">
         <div class="padding">
-          <i class="icon ion-trash-b float-right" ng-click="pc.removeImg('own', img)"></i>
+          <i class="icon ion-trash-b float-right xlarge" ng-click="pc.removeImg('own', img)"></i>
         </div>
       </div>
       <!--<div class="item item-body">
@@ -26,7 +31,7 @@
         <div class="padding">
           <i class="icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
           <span class="m-left30">Self photos</span>
-          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+          <i class="icon ion-images float-right" ng-click="pc.changeDP('galary')"></i>
         </div>
         <div class="">
           <button class="button button-full button-assertive" ng-disabled="eMyProfileForm.$invalid" ng-click="signupCtrl.signup()">
@@ -43,8 +48,8 @@
     <!-- Home photos -->
     <form name="homePhotoForm" novalidate ng-show="pc.isHomePhotoForm">
       <div class="padding" ng-show="pc.homeImages.uri.length == 0 || pc.homeImages.uri.length < pc.homeImagesLimit">
-        <i class="icon icon ion-camera float-left" ng-click="pc.addImgs('home', 'camera')"></i>
-        <i class="icon ion-image float-right" ng-click="pc.addImgs('home', 'galary')"></i>
+        <i class="icon icon ion-camera float-left xlarge" ng-click="pc.addImgs('home', 'camera')"></i>
+        <i class="icon ion-images float-right xlarge" ng-click="pc.addImgs('home', 'galary')"></i>
       </div>
       <div class="padding">
 
@@ -53,13 +58,13 @@
         <img src="img/noimg.jpg">
         <!--<div class="padding">
           <i class="icon icon ion-camera float-left" ng-click="pc.uploadHomeImages('camera')"></i>
-          <i class="icon ion-image float-right" ng-click="pc.uploadHomeImages('galary')"></i>
+          <i class="icon ion-images float-right" ng-click="pc.uploadHomeImages('galary')"></i>
         </div>-->
       </div>
       <div class="item item-body" ng-repeat="img in pc.homeImages.uri">
         <img class="full-image" src="{{img}}" ng-click="pc.largeImg('home', img)">
         <div class="padding">
-          <i class="icon ion-trash-b float-right" ng-click="pc.removeImg('home', img)"></i>
+          <i class="icon ion-trash-b float-right xlarge" ng-click="pc.removeImg('home', img)"></i>
         </div>
       </div>
       <!--<div class="item item-body" ng-repeat="img in pc.ownImages.uri">
@@ -67,7 +72,7 @@
         <div class="padding">
           <i class="icon icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
           <i class="icon ion-trash-b"></i>
-          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+          <i class="icon ion-images float-right" ng-click="pc.changeDP('galary')"></i>
         </div>
       </div>-->
       <!--<div class="item item-body">
@@ -75,7 +80,7 @@
         <div class="padding">
           <i class="icon ion-camera float-left" ng-click="pc.changeDP('camera')"></i>
           <span class="m-left30">Home photos</span>
-          <i class="icon ion-image float-right" ng-click="pc.changeDP('galary')"></i>
+          <i class="icon ion-images float-right" ng-click="pc.changeDP('galary')"></i>
         </div>-->
         <div class="padding">
           <button class="button button-full button-assertive" ng-click="signupCtrl.signup()">

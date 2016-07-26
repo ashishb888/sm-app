@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', 'md5'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, md5) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -88,6 +88,7 @@
     pc.dp.uri = "img/sm-2.png";
     pc.dp.base64;
     pc.modalImgsArr = [];
+    pc.dataOf = sConfig.dataOf.pinfo;
 
     // Function section
     var initHeightArr = initHeightArr;
@@ -109,6 +110,7 @@
     pc.largeImg = largeImg;
     pc.removeImg = removeImg;
     pc.addImgs = addImgs;
+    pc.uploadData = uploadData;
 
     pc.ownImages.uri.push('img/sm-1.jpg');
     pc.ownImages.uri.push('img/sm-2.png');
@@ -167,6 +169,7 @@
     });
 
     function showPInfoForm() {
+      pc.dataOf = sConfig.dataOf.pinfo;
       pc.isPInfoForm = true;
       pc.isPhotoForm = false;
       pc.isFamilyForm = false;
@@ -183,6 +186,7 @@
     }
 
     function showFamilyForm() {
+      pc.dataOf = sConfig.dataOf.family;
       pc.isFamilyForm = true;
       pc.isPhotoForm = false;
       pc.isPInfoForm = false;
@@ -191,6 +195,7 @@
     }
 
     function showOccupationForm() {
+      pc.dataOf = sConfig.dataOf.occupation;
       pc.isOccupationForm = true;
       pc.isFamilyForm = false;
       pc.isPhotoForm = false;
@@ -199,6 +204,7 @@
     }
 
     function showAddressForm() {
+      pc.dataOf = sConfig.dataOf.address;
       pc.isAddressForm = true;
       pc.isOccupationForm = false;
       pc.isFamilyForm = false;
@@ -207,11 +213,13 @@
     }
 
     function showOwnPhotoForm() {
+      pc.dataOf = sConfig.dataOf.pown;
       pc.isOwnPhotoForm = true;
       pc.isHomePhotoForm = false;
     }
 
     function showHomePhotoForm() {
+      pc.dataOf = sConfig.dataOf.phome;
       pc.isOwnPhotoForm = false;
       pc.isHomePhotoForm = true;
     }
@@ -383,7 +391,38 @@
       } catch (exception) {
         logger.error("exception: " + exception);
       }
+    }
 
+    function uploadData() {
+      try {
+        logger.debug("uploadData function");
+        logger.debug("pc.dataOf: " + pc.dataOf);
+
+        switch (pc.dataOf) {
+          case sConfig.dataOf.pinfo:
+            logger.debug("pif: " + JSON.stringify(pc.pif));
+            break;
+          case sConfig.dataOf.address:
+            logger.debug("pif: " + JSON.stringify(pc.af));
+            break;
+          case sConfig.dataOf.pown:
+
+            break;
+          case sConfig.dataOf.phome:
+
+            break;
+          case sConfig.dataOf.occupation:
+            logger.debug("pif: " + JSON.stringify(pc.of));
+            break;
+          case sConfig.dataOf.family:
+            logger.debug("pif: " + JSON.stringify(pc.ff));
+            break;
+          default:
+
+        }
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function initHeightArr() {
