@@ -1,8 +1,14 @@
 <ion-view view-title="Images">
   <ion-nav-buttons side="right">
-    <div class="button button-clear" ng-click="pc.uploadData()">
+    <button class="button button-dark" ng-click="signupCtrl.signup()" ng-disabled="pc.homeImages.uri.length == 0" ng-show="pc.isHomePhotoForm">
+      Upload
+    </button>
+    <button class="button button-dark" ng-click="signupCtrl.signup()" ng-disabled="pc.ownImages.uri.length == 0" ng-show="pc.isOwnPhotoForm">
+      Upload
+    </button>
+    <!--<div class="button button-clear" ng-click="pc.uploadData()">
       <i class="xlarge ion-upload"></i>
-    </div>
+    </div>-->
   </ion-nav-buttons>
   <ion-content class="has-footer">
     <form name="ownPhotoForm" novalidate ng-show="pc.isOwnPhotoForm">
