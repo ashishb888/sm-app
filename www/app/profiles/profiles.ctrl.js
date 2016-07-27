@@ -75,6 +75,7 @@
     pc.homeImages.index = 0;
     pc.homeImagesLimit = 5;
     pc.ownImagesLimit = 5;
+    pc.disableImgsUploadBtn = true;
     //pc.ownImages.uri.push("img/sm-1.jpg");
 
     // Address form
@@ -175,7 +176,7 @@
     // Cleanup the modal when we're done with it!
     // Execute action on hide modal
     $scope.$on('modal.hidden', function() {
-      console.log('Modal is hidden!');
+      logger.debug('Modal is hidden!');
       // Execute action
     });
     // Execute action on remove modal
@@ -183,63 +184,105 @@
       // Execute action
     });
     $scope.$on('modal.shown', function() {
-      console.log('Modal is shown!');
+      logger.debug('Modal is shown!');
     });
 
     function showPInfoForm() {
-      pc.dataOf = sConfig.dataOf.pinfo;
-      pc.isPInfoForm = true;
-      pc.isPhotoForm = false;
-      pc.isFamilyForm = false;
-      pc.isOccupationForm = false;
-      pc.isAddressForm = false;
+      try {
+        logger.debug("showPInfoForm function");
+
+        pc.dataOf = sConfig.dataOf.pinfo;
+        pc.isPInfoForm = true;
+        pc.isPhotoForm = false;
+        pc.isFamilyForm = false;
+        pc.isOccupationForm = false;
+        pc.isAddressForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showPhotoForm() {
-      pc.isPhotoForm = true;
-      pc.isPInfoForm = false;
-      pc.isFamilyForm = false;
-      pc.isOccupationForm = false;
-      pc.isAddressForm = false;
+      try {
+        logger.debug("showPhotoForm function");
+
+        pc.isPhotoForm = true;
+        pc.isPInfoForm = false;
+        pc.isFamilyForm = false;
+        pc.isOccupationForm = false;
+        pc.isAddressForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showFamilyForm() {
-      pc.dataOf = sConfig.dataOf.family;
-      pc.isFamilyForm = true;
-      pc.isPhotoForm = false;
-      pc.isPInfoForm = false;
-      pc.isOccupationForm = false;
-      pc.isAddressForm = false;
+      try {
+        logger.debug("showFamilyForm function");
+
+        pc.dataOf = sConfig.dataOf.family;
+        pc.isFamilyForm = true;
+        pc.isPhotoForm = false;
+        pc.isPInfoForm = false;
+        pc.isOccupationForm = false;
+        pc.isAddressForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showOccupationForm() {
-      pc.dataOf = sConfig.dataOf.occupation;
-      pc.isOccupationForm = true;
-      pc.isFamilyForm = false;
-      pc.isPhotoForm = false;
-      pc.isPInfoForm = false;
-      pc.isAddressForm = false;
+      try {
+        logger.debug("showOccupationForm function");
+
+        pc.dataOf = sConfig.dataOf.occupation;
+        pc.isOccupationForm = true;
+        pc.isFamilyForm = false;
+        pc.isPhotoForm = false;
+        pc.isPInfoForm = false;
+        pc.isAddressForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showAddressForm() {
-      pc.dataOf = sConfig.dataOf.address;
-      pc.isAddressForm = true;
-      pc.isOccupationForm = false;
-      pc.isFamilyForm = false;
-      pc.isPhotoForm = false;
-      pc.isPInfoForm = false;
+      try {
+        logger.debug("showAddressForm function");
+
+        pc.dataOf = sConfig.dataOf.address;
+        pc.isAddressForm = true;
+        pc.isOccupationForm = false;
+        pc.isFamilyForm = false;
+        pc.isPhotoForm = false;
+        pc.isPInfoForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showOwnPhotoForm() {
-      pc.dataOf = sConfig.dataOf.pown;
-      pc.isOwnPhotoForm = true;
-      pc.isHomePhotoForm = false;
+      try {
+        logger.debug("showOwnPhotoForm function");
+
+        pc.dataOf = sConfig.dataOf.pown;
+        pc.isOwnPhotoForm = true;
+        pc.isHomePhotoForm = false;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function showHomePhotoForm() {
-      pc.dataOf = sConfig.dataOf.phome;
-      pc.isOwnPhotoForm = false;
-      pc.isHomePhotoForm = true;
+      try {
+        logger.debug("showHomePhotoForm function");
+
+        pc.dataOf = sConfig.dataOf.phome;
+        pc.isOwnPhotoForm = false;
+        pc.isHomePhotoForm = true;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
 
     function changeDP(srcType) {
@@ -405,6 +448,9 @@
             break;
           case sConfig.picType.dp:
             pc.modalImgsArr[0] = pc.dp.uri;
+            break;
+          case sConfig.picType.pp:
+            pc.modalImgsArr[0] = 'img/sm-2.png';
             break;
         }
         pc.showImagesModal(index);
