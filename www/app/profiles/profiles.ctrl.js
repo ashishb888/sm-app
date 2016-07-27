@@ -14,6 +14,7 @@
     pc.genderArr = ["Male", "Female"];
     pc.pif.gender = pc.genderArr[0];
     pc.heightArr = [];
+    pc.pif.height;
     pc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
     pc.pif.bodyType = pc.bodyTypeArr[0];
     pc.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
@@ -83,6 +84,12 @@
     pc.af.taluqa = pc.taluqaArr[0];
     pc.townArr = ["A", "B", "C"];
     pc.af.town = pc.townArr[0];
+
+    // Profiles preference
+    pc.ppf = {};
+    pc.ageArr = [];
+    pc.ppf.minAge;
+    pc.ppf.maxAge;
 
     pc.dp = {};
     pc.dp.uri = "img/sm-2.png";
@@ -254,25 +261,28 @@
             promise = getImages(srcType, pc.ownImagesLimit - pc.ownImages.uri.length);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
-              for (var i = 0; i < imageData.uri.length; i++) {
+              for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 pc.ownImages.uri.push(imageData.uri[i]);
               }
-
             });
             break;
           case sConfig.picType.home:
             promise = getImages(srcType, pc.homeImagesLimit - pc.homeImages.uri.length);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
-              for (var i = 0; i < imageData.uri.length; i++) {
+              for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 pc.homeImages.uri.push(imageData.uri[i]);
               }
             });
             break;
+          case sConfig.picType.dp:
+            promise = getImages(srcType, 1);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              pc.dp.uri = imageData.uri[0];
+            });
+            break;
         }
-        var promise = getImages(srcType, 5 - pc.homeImages.uri.length);
-
-
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -285,7 +295,7 @@
 
         promise.then(function(imageData) {
           logger.debug("imageData: " + JSON.stringify(imageData));
-          for (var i = 0; i < imageData.uri.length; i++) {
+          for (var i = 0, len = imageData.uri.length; i < len; i++) {
             pc.homeImages.uri.push(imageData.uri[i])
           }
         });
@@ -301,7 +311,7 @@
 
         promise.then(function(imageData) {
           logger.debug("imageData: " + JSON.stringify(imageData));
-          for (var i = 0; i < imageData.uri.length; i++) {
+          for (var i = 0, len = imageData.uri.length; i < len; i++) {
             pc.ownImages.uri.push(imageData.uri[i])
           }
         });
@@ -321,7 +331,6 @@
             pc.homeImages.uri.splice(pc.homeImages.uri.indexOf(img), 1);
             break;
         }
-        pc.ownImages.uri.splice(pc.ownImages.uri.indexOf(img), 1);
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -425,20 +434,53 @@
       }
     }
 
-    function initHeightArr() {
-      logger.debug("initHeightArr function");
-      for (var i = 4; i < 10; i++) {
-        for (var j = 0; j < 12; j++) {
-          if (j === 0) {
-            pc.heightArr.push(i + " ft ");
-            continue;
-          }
-          pc.heightArr.push(i + " ft " + j + " in");
+    function initAgeArr() {
+      try {
+        logger.debug("initAgeArr function");
+
+        pc.ageArr.push("any");
+        for (var i = 18; i <= 40; i++) {
+          pc.ageArr.push(i);
         }
+
+        pc.ppf.minAge = pc.ageArr[0];
+        pc.ppf.maxAge = pc.ageArr[0];
+      } catch (exception) {
+        logger.error("exception: " + exception);
       }
-      pc.pif.height = pc.heightArr[0];
+    }
+    initAgeArr();
+
+    function initHeightArr() {
+      try {
+        logger.debug("initHeightArr function");
+
+        for (var i = 4; i < 10; i++) {
+          for (var j = 0; j < 12; j++) {
+            if (j === 0) {
+              pc.heightArr.push(i + " ft ");
+              continue;
+            }
+            pc.heightArr.push(i + " ft " + j + " in");
+          }
+        }
+        pc.pif.height = pc.heightArr[0];
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     }
     initHeightArr();
+
+    function setProfilesP() {
+      try {
+        logger.debug("setProfilesP function");
+
+        pc.heightArr.slice(0, 1, "any");
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+    //setProfilesP();
 
     logger.debug("ProfilesCtrl end");
   }

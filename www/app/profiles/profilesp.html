@@ -1,0 +1,60 @@
+<ion-view view-title="Profiles preference">
+  <ion-content class="">
+    <form name="profilesPForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Min age
+        </div>
+        <select ng-model="pc.ppf.minAge">
+          <option ng-repeat="a in pc.ageArr">{{a}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Max age
+        </div>
+        <select ng-model="pc.ppf.maxAge">
+          <option ng-repeat="a in pc.ageArr">{{a}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Height
+        </div>
+        <select ng-model="pc.pif.height">
+          <option ng-repeat="h in pc.heightArr">{{h}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Complexion
+        </div>
+        <select ng-model="pc.pif.complexion">
+          <option ng-repeat="c in pc.complexionArr">{{c}}</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Body type
+        </div>
+        <select ng-model="pc.pif.bodyType">
+          <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Sub-caste
+        </div>
+        <select ng-model="pc.pif.subCaste">
+          <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="profilesPForm.$invalid" ng-click="pc.signup()">
+          Update preference
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

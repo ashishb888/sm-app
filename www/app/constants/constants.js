@@ -94,6 +94,11 @@ angular.module('starter').constant('starterConfig', (function() {
     home: "home",
     dp: "dp"
   };
+  var picProps = {
+    quality: 50,
+    width: 400,
+    height: 400
+  };
   var dataOf = {
     pinfo: "pinfo",
     address: "address",
@@ -134,6 +139,7 @@ angular.module('starter').constant('starterConfig', (function() {
     operatorStatus: operatorStatus,
     picSrc: picSrc,
     picType: picType,
+    picProps: picProps,
     dataOf: dataOf
   };
 

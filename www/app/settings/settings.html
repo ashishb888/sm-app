@@ -71,9 +71,11 @@
     </div>
   </ion-content>
   <div class="bar bar-footer">
-    <div class="button-bar">
-      <button class="button" ng-click="sc.showUpdatePasswordForm()">Update password</button>
-      <button class="button" ng-click="sc.showUpdatePhoneForm()">Update mobile no</button>
+    <div class="button-bar txt-ctr-align">
+      <ion-scroll direction="x" class="w100">
+        <button class="button" ng-click="sc.showUpdatePasswordForm()">Update password</button>
+        <button class="button" ng-click="sc.showUpdatePhoneForm()">Update mobile no</button>
+      </ion-scroll>
     </div>
   </div>
 </ion-view>

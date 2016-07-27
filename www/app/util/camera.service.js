@@ -8,7 +8,11 @@
     var logger = utilService.getLogger();
     logger.debug("cameraService service");
 
-    cs.clickImage = function(srcType) {
+    // services
+    cs.clickImage = clickImage;
+    cs.selectImage = selectImage;
+
+    function clickImage(srcType) {
       try {
         logger.debug("clickImage service");
         logger.debug("srcType: " + srcType);
@@ -30,20 +34,21 @@
           allowEdit: false,
           encodingType: Camera.EncodingType.JPEG,
           popoverOptions: CameraPopoverOptions,
-          quality: 50,
-          targetWidth: 400,
-          targetHeight: 600,
+          quality: sConfig.picProps.quality,
+          targetWidth: sConfig.picProps.width,
+          targetHeight: sConfig.picProps.height,
           correctOrientation: true
         }
         var imageData = {};
         return $cordovaCamera.getPicture(options)
           .then(function(imageURI) {
             logger.debug("imageURI: " + imageURI);
-            imageData.uri = imageURI;
+            imageData.uri = [imageURI];
+            return imageData;
             /*if(sConfig.picSrc.galary === srcType)
               return imageData;*/
 
-            var pathArr = imageURI.split("/");
+            /*var pathArr = imageURI.split("/");
             var fileNm = encodeURI(pathArr.pop());
             return $cordovaFile.readAsDataURL(pathArr.join("/"), fileNm)
               .then(function(fileData) {
@@ -52,16 +57,16 @@
                 return imageData;
               }, function(error) {
                 logger.error("error: " + JSON.stringify(error));
-              });
+              });*/
           }, function(error) {
             logger.error("error: " + JSON.stringify(error));
           });
       } catch (exception) {
         logger.error("exception: " + exception);
       }
-    };
+    }
 
-    cs.selectImage = function(nImgs) {
+    function selectImage(nImgs) {
       try {
         if(nImgs === undefined)
           nImgs = 5;
@@ -70,14 +75,14 @@
         imageData.uri = [];
         var options = {
           maximumImagesCount: nImgs,
-          width: 800,
-          height: 800,
-          quality: 80
+          width: sConfig.picProps.width,
+          height: sConfig.picProps.height,
+          quality: sConfig.picProps.quality
         };
 
         return $cordovaImagePicker.getPictures(options)
           .then(function(uriArr) {
-            for (var i = 0; i < uriArr.length; i++) {
+            for (var i = 0, len = uriArr.length; i < len; i++) {
               logger.debug('Image URI: ' + uriArr[i]);
               imageData.uri.push(uriArr[i]);
             }
@@ -88,7 +93,7 @@
       } catch (exception) {
         logger.error("exception: " + exception);
       }
-    };
+    }
 
     // Return service
     return cs;

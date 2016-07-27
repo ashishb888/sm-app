@@ -361,6 +361,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
           controller: 'ProfilesCtrl as pc'
         }
       }
+    })
+    .state('menu.profilesp', {
+      url: '/profilesp',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/profilesp.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
     });
 
   $urlRouterProvider.otherwise('/signin');

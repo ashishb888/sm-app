@@ -20,6 +20,7 @@
     us.executeQuery = executeQuery;
     us.selectQuery = selectQuery;
     us.insertQuery = insertQuery;
+    us.base64 = base64;
 
     /* Logs every request's data */
     function logReqResp(data, key) {

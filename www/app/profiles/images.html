@@ -1,6 +1,6 @@
 <ion-view view-title="Images">
   <ion-nav-buttons side="right">
-    <div class="button" ng-click="pc.uploadData()">
+    <div class="button button-clear" ng-click="pc.uploadData()">
       <i class="xlarge ion-upload"></i>
     </div>
   </ion-nav-buttons>
@@ -82,18 +82,20 @@
           <span class="m-left30">Home photos</span>
           <i class="icon ion-images float-right" ng-click="pc.changeDP('galary')"></i>
         </div>-->
-        <div class="padding">
-          <button class="button button-full button-assertive" ng-click="signupCtrl.signup()">
-            Upload
-          </button>
-        </div>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-click="signupCtrl.signup()">
+          Upload
+        </button>
+      </div>
       </div>
     </form>
   </ion-content>
   <div class="bar bar-footer">
-    <div class="button-bar txt-xx-small-font">
-      <button class="button txt-xx-small-font" ng-click="pc.showOwnPhotoForm()">Personal</button>
-      <button class="button txt-xx-small-font" ng-click="pc.showHomePhotoForm()">Home</button>
+    <div class="button-bar txt-ctr-align">
+      <ion-scroll direction="x" class="w100">
+        <button class="button txt-xx-small-font" ng-click="pc.showOwnPhotoForm()">Personal</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showHomePhotoForm()">Home</button>
+      </ion-scroll>
     </div>
   </div>
 </ion-view>
