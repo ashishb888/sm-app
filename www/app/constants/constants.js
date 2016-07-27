@@ -20,11 +20,22 @@ angular.module('starter').constant('starterConfig', (function() {
     ERROR: "ERROR",
     SUCCESS: "SUCCESS"
   };
-  var hfStates = {
-    address: "address",
-    placeorder: "menu.placeorder",
+  var appStates = {
     signin: "signin",
-    profiles: "menu.profiles"
+    signup: "signup",
+    forgotpassword: "forgotpassword",
+    menu: "menu",
+    menu_account: "menu.account",
+    menu_help: "menu.help",
+    menu_tc: "menu.tc",
+    menu_profiles: "menu.profiles",
+    menu_settings: "menu.settings",
+    menu_profile: "menu.profile",
+    menu_images: "menu.images",
+    menu_pprofiles: "menu.pprofiles",
+    menu_eprofile: "menu.eprofile",
+    menu_emyprofile: "menu.emyprofile",
+    menu_profilesp: "menu.profilesp"
   };
   var screenTitles = {
     signin: "Sign in",
@@ -80,11 +91,7 @@ angular.module('starter').constant('starterConfig', (function() {
     }]
   };
 
-  var operatorStatus = {
-      avail: "AVAIL",
-      unavail: "UNAVAIL"
-  };
-
+  // Photos properties
   var picSrc = {
     camera: "camera",
     galary: "galary"
@@ -128,7 +135,7 @@ angular.module('starter').constant('starterConfig', (function() {
   return {
     ws: ws,
     msgs: msgs,
-    hfStates: hfStates,
+    appStates: appStates,
     httpKeys: httpKeys,
     httpStatus: httpStatus,
     screenTitles: screenTitles,
@@ -136,7 +143,6 @@ angular.module('starter').constant('starterConfig', (function() {
     modal: modal,
     pullRefresher: pullRefresher,
     dbConfig: dbConfig,
-    operatorStatus: operatorStatus,
     picSrc: picSrc,
     picType: picType,
     picProps: picProps,
