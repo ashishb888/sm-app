@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', 'md5'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, md5) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -45,8 +45,9 @@
 
     // Occupation form
     pc.of = {};
-    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc"];
+    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
     pc.of.hEducation = pc.hEducationArr[0];
+    pc.of.oHEducation;
     pc.occupationArr = ["Job", "Farm", "Business"];
     pc.of.occupation = pc.occupationArr[0];
 
@@ -90,16 +91,25 @@
     pc.ageArr = [];
     pc.ppf.minAge;
     pc.ppf.maxAge;
+    pc.ppf.minHeight;
+    pc.ppf.maxHeight;
+    pc.ppf.complexion;
+    pc.ppf.bodyType;
+    pc.ppf.subCaste;
 
     pc.dp = {};
-    pc.dp.uri = "img/sm-2.png";
+    pc.dp.uri = "img/no-profile.jpg";
     pc.dp.base64;
     pc.modalImgsArr = [];
     pc.dataOf = sConfig.dataOf.pinfo;
+    pc.noImg = "img/noimg.gif"
 
     // Function section
     var initHeightArr = initHeightArr;
     var getImages = getImages;
+    var bootstrap = bootstrap;
+    var setProfilesP = setProfilesP;
+    var setEProfile = setEProfile;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
     pc.showPInfoForm = showPInfoForm;
@@ -118,32 +128,14 @@
     pc.removeImg = removeImg;
     pc.addImgs = addImgs;
     pc.uploadData = uploadData;
+    pc.showProfileFModal = showProfileFModal;
+    pc.hideProfileFModal = hideProfileFModal;
 
     pc.ownImages.uri.push('img/sm-1.jpg');
     pc.ownImages.uri.push('img/sm-2.png');
     pc.ownImages.uri.push('img/a.jpg');
     pc.ownImages.uri.push('img/c.jpg');
     pc.ownImages.uri.push('img/b.jpg');
-
-    $scope.aImages = [{
-      'src': 'img/sm-1.jpg',
-      'msg': 'swipe/tap'
-    }, {
-      'src': 'img/sm-2.png',
-      'msg': ''
-    }, {
-      'src': 'img/sm-1.jpg',
-      'msg': ''
-    }, {
-      'src': 'img/a.jpg',
-      'msg': ''
-    }, {
-      'src': 'img/b.jpg',
-      'msg': ''
-    }, {
-      'src': 'img/c.jpg',
-      'msg': ''
-    }];
 
     $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
@@ -153,12 +145,31 @@
     });
 
     function showImagesModal(index) {
+      logger.debug("showImagesModal function");
       $ionicSlideBoxDelegate.slide(index);
       pc.imagesModal.show();
     }
 
     function hideImagesModal() {
+      logger.debug("hideImagesModal function");
       pc.imagesModal.hide();
+    }
+
+    $ionicModal.fromTemplateUrl('app/profiles/profile-filter-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      pc.profileFModal = modal;
+    });
+
+    function showProfileFModal() {
+      logger.debug("showProfileFModal function");
+      pc.profileFModal.show();
+    }
+
+    function hideProfileFModal() {
+      logger.debug("hideProfileFModal function");
+      pc.profileFModal.hide();
     }
 
     // Cleanup the modal when we're done with it!
@@ -426,8 +437,6 @@
           case sConfig.dataOf.family:
             logger.debug("pif: " + JSON.stringify(pc.ff));
             break;
-          default:
-
         }
       } catch (exception) {
         logger.error("exception: " + exception);
@@ -449,7 +458,7 @@
         logger.error("exception: " + exception);
       }
     }
-    initAgeArr();
+    // initAgeArr();
 
     function initHeightArr() {
       try {
@@ -469,18 +478,67 @@
         logger.error("exception: " + exception);
       }
     }
-    initHeightArr();
+    // initHeightArr();
+
+    function setEProfile() {
+      try {
+        logger.debug("setEProfile function");
+        if (pc.heightArr == 0)
+          initHeightArr();
+        pc.pif.height = pc.heightArr[0];
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function setProfilesP() {
       try {
         logger.debug("setProfilesP function");
 
-        pc.heightArr.slice(0, 1, "any");
+        if (pc.heightArr == 0)
+          initHeightArr();
+
+        pc.ageArr.push("Any");
+        for (var i = 18; i <= 40; i++) {
+          pc.ageArr.push(i);
+        }
+
+        pc.heightArr.splice(0, 0, "Any");
+        pc.complexionArr.splice(0, 0, "Any");
+        pc.bodyTypeArr.splice(0, 0, "Any");
+        pc.subCasteArr.splice(0, 0, "Any");
+
+        pc.ppf.minAge = pc.ageArr[0];
+        pc.ppf.maxAge = pc.ageArr[0];;
+        pc.ppf.minHeight = pc.heightArr[0];
+        pc.ppf.maxHeight = pc.heightArr[0];
+        pc.ppf.complexion = pc.complexionArr[0];
+        pc.ppf.bodyType = pc.bodyTypeArr[0];
+        pc.ppf.subCaste = pc.subCasteArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
     }
-    //setProfilesP();
+
+    function bootstrap() {
+      try {
+        logger.debug("bootstrap function")
+
+        switch ($stateParams.functionNm) {
+          case "setProfilesP":
+            setProfilesP();
+            break;
+          case "setEProfile":
+            setEProfile();
+            break;
+          default:
+            setEProfile();
+        }
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+    bootstrap();
 
     logger.debug("ProfilesCtrl end");
   }

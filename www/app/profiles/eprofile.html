@@ -276,6 +276,15 @@
           <option ng-repeat="e in pc.hEducationArr">{{e}}</option>
         </select>
       </label>
+      <label class="item item-input item-floating-label" ng-show="pc.of.hEducation == 'Other'">
+        <span class="input-label">Other higher education</span>
+        <input type="text" name="oHEducation" placeholder="Other higher education" ng-model="pc.of.oHEducation" ng-required="pc.of.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
+        <div class="app-error" ng-messages="occupationForm.oHEducation.$error" ng-if="occupationForm.oHEducation.$dirty">
+          <div ng-message="required">Other higher education is required.</div>
+          <div ng-message="minlength">Other higher education must be at least 2 characters long.</div>
+          <div ng-message="maxlength">Other higher education can be at most 20 characters long.</div>
+        </div>
+      </label>
       <!--<label class="item item-input item-floating-label">
             <span class="input-label">Higher education</span>
             <input type="text" name="hEducation" placeholder="Higher education" ng-model="pc.of.hEducation" ng-required="true" ng-minlength="2" ng-maxlength="20">

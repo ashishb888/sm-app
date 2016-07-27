@@ -8,10 +8,11 @@
     var logger = utilService.getLogger();
     logger.debug("MenuCtrl start");
 
-    var menuCtrl = this;
-
+    var mc = this;
+    mc.dp = {};
+    mc.dp.uri = "img/no-profile.jpg";
     // Functions section
-    menuCtrl.signout = signout;
+    mc.signout = signout;
 
     function signout() {
       try {

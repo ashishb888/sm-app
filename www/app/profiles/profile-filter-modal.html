@@ -1,6 +1,9 @@
-<ion-view view-title="Profiles preference">
-  <ion-content class="">
-    <form name="profilesPForm" novalidate>
+<ion-modal-view class="pfilter-modal">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Search profile</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form name="profilesFilterForm" novalidate>
       <div class="item row no-padding">
         <div class="col no-padding">
           <label class="item item-input item-select">
@@ -72,10 +75,10 @@
         </select>
       </label>
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="profilesPForm.$invalid" ng-click="pc.signup()">
-          Update preference
+        <button class="button button-full button-assertive" ng-disabled="profilesFilterForm.$invalid" ng-click="pc.signup()">
+          Search
         </button>
       </div>
     </form>
   </ion-content>
-</ion-view>
+</ion-modal-view>

@@ -249,7 +249,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       url: '/menu',
       abstract: true,
       templateUrl: 'app/menu/menu.html',
-      controller: 'MenuCtrl as menuCtrl'
+      controller: 'MenuCtrl as mc'
     })
     .state('menu.account', {
       url: '/account',
@@ -279,7 +279,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       url: '/profiles',
       views: {
         'menuContent': {
-          templateUrl: 'app/profiles/profiles.html'
+          templateUrl: 'app/profiles/profiles.html',
+          controller: 'ProfilesCtrl as pc'
         }
       }
     })
@@ -320,6 +321,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.eprofile', {
+      params: {'functionNm': 'setEProfile'},
       url: '/eprofile',
       views: {
         'menuContent': {
@@ -338,6 +340,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.profilesp', {
+      params: {'functionNm': 'setProfilesP'},
       url: '/profilesp',
       views: {
         'menuContent': {

@@ -14,7 +14,7 @@
 
       </div>
       <div class="item item-body txt-ctr-align" ng-show="pc.ownImages.uri.length == 0">
-        <img src="img/noimg.jpg">
+        <img src="{{pc.noImg}}">
         <!--<div class="padding">
           <i class="icon icon ion-camera float-left" ng-click="pc.uploadOwnImages('camera')"></i>
           <i class="icon ion-images float-right" ng-click="pc.uploadOwnImages('galary')"></i>
@@ -55,7 +55,7 @@
 
       </div>
       <div class="item item-body txt-ctr-align" ng-show="pc.homeImages.uri.length == 0">
-        <img src="img/noimg.jpg">
+        <img src="{{pc.noImg}}">
         <!--<div class="padding">
           <i class="icon icon ion-camera float-left" ng-click="pc.uploadHomeImages('camera')"></i>
           <i class="icon ion-images float-right" ng-click="pc.uploadHomeImages('galary')"></i>

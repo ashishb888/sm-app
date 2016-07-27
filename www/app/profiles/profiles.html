@@ -1,16 +1,21 @@
 <ion-view view-title="Matching profiles">
-    <ion-content>
-        <div class="list card">
-            <div class="item item-avatar" ui-sref="menu.profile">
-                <img src="img/sm-2.png">
-                <h2>Marty McFly</h2>
-                <p>November 05, 1955</p>
-            </div>
-        </div>
-    </ion-content>
-    <div class="bar bar-footer">
+  <ion-nav-buttons side="right">
+    <div class="button button-clear" ng-click="pc.showProfileFModal()">
+      <i class="xlarge ion-search"></i>
+    </div>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="list card">
+      <div class="item item-avatar" ui-sref="menu.profile">
+        <img src="img/sm-2.png">
+        <h2>Marty McFly</h2>
+        <p>November 05, 1955</p>
+      </div>
+    </div>
+  </ion-content>
+  <!--<div class="bar bar-footer">
         <button class="button ">Left</button>
         <div class="title">Title</div>
         <button class="button ">Right</button>
-    </div>
+    </div>-->
 </ion-view>

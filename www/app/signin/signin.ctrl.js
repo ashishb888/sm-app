@@ -43,7 +43,7 @@
     function signin() {
       logger.debug("signin starts");
 
-      $state.go(sc.hfStates.profiles);
+      $state.go(sc.appStates.menu_profiles);
       return;
 
       if (!utilService.isAppOnlineService()) {
@@ -84,7 +84,7 @@
             lsService.set("custId", resp.data.cust_id);
 
             if (lsService.get("isAddressPresent") == "true") {
-              $state.go(sc.hfStates.placeorder);
+              $state.go(sc.appStates.placeorder);
               return;
             } else {
               addressService.getAddress(lsService.get("custId"))
@@ -97,10 +97,10 @@
 
                   if (resp1.data.isAddressPresent == true) {
                     lsService.set("isAddressPresent", true);
-                    $state.go(sc.hfStates.placeorder);
+                    $state.go(sc.appStates.placeorder);
                     return;
                   }
-                  $state.go(sc.hfStates.address);
+                  $state.go(sc.appStates.address);
                 }, function(errResp1) {});
             }
           } catch (exception) {
@@ -109,7 +109,7 @@
         }, function(errResp) {});
         /*.then(function(resp) {
           if (lsService.get("isAddressPresent") == "true") {
-            $state.go(sc.hfStates.placeorder);
+            $state.go(sc.appStates.placeorder);
             return;
           } else {
             addressService.getAddress(lsService.get("custId"))
@@ -122,18 +122,18 @@
 
                 if (resp1.data.isAddressPresent == true) {
                   lsService.set("isAddressPresent", true);
-                  $state.go(sc.hfStates.placeorder);
+                  $state.go(sc.appStates.placeorder);
                   return;
                 }
-                $state.go(sc.hfStates.address);
+                $state.go(sc.appStates.address);
               }, function(errResp1) {});
           }
         });*/
 
       /*if (signinCtrl.isAddressPresent) {
-        $state.go(sc.hfStates.placeorder);
+        $state.go(sc.appStates.placeorder);
       }else{
-        $state.go(sc.hfStates.address);
+        $state.go(sc.appStates.address);
       }*/
 
       logger.debug("signin ends");
@@ -144,10 +144,10 @@
       var isSignedIn = JSON.parse(lsService.get("isSignedIn"));
       if (isSignedIn) {
         if (lsService.get("isAddressPresent") == "true") {
-          $state.go(sc.hfStates.placeorder);
+          $state.go(sc.appStates.placeorder);
           return;
         }
-        $state.go(sc.hfStates.address);
+        $state.go(sc.appStates.address);
       }
     }
 
