@@ -3807,7 +3807,7 @@ a.subdued {
 
 .action-sheet-open {
   pointer-events: none; }
-  .action-sheet-open.modal-open .modal, .action-sheet-open.modal-open .pfilter-modal {
+  .action-sheet-open.modal-open .modal {
     pointer-events: none; }
   .action-sheet-open .action-sheet-backdrop {
     pointer-events: auto; }
@@ -5336,7 +5336,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 .modal-backdrop-bg {
   pointer-events: none; }
 
-.modal, .pfilter-modal {
+.modal {
   display: block;
   position: absolute;
   top: 0;
@@ -5347,32 +5347,30 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
   background-color: #fff; }
 
 @media (min-width: 680px) {
-  .modal, .pfilter-modal {
+  .modal {
     top: 20%;
     right: 20%;
     bottom: 20%;
     left: 20%;
     min-height: 240px;
     width: 60%; }
-  .modal.ng-leave-active, .ng-leave-active.pfilter-modal {
+  .modal.ng-leave-active {
     bottom: 0; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader), .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .bar-header:not(.bar-subheader) {
+  .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) {
     height: 44px; }
-    .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) > *, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .bar-header:not(.bar-subheader) > * {
+    .platform-ios.platform-cordova .modal-wrapper .modal .bar-header:not(.bar-subheader) > * {
       margin-top: 0; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .tabs-top > .tabs, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .tabs-top > .tabs,
-  .platform-ios.platform-cordova .modal-wrapper .modal .tabs.tabs-top,
-  .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .tabs.tabs-top {
+  .platform-ios.platform-cordova .modal-wrapper .modal .tabs-top > .tabs,
+  .platform-ios.platform-cordova .modal-wrapper .modal .tabs.tabs-top {
     top: 44px; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .has-header, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .has-header,
-  .platform-ios.platform-cordova .modal-wrapper .modal .bar-subheader,
-  .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .bar-subheader {
+  .platform-ios.platform-cordova .modal-wrapper .modal .has-header,
+  .platform-ios.platform-cordova .modal-wrapper .modal .bar-subheader {
     top: 44px; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .has-subheader, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .has-subheader {
+  .platform-ios.platform-cordova .modal-wrapper .modal .has-subheader {
     top: 88px; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-tabs-top, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .has-header.has-tabs-top {
+  .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-tabs-top {
     top: 93px; }
-  .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top, .platform-ios.platform-cordova .modal-wrapper .pfilter-modal .has-header.has-subheader.has-tabs-top {
+  .platform-ios.platform-cordova .modal-wrapper .modal .has-header.has-subheader.has-tabs-top {
     top: 137px; }
   .modal-backdrop-bg {
     -webkit-transition: opacity 300ms ease-in-out;
@@ -5384,10 +5382,10 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 
 .modal-open {
   pointer-events: none; }
-  .modal-open .modal, .modal-open .pfilter-modal,
+  .modal-open .modal,
   .modal-open .modal-backdrop {
     pointer-events: auto; }
-  .modal-open.loading-active .modal, .modal-open.loading-active .pfilter-modal,
+  .modal-open.loading-active .modal,
   .modal-open.loading-active .modal-backdrop {
     pointer-events: none; }
 
@@ -5640,7 +5638,7 @@ ion-tabs.tabs-striped.tabs-color-active-dark .tab-item.tab-item-active, ion-tabs
 
 .popup-open {
   pointer-events: none; }
-  .popup-open.modal-open .modal, .popup-open.modal-open .pfilter-modal {
+  .popup-open.modal-open .modal {
     pointer-events: none; }
   .popup-open .popup-backdrop, .popup-open .popup {
     pointer-events: auto; }
@@ -9944,13 +9942,14 @@ p.info {
 .xxsmall {
   font-size: xx-small !important; }
 
-.modal, .pfilter-modal {
+.pfilter-modal {
   top: 2% !important;
   right: 3% !important;
   left: 2% !important;
   width: 96% !important;
   border: 1px solid #D9DCDE;
-  border-radius: 5px !important; }
-
-.pfilter-modal {
+  border-radius: 5px !important;
   min-height: 70% !important; }
+
+.gray-clr {
+  color: gray !important; }
