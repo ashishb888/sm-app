@@ -99,7 +99,8 @@ angular.module('starter').constant('starterConfig', (function() {
   var picType = {
     own: "own",
     home: "home",
-    dp: "dp"
+    dp: "dp",
+    pp: "pp"
   };
   var picProps = {
     quality: 50,
