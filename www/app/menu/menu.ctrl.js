@@ -27,7 +27,7 @@
             logger.debug("Signed out");
             lsService.set("isSignedIn", false);
             lsService.set("isAddressPresent", false);
-            $state.go(sc.hfStates.signin);
+            $state.go(sc.appStates.signin);
           }
         });
       } catch (exception) {
