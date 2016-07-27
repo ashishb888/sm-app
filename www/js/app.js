@@ -259,36 +259,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
         }
       }
     })
-    .state('menu.placeorder', {
-      url: '/placeorder',
-      views: {
-        'menuContent': {
-          templateUrl: 'app/orders/place-order.html',
-          controller: 'OrdersCtrl as ordersCtrl'
-        }
-      }
-    })
-    .state('menu.prevorders', {
-      url: '/prevorders',
-      views: {
-        'menuContent': {
-          templateUrl: 'app/orders/prev-orders.html'
-        }
-      }
-    })
     .state('menu.help', {
       url: '/help',
       views: {
         'menuContent': {
           templateUrl: 'app/help/help.html'
-        }
-      }
-    })
-    .state('menu.signout', {
-      url: '/signout',
-      views: {
-        'menuContent': {
-          templateUrl: 'app/signout/signout.html'
         }
       }
     })
