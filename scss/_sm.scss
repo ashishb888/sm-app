@@ -171,16 +171,16 @@ p.info {
   font-size: xx-small !important;
 }
 
-.modal {
-    top: 2% !important;
-    right: 3% !important;
-    left: 2% !important;
-    width: 96% !important;
-    border: 1px solid #D9DCDE;
-    @include btn-rounded-corner(5px);
+.pfilter-modal {
+  top: 2% !important;
+  right: 3% !important;
+  left: 2% !important;
+  width: 96% !important;
+  border: 1px solid #D9DCDE;
+  @include btn-rounded-corner(5px);
+  min-height: 70% !important;
 }
 
-.pfilter-modal {
-    @extend .modal;
-    min-height: 70% !important;
+.gray-clr {
+  color: gray !important;
 }
