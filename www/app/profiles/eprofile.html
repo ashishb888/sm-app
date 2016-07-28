@@ -26,9 +26,16 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Date of birth</span>
-        <input type="date" name="dob" placeholder="Date of birth" ng-model="pc.pif.dob" ng-required="true" ng-minlength="5" ng-maxlength="20">
+        <input type="date" name="dob" placeholder="Date of birth" ng-model="pc.pif.dob" ng-required="true">
         <div class="app-error" ng-messages="pInfoForm.dob.$error" ng-if="pInfoForm.dob.$dirty">
           <div ng-message="required">Date of birth is required.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Time of birth</span>
+        <input type="time" name="tob" placeholder="Time of birth" ng-model="pc.pif.tob" ng-required="true">
+        <div class="app-error" ng-messages="pInfoForm.tob.$error" ng-if="pInfoForm.tob.$dirty">
+          <div ng-message="required">Time of birth is required.</div>
         </div>
       </label>
       <label class="item item-input item-select">
@@ -119,6 +126,14 @@
         </div>
         <select ng-model="pc.pif.subCaste">
           <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Zodiac
+        </div>
+        <select ng-model="pc.pif.zodiac">
+          <option ng-repeat="z in pc.zodiacArr">{{z}}</option>
         </select>
       </label>
       <div class="padding">
@@ -336,7 +351,7 @@
         <!--<button class="button txt-xx-small-font" ng-click="pc.showPhotoForm()">Photos</button>-->
         <button class="button txt-xx-small-font" ui-sref="menu.images">Photos</button>
         <button class="button txt-xx-small-font" ng-click="pc.showFamilyForm()">Family</button>
-        <button class="button txt-xx-small-font" ng-click="pc.showOccupationForm()">Occupation</button>
+        <button class="button txt-xx-small-font" ng-click="pc.showOccupationForm()">Professional</button>
       </ion-scroll>
     </div>
   </div>

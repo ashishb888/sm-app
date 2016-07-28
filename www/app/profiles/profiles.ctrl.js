@@ -32,6 +32,9 @@
     pc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
     pc.pif.subCaste = pc.subCasteArr[0];
     pc.pif.dob = new Date();
+    pc.pif.tob = new Date();
+    pc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces"];
+    pc.pif.zodiac = pc.zodiacArr[0];
 
     // Form hide/show
     pc.isPInfoForm = true;
@@ -114,6 +117,8 @@
     pc.modalImgsArr = [];
     pc.dataOf = sConfig.dataOf.pinfo;
     pc.noImg = "img/noimg.gif"
+    pc.shortlited = false;
+    pc.interested = false;
 
     // Function section
     var initHeightArr = initHeightArr;
