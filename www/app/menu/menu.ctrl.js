@@ -10,7 +10,7 @@
 
     var mc = this;
     mc.dp = {};
-    mc.dp.uri = "img/no-profile.jpg";
+    mc.dp.uri = "img/no-avatar.png";
     // Functions section
     mc.signout = signout;
 

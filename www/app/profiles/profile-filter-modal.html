@@ -1,6 +1,6 @@
 <ion-modal-view class="pfilter-modal">
   <ion-header-bar class="bar-assertive">
-    <h1 class="title txt-ctr-align">Search profile</h1>
+    <h1 class="title txt-ctr-align">Search profile <i class="icon ion-android-close float-right xlarge" ng-click="pc.hideProfileFModal()"></i></h1>
   </ion-header-bar>
   <ion-content>
     <!--<div class="item row no-padding">
@@ -28,7 +28,7 @@
             <div class="input-label xxsmall">
               Min age
             </div>
-            <select ng-model="pc.ppf.minAge" class="xxsmall">
+            <select ng-model="pc.pff.minAge" class="xxsmall">
               <option ng-repeat="a in pc.ageArr">{{a}}</option>
             </select>
           </label>
@@ -38,7 +38,7 @@
             <div class="input-label xxsmall">
               Max age
             </div>
-            <select ng-model="pc.ppf.maxAge" class="xxsmall">
+            <select ng-model="pc.pff.maxAge" class="xxsmall">
               <option ng-repeat="a in pc.ageArr">{{a}}</option>
             </select>
           </label>
@@ -50,7 +50,7 @@
             <div class="input-label xxsmall">
               Min height
             </div>
-            <select ng-model="pc.ppf.minHeight" class="xxsmall">
+            <select ng-model="pc.pff.minHeight" class="xxsmall">
               <option ng-repeat="h in pc.heightArr">{{h}}</option>
             </select>
           </label>
@@ -60,7 +60,7 @@
             <div class="input-label xxsmall">
               Max height
             </div>
-            <select ng-model="pc.ppf.maxHeight" class="xxsmall">
+            <select ng-model="pc.pff.maxHeight" class="xxsmall">
               <option ng-repeat="h in pc.heightArr">{{h}}</option>
             </select>
           </label>
@@ -71,7 +71,7 @@
         <div class="input-label">
           Complexion
         </div>
-        <select ng-model="pc.ppf.complexion">
+        <select ng-model="pc.pff.complexion">
           <option ng-repeat="c in pc.complexionArr">{{c}}</option>
         </select>
       </label>
@@ -80,7 +80,7 @@
         <div class="input-label">
           Body type
         </div>
-        <select ng-model="pc.ppf.bodyType">
+        <select ng-model="pc.pff.bodyType">
           <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
         </select>
       </label>
@@ -88,7 +88,7 @@
         <div class="input-label">
           Sub-caste
         </div>
-        <select ng-model="pc.ppf.subCaste">
+        <select ng-model="pc.pff.subCaste">
           <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
         </select>
       </label>

@@ -98,8 +98,18 @@
     pc.ppf.bodyType;
     pc.ppf.subCaste;
 
+    // Filter profiles
+    pc.pff = {};
+    pc.pff.minAge;
+    pc.pff.maxAge;
+    pc.pff.minHeight;
+    pc.pff.maxHeight;
+    pc.pff.complexion;
+    pc.pff.bodyType;
+    pc.pff.subCaste;
+
     pc.dp = {};
-    pc.dp.uri = "img/no-profile.jpg";
+    pc.dp.uri = "img/no-avatar.png";
     pc.dp.base64;
     pc.modalImgsArr = [];
     pc.dataOf = sConfig.dataOf.pinfo;
@@ -111,6 +121,7 @@
     var bootstrap = bootstrap;
     var setProfilesP = setProfilesP;
     var setEProfile = setEProfile;
+    var setFProfiles = setFProfiles;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
     pc.showPInfoForm = showPInfoForm;
@@ -134,9 +145,6 @@
 
     pc.ownImages.uri.push('img/sm-1.jpg');
     pc.ownImages.uri.push('img/sm-2.png');
-    pc.ownImages.uri.push('img/a.jpg');
-    pc.ownImages.uri.push('img/c.jpg');
-    pc.ownImages.uri.push('img/b.jpg');
 
     $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
@@ -165,6 +173,7 @@
 
     function showProfileFModal() {
       logger.debug("showProfileFModal function");
+      setFProfiles();
       pc.profileFModal.show();
     }
 
@@ -489,11 +498,37 @@
       }
     }
 
+    function setFProfiles() {
+      try {
+        logger.debug("setFProfiles function");
+
+        if (pc.ageArr.length == 0)
+          initAgeArr();
+
+        if (pc.heightArr.indexOf("Any") == -1) {
+          pc.heightArr.splice(0, 0, "Any");
+          pc.complexionArr.splice(0, 0, "Any");
+          pc.bodyTypeArr.splice(0, 0, "Any");
+          pc.subCasteArr.splice(0, 0, "Any");
+        }
+
+        pc.pff.minAge = pc.ageArr[0];
+        pc.pff.maxAge = pc.ageArr[0];;
+        pc.pff.minHeight = pc.heightArr[0];
+        pc.pff.maxHeight = pc.heightArr[0];
+        pc.pff.complexion = pc.complexionArr[0];
+        pc.pff.bodyType = pc.bodyTypeArr[0];
+        pc.pff.subCaste = pc.subCasteArr[0];
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function initAgeArr() {
       try {
         logger.debug("initAgeArr function");
 
-        pc.ageArr.push("any");
+        pc.ageArr.push("Any");
         for (var i = 18; i <= 40; i++) {
           pc.ageArr.push(i);
         }
@@ -549,10 +584,12 @@
           pc.ageArr.push(i);
         }
 
-        pc.heightArr.splice(0, 0, "Any");
-        pc.complexionArr.splice(0, 0, "Any");
-        pc.bodyTypeArr.splice(0, 0, "Any");
-        pc.subCasteArr.splice(0, 0, "Any");
+        if (pc.heightArr.indexOf("Any") == -1) {
+          pc.heightArr.splice(0, 0, "Any");
+          pc.complexionArr.splice(0, 0, "Any");
+          pc.bodyTypeArr.splice(0, 0, "Any");
+          pc.subCasteArr.splice(0, 0, "Any");
+        }
 
         pc.ppf.minAge = pc.ageArr[0];
         pc.ppf.maxAge = pc.ageArr[0];;
