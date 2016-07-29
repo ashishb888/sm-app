@@ -11,6 +11,6 @@
   ],
   "proxies": [{
     "path": "/api/",
-    "proxyUrl": "http://10.1.1.82:8000"
+    "proxyUrl": "http://localhost:3000"
    }]
 }
