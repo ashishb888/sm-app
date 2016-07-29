@@ -43,8 +43,8 @@
     function signin() {
       logger.debug("signin starts");
 
-      $state.go(sc.appStates.menu_profiles);
-      return;
+      /*$state.go(sc.appStates.menu_profiles);
+      return;*/
 
       if (!utilService.isAppOnlineService()) {
         utilService.appAlert(sc.msgs.noConnMsg);
@@ -81,8 +81,10 @@
               return;
             }
             lsService.set("isSignedIn", true);
-            lsService.set("custId", resp.data.cust_id);
-
+            //lsService.set("custId", resp.data.cust_id);
+            $state.go(sc.appStates.menu_profiles);
+            return;
+            
             if (lsService.get("isAddressPresent") == "true") {
               $state.go(sc.appStates.placeorder);
               return;
