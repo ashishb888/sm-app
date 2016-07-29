@@ -6,7 +6,7 @@ angular.module('starter').constant('starterConfig', (function() {
     config: {
       timeout: 60000,
       headers: {
-        'Content-Type': 'applcation/json'
+        'Content-Type': 'application/json;charset=UTF-8'
       }
     }
   };
