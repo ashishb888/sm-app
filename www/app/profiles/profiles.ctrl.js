@@ -550,7 +550,7 @@
       try {
         logger.debug("initHeightArr function");
 
-        for (var i = 4; i < 10; i++) {
+        for (var i = 4; i < 7; i++) {
           for (var j = 0; j < 12; j++) {
             if (j === 0) {
               pc.heightArr.push(i + " ft ");
