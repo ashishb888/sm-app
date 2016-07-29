@@ -9,7 +9,7 @@
       <form name="signupForm" novalidate>
         <label class="item item-input item-floating-label">
           <span class="input-label">Full name</span>
-          <input type="text" name="fullName" placeholder="Full name" ng-model="signupCtrl.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+          <input type="text" name="fullName" placeholder="Full name" ng-model="sc.sf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
           <div class="app-error" ng-messages="signupForm.fullName.$error" ng-if="signupForm.fullName.$dirty">
             <div ng-message="required">Name is required.</div>
             <div ng-message="minlength">Name must be at least 5 characters long.</div>
@@ -26,7 +26,7 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Mobile number</span>
-          <input type="tel" name="phone" placeholder="Mobile number" ng-model="signupCtrl.sf.phone" ng-required="true" ng-minlength="10" ng-maxlength="10">
+          <input type="tel" name="phone" placeholder="Mobile number" ng-model="sc.sf.phone" ng-required="true" ng-minlength="10" ng-maxlength="10">
           <div class="app-error" ng-messages="signupForm.phone.$error" ng-if="signupForm.phone.$dirty">
             <div ng-message="required">Mobile number is required.</div>
             <div ng-message="tel">Enter a valid mobile number.</div>
@@ -36,14 +36,14 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Email(optional)</span>
-          <input type="email" name="email" placeholder="Email(optional)" ng-model="signupCtrl.sf.email">
+          <input type="email" name="email" placeholder="Email(optional)" ng-model="sc.sf.email">
           <div class="app-error" ng-messages="signupForm.email.$error" ng-if="signupForm.email.$dirty">
             <div ng-message="email">Enter a valid email address.</div>
           </div>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Password</span>
-          <input type="password" name="password" placeholder="Password" ng-model="signupCtrl.sf.password" ng-required="true" ng-minlength="6">
+          <input type="password" name="password" placeholder="Password" ng-model="sc.sf.password" ng-required="true" ng-minlength="6">
           <div class="app-error" ng-messages="signupForm.password.$error" ng-if="signupForm.password.$dirty">
             <div ng-message="required">Password is required.</div>
             <div ng-message="minlength">Password must be at least 6 characters long.</div>
@@ -52,7 +52,7 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Re-type password</span>
-          <input type="password" name="rePassword" placeholder="Re-type password" ng-model="signupCtrl.sf.rePassword" ng-required="true" ng-minlength="6">
+          <input type="password" name="rePassword" placeholder="Re-type password" ng-model="sc.sf.rePassword" ng-required="true" ng-minlength="6">
           <div class="app-error" ng-messages="signupForm.rePassword.$error" ng-if="signupForm.rePassword.$dirty">
             <div ng-message="required">Password is required.</div>
             <div ng-message="minlength">Password must be at least 6 characters long.</div>
@@ -60,7 +60,7 @@
           </div>
         </label>
         <div class="padding">
-          <button class="button button-full button-assertive" ng-disabled="signupForm.$invalid" ng-click="signupCtrl.signup()">
+          <button class="button button-full button-assertive" ng-disabled="signupForm.$invalid" ng-click="sc.signup()">
             Sign up
           </button>
         </div>

@@ -20,7 +20,7 @@
 
     function signup() {
       try {
-        logger.debug("signup starts");
+        logger.debug("signup function");
 
         if (!utilService.isAppOnlineService()) {
             utilService.appAlert(sc.msgs.noConnMsg);
@@ -41,7 +41,7 @@
                     return;
                 }
 
-                utilService.appAlert(resp.messages, sConfig.hfStates.signin, sConfig.msgs.success);
+                utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
             } catch (exception) {
                 logger.error("exception: " + exception);
             }
