@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -127,6 +127,8 @@
     var setProfilesP = setProfilesP;
     var setEProfile = setEProfile;
     var setFProfiles = setFProfiles;
+    var ownBase64 = ownBase64;
+    var homeBase64 = homeBase64;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
     pc.showPInfoForm = showPInfoForm;
@@ -147,6 +149,7 @@
     pc.uploadData = uploadData;
     pc.showProfileFModal = showProfileFModal;
     pc.hideProfileFModal = hideProfileFModal;
+    //pc.updatePInfo = updatePInfo;
 
     pc.ownImages.uri.push('img/sm-1.jpg');
     pc.ownImages.uri.push('img/sm-2.png');
@@ -332,6 +335,7 @@
               for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 pc.ownImages.uri.push(imageData.uri[i]);
               }
+              ownBase64();
             });
             break;
           case sConfig.picType.home:
@@ -341,6 +345,7 @@
               for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 pc.homeImages.uri.push(imageData.uri[i]);
               }
+              homeBase64();
             });
             break;
           case sConfig.picType.dp:
@@ -478,26 +483,98 @@
         logger.debug("uploadData function");
         logger.debug("pc.dataOf: " + pc.dataOf);
 
+        var promise;
+        var req = {
+          data: {}
+        };
+
+        req.data._id = lsService.get("userId");
+
         switch (pc.dataOf) {
           case sConfig.dataOf.pinfo:
-            logger.debug("pif: " + JSON.stringify(pc.pif));
+            //logger.debug("pif: " + JSON.stringify(pc.pif));
+            req.data.pinfo = pc.pif;
+            promise = profileService.updatePInfo(req);
             break;
           case sConfig.dataOf.address:
-            logger.debug("pif: " + JSON.stringify(pc.af));
+            //logger.debug("pif: " + JSON.stringify(pc.af));
+            req.data.location = pc.af;
+            promise = profileService.updateLocation(req);
             break;
           case sConfig.dataOf.pown:
-
             break;
           case sConfig.dataOf.phome:
 
             break;
           case sConfig.dataOf.occupation:
-            logger.debug("pif: " + JSON.stringify(pc.of));
+            //logger.debug("pif: " + JSON.stringify(pc.of));
+            req.data.professional = pc.of;
+            promise = profileService.updateProfessional(req);
             break;
           case sConfig.dataOf.family:
-            logger.debug("pif: " + JSON.stringify(pc.ff));
+            //logger.debug("pif: " + JSON.stringify(pc.ff));
+            req.data.family = pc.ff;
+            promise = profileService.updateFamily(req);
             break;
         }
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function ownBase64(index) {
+      try {
+        logger.debug("ownBase64 function");
+        var len = pc.ownImages.uri.length;
+        if (index == null || index == undefined)
+          index = 0;
+        if (len == index)
+          return;
+
+        utilService.base64(pc.ownImages.uri[index])
+          .then(function(sucResp) {
+            logger.debug("sucResp: " + sucResp);
+            pc.ownImages.base64[index] = sucResp;
+            index++;
+            ownBase64(index);
+          }, function(errResp) {
+            logger.error("errResp: " + JSON.stringify(errResp));
+          });
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function homeBase64() {
+      try {
+        logger.debug("homeBase64 function");
+        var len = pc.homeImages.uri.length;
+        var index = 0;
+
+        if (len == (index + 1))
+          return;
+
+        utilService.base64(pc.homeImages.uri[index])
+          .then(function(sucResp) {
+            logger.debug("sucResp: " + sucResp);
+            pc.homeImages.base64[index] = sucResp;
+          }, function(errResp) {
+            logger.error("errResp: " + JSON.stringify(errResp));
+          });
       } catch (exception) {
         logger.error("exception: " + exception);
       }

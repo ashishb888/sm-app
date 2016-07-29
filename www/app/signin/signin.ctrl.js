@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('SigninCtrl', SigninCtrl);
 
-  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'addressService'];
+  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'addressService', 'hwBackBtnService'];
 
-  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, addressService) {
+  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, addressService, hwBackBtnService) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SigninCtrl start");
@@ -73,7 +73,6 @@
       var promise = signinService.signin(req);
       promise.then(function(sucResp) {
           try {
-            logger.debug("success");
             var resp = sucResp.data;
 
             if (resp.status !== sc.httpStatus.SUCCESS) {
@@ -81,10 +80,10 @@
               return;
             }
             lsService.set("isSignedIn", true);
-            //lsService.set("custId", resp.data.cust_id);
+            lsService.set("userId", resp.data.userId);
             $state.go(sc.appStates.menu_profiles);
             return;
-            
+
             if (lsService.get("isAddressPresent") == "true") {
               $state.go(sc.appStates.placeorder);
               return;
@@ -145,17 +144,16 @@
     function setView() {
       var isSignedIn = JSON.parse(lsService.get("isSignedIn"));
       if (isSignedIn) {
-        if (lsService.get("isAddressPresent") == "true") {
-          $state.go(sc.appStates.placeorder);
-          return;
-        }
-        $state.go(sc.appStates.address);
+        $state.go(sc.appStates.menu_profiles);
       }
     }
 
     /* Executes function according function name */
     function bootstrap() {
       logger.debug("bootstrap() start");
+
+      hwBackBtnService.tapToExit();
+
       switch (functionNm) {
         case "setView":
           setView();

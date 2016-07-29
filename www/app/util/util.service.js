@@ -121,9 +121,12 @@
       });
     }
 
-    function base64(path, fileNm) {
+    function base64(path) {
       try {
-        return $cordovaFile.readAsDataURL(path, fileNm)
+        var pathArr = path.split("/");
+        var fileNm = encodeURI(pathArr.pop());
+
+        return $cordovaFile.readAsDataURL(pathArr.join("/"), fileNm)
           .then(function(fileData) {
             logger.debug("fileData: " + fileData);
             return fileData.split(',').pop();
