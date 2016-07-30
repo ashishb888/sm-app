@@ -1,0 +1,145 @@
+<ion-view view-title="Persional info">
+  <ion-nav-buttons side="right">
+  </ion-nav-buttons>
+  <ion-content class="has-footer">
+    <!-- Update persional information -->
+    <form name="pInfoForm" novalidate>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Full name</span>
+        <input type="text" name="fullName" placeholder="Full name" ng-model="pic.pif.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+        <div class="app-error" ng-messages="pInfoForm.fullName.$error" ng-if="pInfoForm.fullName.$dirty">
+          <div ng-message="required">Name is required.</div>
+          <div ng-message="minlength">Name must be at least 5 characters long.</div>
+          <div ng-message="maxlength">Name can be at most 20 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Date of birth</span>
+        <input type="date" name="dob" placeholder="Date of birth" ng-model="pic.pif.dob" ng-required="true">
+        <div class="app-error" ng-messages="pInfoForm.dob.$error" ng-if="pInfoForm.dob.$dirty">
+          <div ng-message="required">Date of birth is required.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Time of birth</span>
+        <input type="time" name="tob" placeholder="Time of birth" ng-model="pic.pif.tob" ng-required="true">
+        <div class="app-error" ng-messages="pInfoForm.tob.$error" ng-if="pInfoForm.tob.$dirty">
+          <div ng-message="required">Time of birth is required.</div>
+        </div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Gender
+        </div>
+        <select ng-model="pic.pif.gender">
+          <option ng-repeat="g in pic.genderArr">{{g}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Weight</span>
+        <input type="number" name="weight" placeholder="Weight" ng-model="pic.pif.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
+        <div class="app-error" ng-messages="pInfoForm.weight.$error" ng-if="pInfoForm.weight.$dirty">
+          <div ng-message="required">Weight is required.</div>
+          <div ng-message="minlength">Weight must be at least 2 digits long.</div>
+          <div ng-message="maxlength">Weight can be at most 3 digits long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Height
+        </div>
+        <select ng-model="pic.pif.height">
+          <option ng-repeat="h in pic.heightArr">{{h}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Complexion
+        </div>
+        <select ng-model="pic.pif.complexion">
+          <option ng-repeat="c in pic.complexionArr">{{c}}</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Body type
+        </div>
+        <select ng-model="pic.pif.bodyType">
+          <option ng-repeat="bt in pic.bodyTypeArr">{{bt}}</option>
+        </select>
+      </label>
+      <!--<label class="item item-input item-select">
+            <div class="input-label">
+              Martital status
+            </div>
+            <select ng-model="pic.pif.martitalStatus">
+              <option ng-repeat="mt in pic.martitalStatusArr">{{mt}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Physical status
+            </div>
+            <select ng-model="pic.pif.physicalStatus">
+              <option ng-repeat="pt in pic.physicalStatusArr">{{pt}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Eating habits
+            </div>
+            <select ng-model="pic.pif.eatingHabit">
+              <option ng-repeat="eh in pic.eatingHabitArr">{{eh}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Drinking habits
+            </div>
+            <select ng-model="pic.pif.drinkingHabit">
+              <option ng-repeat="dh in pic.drinkingHabitArr">{{dh}}</option>
+            </select>
+          </label>
+          <label class="item item-input item-select">
+            <div class="input-label">
+              Smoking habits
+            </div>
+            <select ng-model="pic.pif.smokingHabit">
+              <option ng-repeat="sh in pic.smokingHabitArr">{{sh}}</option>
+            </select>
+          </label>-->
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Sub-caste
+        </div>
+        <select ng-model="pic.pif.subCaste">
+          <option ng-repeat="sc in pic.subCasteArr">{{sc}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Zodiac
+        </div>
+        <select ng-model="pic.pif.zodiac">
+          <option ng-repeat="z in pic.zodiacArr">{{z}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="pic.postPInfo()">
+          Update profile
+        </button>
+      </div>
+    </form>
+  </ion-content>
+  <div class="bar bar-footer">
+    <div class="button-bar txt-ctr-align">
+      <ion-scroll direction="x" class="w100">
+        <button class="button txt-xx-small-font" ui-sref="menu.location">Location</button>
+        <button class="button txt-xx-small-font" ui-sref="menu.images">Photos</button>
+        <button class="button txt-xx-small-font" ui-sref="menu.family">Family</button>
+        <button class="button txt-xx-small-font" ui-sref="menu.profession">Professional</button>
+      </ion-scroll>
+    </div>
+  </div>
+</ion-view>
