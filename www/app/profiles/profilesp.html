@@ -7,8 +7,8 @@
             <div class="input-label xxsmall">
               Min age
             </div>
-            <select ng-model="pc.ppf.minAge" class="xxsmall">
-              <option ng-repeat="a in pc.ageArr">{{a}}</option>
+            <select ng-model="ppc.ppf.minAge" class="xxsmall">
+              <option ng-repeat="a in ppc.ageArr">{{a}}</option>
             </select>
           </label>
         </div>
@@ -17,8 +17,8 @@
             <div class="input-label xxsmall">
               Max age
             </div>
-            <select ng-model="pc.ppf.maxAge" class="xxsmall">
-              <option ng-repeat="a in pc.ageArr">{{a}}</option>
+            <select ng-model="ppc.ppf.maxAge" class="xxsmall">
+              <option ng-repeat="a in ppc.ageArr">{{a}}</option>
             </select>
           </label>
         </div>
@@ -29,8 +29,8 @@
             <div class="input-label xxsmall">
               Min height
             </div>
-            <select ng-model="pc.ppf.minHeight" class="xxsmall">
-              <option ng-repeat="h in pc.heightArr">{{h}}</option>
+            <select ng-model="ppc.ppf.minHeight" class="xxsmall">
+              <option ng-repeat="h in ppc.heightArr">{{h}}</option>
             </select>
           </label>
         </div>
@@ -39,8 +39,8 @@
             <div class="input-label xxsmall">
               Max height
             </div>
-            <select ng-model="pc.ppf.maxHeight" class="xxsmall">
-              <option ng-repeat="h in pc.heightArr">{{h}}</option>
+            <select ng-model="ppc.ppf.maxHeight" class="xxsmall">
+              <option ng-repeat="h in ppc.heightArr">{{h}}</option>
             </select>
           </label>
         </div>
@@ -50,8 +50,8 @@
         <div class="input-label">
           Complexion
         </div>
-        <select ng-model="pc.ppf.complexion">
-          <option ng-repeat="c in pc.complexionArr">{{c}}</option>
+        <select ng-model="ppc.ppf.complexion">
+          <option ng-repeat="c in ppc.complexionArr">{{c}}</option>
         </select>
       </label>
 
@@ -59,20 +59,20 @@
         <div class="input-label">
           Body type
         </div>
-        <select ng-model="pc.ppf.bodyType">
-          <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
+        <select ng-model="ppc.ppf.bodyType">
+          <option ng-repeat="bt in ppc.bodyTypeArr">{{bt}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
           Sub-caste
         </div>
-        <select ng-model="pc.ppf.subCaste">
-          <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+        <select ng-model="ppc.ppf.subCaste">
+          <option ng-repeat="sc in ppc.subCasteArr">{{sc}}</option>
         </select>
       </label>
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="profilesPForm.$invalid" ng-click="pc.signup()">
+        <button class="button button-full button-assertive" ng-disabled="profilesPForm.$invalid" ng-click="ppc.signup()">
           Update preference
         </button>
       </div>

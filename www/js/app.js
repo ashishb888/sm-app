@@ -12,6 +12,7 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
+  /*local: "/api",*/
   local: "http://10.1.1.86:3000",
   tcUrl: "",
   prodStaticResUrl: "",
@@ -54,7 +55,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
   /* Shows ionicLoading */
   $rootScope.$on('loadingShow', function() {
     $ionicLoading.show({
-      template: 'Loading...',
+      template: '<ion-spinner icon="lines"></ion-spinner>',
     });
   });
 
@@ -307,7 +308,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       views: {
         'menuContent': {
           templateUrl: 'app/profiles/profile.html',
-          controller: 'ProfilesCtrl as pc'
+          controller: 'ProfileCtrl as pc'
         }
       }
     })
@@ -352,8 +353,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       url: '/emyprofile',
       views: {
         'menuContent': {
-          templateUrl: 'app/profiles/emy-profile.html',
-          controller: 'ProfilesCtrl as pc'
+          templateUrl: 'app/emyprofile/emyprofile.html',
+          controller: 'EMyProfileCtrl as emp'
         }
       }
     })
@@ -363,7 +364,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       views: {
         'menuContent': {
           templateUrl: 'app/profiles/profilesp.html',
-          controller: 'ProfilesCtrl as pc'
+          controller: 'ProfilesPCtrl as ppc'
         }
       }
     })

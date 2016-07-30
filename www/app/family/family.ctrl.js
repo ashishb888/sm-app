@@ -21,12 +21,34 @@
 
     // Function section
     var bootstrap = bootstrap;
-    fc.postFamily = postFamily;
+    fc.updateFamily = updateFamily;
 
-    function postFamily() {
+    function updateFamily() {
       try {
-        logger.debug("postFamily function")
+        logger.debug("updateFamily function")
 
+        var req = {
+          data:{
+            _id: lsService.get("userId")
+          }
+        };
+
+        req.data.family = fc.ff;
+        var promise = profileService.updateFamily(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

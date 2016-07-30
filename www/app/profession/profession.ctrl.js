@@ -11,23 +11,44 @@
     var pfc = this;
 
     // Professional form
-    pfc.of = {};
+    pfc.pf = {};
     pfc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
-    pfc.of.hEducation = pfc.hEducationArr[0];
-    pfc.of.oHEducation;
+    pfc.pf.hEducation = pfc.hEducationArr[0];
+    pfc.pf.oHEducation;
     pfc.occupationArr = ["Job", "Farm", "Business"];
-    pfc.of.occupation = pfc.occupationArr[0];
+    pfc.pf.occupation = pfc.occupationArr[0];
 
 
     // Function section
     var bootstrap = bootstrap;
-    pfc.postProfession = postProfession;
+    pfc.updateProfession = updateProfession;
 
-    function postProfession() {
+    function updateProfession() {
       try {
-        logger.debug("postProfession function");
+        logger.debug("updateProfession function");
 
+        var req = {
+          data:{
+            _id: lsService.get("userId")
+          }
+        };
 
+        req.data.profession = pfc.pf;
+        var promise = profileService.updateProfession(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

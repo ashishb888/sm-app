@@ -11,23 +11,44 @@
     var lc = this;
 
     // Address form
-    lc.af = {};
+    lc.lf = {};
     lc.districtArr = ["A"];
-    lc.af.district = lc.districtArr[0];
+    lc.lf.district = lc.districtArr[0];
     lc.taluqaArr = ["A", "B"];
-    lc.af.taluqa = lc.taluqaArr[0];
+    lc.lf.taluqa = lc.taluqaArr[0];
     lc.townArr = ["A", "B", "C"];
-    lc.af.town = lc.townArr[0];
+    lc.lf.town = lc.townArr[0];
 
     // Function section
     var bootstrap = bootstrap;
-    lc.postLocation = postLocation;
+    lc.updateLocation = updateLocation;
 
-    function postLocation() {
+    function updateLocation() {
       try {
-        logger.debug("postLocation function");
+        logger.debug("updateLocation function");
 
+        var req = {
+          data:{
+            _id: lsService.get("userId")
+          }
+        };
 
+        req.data.location = lc.lf;
+        var promise = profileService.updateLocation(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

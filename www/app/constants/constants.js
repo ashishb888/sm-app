@@ -4,7 +4,7 @@ angular.module('starter').constant('starterConfig', (function() {
   var httpReq = {
     timeout: 60000,
     config: {
-      timeout: 60000,
+      timeout: 60000 * 5,
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
       }
@@ -36,7 +36,8 @@ angular.module('starter').constant('starterConfig', (function() {
     menu_eprofile: "menu.eprofile",
     menu_emyprofile: "menu.emyprofile",
     menu_profilesp: "menu.profilesp",
-    menu_slprofiles: "menu.slprofiles"
+    menu_slprofiles: "menu.slprofiles",
+    menu_pinfo: "menu.pinfo"
   };
   var screenTitles = {
     signin: "Sign in",
@@ -104,7 +105,7 @@ angular.module('starter').constant('starterConfig', (function() {
     pp: "pp"
   };
   var picProps = {
-    quality: 50,
+    quality: 10,
     width: 400,
     height: 400
   };
@@ -115,6 +116,9 @@ angular.module('starter').constant('starterConfig', (function() {
     phome: "phome",
     family: "family",
     occupation: "occupation"
+  };
+  var toastMsgs = {
+    appExit: "Press back again to exit."
   };
 
   switch (env) {
@@ -148,7 +152,8 @@ angular.module('starter').constant('starterConfig', (function() {
     picSrc: picSrc,
     picType: picType,
     picProps: picProps,
-    dataOf: dataOf
+    dataOf: dataOf,
+    toastMsgs: toastMsgs
   };
 
 })());

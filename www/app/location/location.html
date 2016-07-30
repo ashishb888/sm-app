@@ -2,13 +2,13 @@
   <ion-nav-buttons side="right">
   </ion-nav-buttons>
   <ion-content>
-    <!-- Address upload form -->
-    <form name="addressForm" novalidate>
+    <!-- Location upload form -->
+    <form name="locationForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
           District
         </div>
-        <select ng-model="lc.af.district">
+        <select ng-model="lc.lf.district">
           <option ng-repeat="d in lc.districtArr">{{d}}</option>
         </select>
       </label>
@@ -16,7 +16,7 @@
         <div class="input-label">
           Taluqa
         </div>
-        <select ng-model="lc.af.taluqa">
+        <select ng-model="lc.lf.taluqa">
           <option ng-repeat="t in lc.taluqaArr">{{t}}</option>
         </select>
       </label>
@@ -24,12 +24,12 @@
         <div class="input-label">
           Town
         </div>
-        <select ng-model="lc.af.town">
+        <select ng-model="lc.lf.town">
           <option ng-repeat="t in lc.townArr">{{t}}</option>
         </select>
       </label>
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="showAddressForm.$invalid" ng-click="lc.uploadData()">
+        <button class="button button-full button-assertive" ng-disabled="locationForm.$invalid" ng-click="lc.updateLocation()">
           Update address
         </button>
       </div>

@@ -184,3 +184,14 @@ p.info {
 .gray-clr {
   color: gray !important;
 }
+
+.spinner svg {
+  /*width: 28px;
+  height: 28px;*/
+  stroke: #FFF;
+  fill: #FFF;
+}
+
+.loading {
+  @extend .transparent;
+}

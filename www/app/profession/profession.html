@@ -2,20 +2,20 @@
   <ion-nav-buttons side="right">
   </ion-nav-buttons>
   <ion-content>
-    <!-- Occupation form -->
-    <form name="occupationForm" novalidate>
+    <!-- Profession form -->
+    <form name="professionForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
           Higher education
         </div>
-        <select ng-model="pfc.of.hEducation">
+        <select ng-model="pfc.pf.hEducation">
           <option ng-repeat="e in pfc.hEducationArr">{{e}}</option>
         </select>
       </label>
-      <label class="item item-input item-floating-label" ng-show="pfc.of.hEducation == 'Other'">
+      <label class="item item-input item-floating-label" ng-show="pfc.pf.hEducation == 'Other'">
         <span class="input-label">Other higher education</span>
-        <input type="text" name="oHEducation" placeholder="Other higher education" ng-model="pfc.of.oHEducation" ng-required="pfc.of.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
-        <div class="app-error" ng-messages="occupationForm.oHEducation.$error" ng-if="occupationForm.oHEducation.$dirty">
+        <input type="text" name="oHEducation" placeholder="Other higher education" ng-model="pfc.pf.oHEducation" ng-required="pfc.pf.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
+        <div class="app-error" ng-messages="professionForm.oHEducation.$error" ng-if="professionForm.oHEducation.$dirty">
           <div ng-message="required">Other higher education is required.</div>
           <div ng-message="minlength">Other higher education must be at least 2 characters long.</div>
           <div ng-message="maxlength">Other higher education can be at most 20 characters long.</div>
@@ -23,8 +23,8 @@
       </label>
       <!--<label class="item item-input item-floating-label">
             <span class="input-label">Higher education</span>
-            <input type="text" name="hEducation" placeholder="Higher education" ng-model="pfc.of.hEducation" ng-required="true" ng-minlength="2" ng-maxlength="20">
-            <div class="app-error" ng-messages="occupationForm.hEducation.$error" ng-if="occupationForm.hEducation.$dirty">
+            <input type="text" name="hEducation" placeholder="Higher education" ng-model="pfc.pf.hEducation" ng-required="true" ng-minlength="2" ng-maxlength="20">
+            <div class="app-error" ng-messages="professionForm.hEducation.$error" ng-if="professionForm.hEducation.$dirty">
               <div ng-message="required">Higher education is required.</div>
               <div ng-message="minlength">Higher education must be at least 2 characters long.</div>
               <div ng-message="maxlength">Higher education can be at most 20 characters long.</div>
@@ -34,23 +34,23 @@
         <div class="input-label">
           Occupation
         </div>
-        <select ng-model="pfc.of.occupation">
+        <select ng-model="pfc.pf.occupation">
           <option ng-repeat="o in pfc.occupationArr">{{o}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">{{pfc.of.occupation}} description</span>
-        <input type="text" name="occupationDesc" placeholder="{{pfc.of.occupation}} description" ng-model="pfc.of.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
-        <div class="app-error" ng-messages="occupationForm.occupationDesc.$error" ng-if="occupationForm.occupationDesc.$dirty">
-          <div ng-message="required">{{pfc.of.occupation}} description is required.</div>
-          <div ng-message="minlength">{{pfc.of.occupation}} description must be at least 2 characters long.</div>
-          <div ng-message="maxlength">{{pfc.of.occupation}} description can be at most 100 characters long.</div>
+        <span class="input-label">{{pfc.pf.occupation}} description</span>
+        <input type="text" name="occupationDesc" placeholder="{{pfc.pf.occupation}} description" ng-model="pfc.pf.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
+        <div class="app-error" ng-messages="professionForm.occupationDesc.$error" ng-if="professionForm.occupationDesc.$dirty">
+          <div ng-message="required">{{pfc.pf.occupation}} description is required.</div>
+          <div ng-message="minlength">{{pfc.pf.occupation}} description must be at least 2 characters long.</div>
+          <div ng-message="maxlength">{{pfc.pf.occupation}} description can be at most 100 characters long.</div>
         </div>
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Annual income</span>
-        <input type="number" name="aIncome" placeholder="Annual income" ng-model="pfc.of.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
-        <div class="app-error" ng-messages="occupationForm.aIncome.$error" ng-if="occupationForm.aIncome.$dirty">
+        <input type="number" name="aIncome" placeholder="Annual income" ng-model="pfc.pf.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
+        <div class="app-error" ng-messages="professionForm.aIncome.$error" ng-if="professionForm.aIncome.$dirty">
           <div ng-message="required">Annual income is required.</div>
           <div ng-message="minlength">Annual income must be at least 2 characters long.</div>
           <div ng-message="maxlength">Annual income can be at most 20 characters long.</div>
@@ -58,7 +58,7 @@
       </label>
 
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="occupationForm.$invalid" ng-click="pfc.postProfession()">
+        <button class="button button-full button-assertive" ng-disabled="professionForm.$invalid" ng-click="pfc.updateProfession()">
           Update
         </button>
       </div>

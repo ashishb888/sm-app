@@ -1,8 +1,8 @@
 (function() {
   angular.module('starter').service('hwBackBtnService', hwBackBtnService);
-  hwBackBtnService.$inject = ['$ionicPlatform', 'utilService', '$cordovaToast', '$timeout'];
+  hwBackBtnService.$inject = ['$ionicPlatform', 'utilService', '$cordovaToast', '$timeout', '$ionicHistory', 'starterConfig', '$state'];
 
-  function hwBackBtnService($ionicPlatform, utilService, $cordovaToast, $timeout) {
+  function hwBackBtnService($ionicPlatform, utilService, $cordovaToast, $timeout, $ionicHistory, sConfig, $state) {
     var logger = utilService.getLogger();
     this.HWBackbtnDeregister = undefined;
 
@@ -28,20 +28,28 @@
       var backBtnCnt = 0;
 
       $ionicPlatform.registerBackButtonAction(function(e) {
-        // Add some states in if statement
-        if (backBtnCnt == 0) {
-          backBtnCnt++;
-          $cordovaToast.showShortBottom("Press back again to exit app").then(function(success) {
-            logger.debug("cordovaToast: " + success);
-          }, function(error) {
-            logger.error("cordovaToast: " + error);
-          });
+        var currentState = $ionicHistory.currentStateName();
 
-          $timeout(function() {
-            backBtnCnt = 0;
-          }, 2000);
-        }else {
-          navigator.app.exitApp();
+        if (currentState == sConfig.appStates.signin || currentState == sConfig.appStates.menu_profiles) {
+          if (backBtnCnt == 0) {
+            backBtnCnt++;
+            $cordovaToast.showShortBottom(sConfig.toastMsgs.appExit).then(function(success) {
+              logger.debug("cordovaToast: " + success);
+            }, function(error) {
+              logger.error("cordovaToast: " + error);
+            });
+
+            $timeout(function() {
+              backBtnCnt = 0;
+            }, 2000);
+          } else {
+            navigator.app.exitApp();
+          }
+        } else {
+          /*if (currentState == sConfig.appStates.menu_help || currentState == sConfig.appStates.menu_tc || currentState == sConfig.appStates.menu_settings || currentState == sConfig.appStates.menu_slprofiles || currentState == sConfig.appStates.menu_profilesp || currentState == sConfig.appStates.menu_emyprofile || currentState == sConfig.appStates.menu_pinfo)
+            $state.go(sConfig.appStates.menu_profiles);*/
+
+          $ionicHistory.goBack();
         }
       }, 100);
     }

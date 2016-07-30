@@ -40,12 +40,33 @@
     // Function section
     var initHeightArr = initHeightArr;
     var bootstrap = bootstrap;
-    pic.postPInfo = postPInfo;
+    pic.updatePInfo = updatePInfo;
 
-    function postPInfo() {
+    function updatePInfo() {
       try {
-        logger.debug("postPInfo function");
+        logger.debug("updatePInfo function");
+        var req = {
+          data:{
+            _id: lsService.get("userId")
+          }
+        };
 
+        req.data.pinfo = pic.pif;
+        var promise = profileService.updatePInfo(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

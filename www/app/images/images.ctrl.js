@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ImagesCtrl', ImagesCtrl);
 
-  ImagesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  ImagesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'imagesService'];
 
-  function ImagesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function ImagesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, imagesService) {
     var logger = utilService.getLogger();
     logger.debug("ImagesCtrl start");
 
@@ -17,8 +17,8 @@
     // Photo form
     ic.pf = {};
     ic.imgs = {};
-    ic.imgs.imgURIs = [];
-    ic.imgs.imgBase64s = [];
+    /*ic.imgs.imgURIs = [];
+    ic.imgs.imgBase64s = [];*/
     ic.ownImages = {};
     ic.ownImages.uri = [];
     ic.ownImages.base64 = [];
@@ -30,25 +30,28 @@
     ic.homeImagesLimit = 5;
     ic.ownImagesLimit = 5;
     ic.disableImgsUploadBtn = true;
-    //ic.ownImages.uri.push("img/sm-1.jpg");
-
 
     // Function section
-    var getImages = getImages;
     var bootstrap = bootstrap;
+    var getImages = getImages;
     var ownBase64 = ownBase64;
     var homeBase64 = homeBase64;
     ic.showImagesModal = showImagesModal;
     ic.hideImagesModal = hideImagesModal;
     ic.showOwnPhotoForm = showOwnPhotoForm;
     ic.showHomePhotoForm = showHomePhotoForm;
+    ic.updateOwnImgs = updateOwnImgs;
+    ic.getOwnImgs = getOwnImgs;
+
+    // These functions should be common place.
     ic.setModalImgs = setModalImgs;
     ic.largeImg = largeImg;
-    ic.removeImg = removeImg;
     ic.addImgs = addImgs;
 
-    ic.ownImages.uri.push('img/sm-1.jpg');
-    ic.ownImages.uri.push('img/sm-2.png');
+    ic.removeImg = removeImg;
+
+    /*ic.ownImages.uri.push('img/sm-1.jpg');
+    ic.ownImages.uri.push('img/sm-2.png');*/
 
     $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
       scope: $scope,
@@ -79,6 +82,64 @@
     $scope.$on('modal.shown', function() {
       logger.debug('Modal is shown!');
     });
+
+    function updateOwnImgs() {
+      try {
+        logger.debug("updateOwnImgs function");
+
+        var req = {
+          data:{
+            _id: lsService.get("userId"),
+            type: "own"
+          }
+        };
+
+        req.data.ownImgs = ic.ownImages.base64;
+        var promise = imagesService.updateImgs(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getOwnImgs() {
+      try {
+        logger.debug("getOwnImgs function");
+
+        var promise = imagesService.getImgs(lsService.get("userId"));
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            for (var i = 0; i < resp.data.base64[0].ownImgs.length; i++) {
+              ic.ownImages.base64[i] = resp.data.base64[0].ownImgs[i];
+            }
+            // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function showOwnPhotoForm() {
       try {
@@ -165,10 +226,10 @@
         logger.debug("getImages function");
 
         switch (srcType) {
-          case sConfig.icSrc.camera:
+          case sConfig.picSrc.camera:
             return cameraService.clickImage(srcType);
             break;
-          case sConfig.icSrc.galary:
+          case sConfig.picSrc.galary:
             return cameraService.selectImage(nImgs);
             break;
           default:
@@ -270,7 +331,13 @@
       try {
         logger.debug("bootstrap function");
 
-        // Add switch here
+        switch ($stateParams.functionNm) {
+          case "getOwnImgs":
+            ic.getOwnImgs();
+            break;
+          default:
+            ic.getOwnImgs();
+        }
       } catch (exception) {
         logger.error("exception: " + exception);
       }

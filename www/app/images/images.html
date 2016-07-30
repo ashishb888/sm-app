@@ -1,9 +1,9 @@
 <ion-view view-title="Images">
   <ion-nav-buttons side="right">
-    <button class="button button-dark" ng-click="ic.uploadData()" ng-disabled="ic.homeImages.uri.length == 0" ng-show="ic.isHomePhotoForm">
+    <button class="button button-dark" ng-click="ic.updateOwnImgs()" ng-disabled="ic.homeImages.uri.length == 0" ng-show="ic.isHomePhotoForm">
       Upload
     </button>
-    <button class="button button-dark" ng-click="ic.uploadData()" ng-disabled="ic.ownImages.uri.length == 0" ng-show="ic.isOwnPhotoForm">
+    <button class="button button-dark" ng-click="ic.updateOwnImgs()" ng-disabled="ic.ownImages.uri.length == 0" ng-show="ic.isOwnPhotoForm">
       Upload
     </button>
     <!--<div class="button button-clear" ng-click="ic.uploadData()">
@@ -19,6 +19,7 @@
       <div class="padding">
 
       </div>
+      Local
       <div class="item item-body txt-ctr-align" ng-show="ic.ownImages.uri.length == 0">
         <img src="{{ic.noImg}}">
         <!--<div class="padding">
@@ -26,6 +27,14 @@
           <i class="icon ion-images float-right" ng-click="ic.uploadOwnImages('galary')"></i>
         </div>-->
       </div>
+      Server
+      <div class="item item-body" ng-repeat="img in ic.ownImages.base64">
+        <img class="full-image" ng-src="data:image/jpg;base64,{{img}}" ng-click="ic.largeImg('own', img)">
+        <div class="padding">
+          <i class="icon ion-trash-b float-right xlarge" ng-click="ic.removeImg('own', img)"></i>
+        </div>
+      </div>
+      Local
       <div class="item item-body" ng-repeat="img in ic.ownImages.uri">
         <img class="full-image" src="{{img}}" ng-click="ic.largeImg('own', img)">
         <div class="padding">

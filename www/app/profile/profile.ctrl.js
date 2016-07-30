@@ -24,7 +24,7 @@
     pc.setModalImgs = setModalImgs;
     pc.largeImg = largeImg;
 
-    $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
+    $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {

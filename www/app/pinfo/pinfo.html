@@ -126,7 +126,7 @@
         </select>
       </label>
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="pic.postPInfo()">
+        <button class="button button-full button-assertive" ng-disabled="pInfoForm.$invalid" ng-click="pic.updatePInfo()">
           Update profile
         </button>
       </div>
@@ -135,6 +135,7 @@
   <div class="bar bar-footer">
     <div class="button-bar txt-ctr-align">
       <ion-scroll direction="x" class="w100">
+        <!--<button class="button txt-xx-small-font" ui-sref="menu.pinfo">Personal</button>-->
         <button class="button txt-xx-small-font" ui-sref="menu.location">Location</button>
         <button class="button txt-xx-small-font" ui-sref="menu.images">Photos</button>
         <button class="button txt-xx-small-font" ui-sref="menu.family">Family</button>
