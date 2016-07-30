@@ -284,6 +284,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
         }
       }
     })
+    .state('menu.profilesv1', {
+      url: '/profilesv1',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/profiles-v1.html',
+          controller: 'ProfilesCtrlv1 as pc'
+        }
+      }
+    })
     .state('menu.settings', {
       url: '/settings',
       views: {
@@ -302,12 +311,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
         }
       }
     })
+    .state('menu.profile1', {
+      url: '/profile1',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profile/profile.html',
+          controller: 'ProfileCtrl as pc'
+        }
+      }
+    })
     .state('menu.images', {
       url: '/images',
       views: {
         'menuContent': {
-          templateUrl: 'app/profiles/images.html',
-          controller: 'ProfilesCtrl as pc'
+          templateUrl: 'app/images/images.html',
+          controller: 'ImagesCtrl as ic'
         }
       }
     })
@@ -346,6 +364,51 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
         'menuContent': {
           templateUrl: 'app/profiles/profilesp.html',
           controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
+    .state('menu.family', {
+      url: '/family',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/family/family.html',
+          controller: 'FamilyCtrl as fc'
+        }
+      }
+    })
+    .state('menu.location', {
+      url: '/location',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/location/location.html',
+          controller: 'LocationCtrl as lc'
+        }
+      }
+    })
+    .state('menu.pinfo', {
+      url: '/pinfo',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/pinfo/pinfo.html',
+          controller: 'PInfoCtrl as pic'
+        }
+      }
+    })
+    .state('menu.profession', {
+      url: '/profession',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profession/profession.html',
+          controller: 'ProfessionCtrl as pfc'
+        }
+      }
+    })
+    .state('menu.slprofiles', {
+      url: '/slprofiles',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/profiles/shortlisted-profiles.html',
+          controller: 'SProfilesCtrl as spc'
         }
       }
     });

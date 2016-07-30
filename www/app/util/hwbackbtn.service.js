@@ -28,6 +28,7 @@
       var backBtnCnt = 0;
 
       $ionicPlatform.registerBackButtonAction(function(e) {
+        // Add some states in if statement
         if (backBtnCnt == 0) {
           backBtnCnt++;
           $cordovaToast.showShortBottom("Press back again to exit app").then(function(success) {

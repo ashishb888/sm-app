@@ -128,7 +128,7 @@
 
         return $cordovaFile.readAsDataURL(pathArr.join("/"), fileNm)
           .then(function(fileData) {
-            logger.debug("fileData: " + fileData);
+            //logger.debug("fileData: " + fileData);
             return fileData.split(',').pop();
           }, function(error) {
             logger.error("error: " + JSON.stringify(error));

@@ -1,0 +1,65 @@
+<ion-view view-title="Profile">
+  <ion-content class="">
+    <div class="card">
+      <div class="item item-body">
+        <img class="full-image" src="img/sm-2.png" ng-click="pc.largeImg('pp')">
+        <h2>Marty McFly</h2>
+        <p>24 Yrs, 5'6", Sangli.</p>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Basic details
+        </div>
+        <div class="item item-text-wrap">
+          This is a basic Card with some text.
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Religious information
+        </div>
+        <div class="item item-text-wrap">
+          This is a basic Card with some text.
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Professional information
+        </div>
+        <div class="item item-text-wrap">
+          This is a basic Card with some text.
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Location
+        </div>
+        <div class="item item-text-wrap">
+          This is a basic Card with some text.
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Family details
+        </div>
+        <div class="item item-text-wrap">
+          This is a basic Card with some text.
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <div class="bar bar-footer item-input-inset">
+    <!--<button class="button ">Left</button>
+        <div class="title">Title</div>
+        <button class="button ">Right</button>-->
+    <!--<label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search by ID">
+    </label>
+    <button class="button">
+      Search
+    </button>-->
+    <button ng-click="pc.shortlited = !pc.shortlited" class="button icon-right" ng-class="{ 'ion-android-star': pc.shortlited, 'ion-android-star-outline': !pc.shortlited }">Shortlist</button>
+    <button ng-click="pc.interested = !pc.interested" class="button icon-right" ng-class="{ 'ion-ios-heart': pc.interested, 'ion-ios-heart-outline': !pc.interested }">Interest</button>
+  </div>
+</ion-view>

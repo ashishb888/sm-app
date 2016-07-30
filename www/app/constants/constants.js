@@ -35,7 +35,8 @@ angular.module('starter').constant('starterConfig', (function() {
     menu_pprofiles: "menu.pprofiles",
     menu_eprofile: "menu.eprofile",
     menu_emyprofile: "menu.emyprofile",
-    menu_profilesp: "menu.profilesp"
+    menu_profilesp: "menu.profilesp",
+    menu_slprofiles: "menu.slprofiles"
   };
   var screenTitles = {
     signin: "Sign in",

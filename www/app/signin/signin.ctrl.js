@@ -144,7 +144,8 @@
     function setView() {
       var isSignedIn = JSON.parse(lsService.get("isSignedIn"));
       if (isSignedIn) {
-        $state.go(sc.appStates.menu_profiles);
+        //$state.go(sc.appStates.menu_profiles);
+        $state.go("menu.profilesv1");
       }
     }
 

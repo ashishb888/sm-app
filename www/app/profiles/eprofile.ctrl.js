@@ -1,124 +1,124 @@
 (function() {
-  angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
+  angular.module('starter').controller('EProfileCtrl', EProfileCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  EProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function EProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
     var logger = utilService.getLogger();
-    logger.debug("ProfilesCtrl start");
+    logger.debug("EProfileCtrl start");
 
     // Variables section
-    var pc = this;
+    var epc = this;
     // Personal info form
-    pc.pif = {};
-    pc.genderArr = ["Male", "Female"];
-    pc.pif.gender = pc.genderArr[0];
-    pc.heightArr = [];
-    pc.pif.height;
-    pc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
-    pc.pif.bodyType = pc.bodyTypeArr[0];
-    pc.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
-    pc.pif.martitalStatus = pc.martitalStatusArr[0];
-    pc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown", "Dark"];
-    pc.pif.complexion = pc.complexionArr[0];
-    pc.physicalStatusArr = ["Normal", "Physically challenged"];
-    pc.pif.physicalStatus = pc.physicalStatusArr[0];
-    pc.eatingHabitArr = ["Vegetarian", "Non-vegetarian", "Eggetarian"];
-    pc.pif.eatingHabit = pc.eatingHabitArr[0];
-    pc.drinkingHabitArr = ["No", "Yes", "Occasionally"];
-    pc.pif.drinkingHabit = pc.drinkingHabitArr[0];
-    pc.smokingHabitArr = ["No", "Yes", "Occasionally"];
-    pc.pif.smokingHabit = pc.smokingHabitArr[0];
-    pc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
-    pc.pif.subCaste = pc.subCasteArr[0];
-    pc.pif.dob = new Date();
-    pc.pif.tob = new Date();
-    pc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces"];
-    pc.pif.zodiac = pc.zodiacArr[0];
+    epc.pif = {};
+    epc.genderArr = ["Male", "Female"];
+    epc.pif.gender = epc.genderArr[0];
+    epc.heightArr = [];
+    epc.pif.height;
+    epc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
+    epc.pif.bodyType = epc.bodyTypeArr[0];
+    epc.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
+    epc.pif.martitalStatus = epc.martitalStatusArr[0];
+    epc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown", "Dark"];
+    epc.pif.complexion = epc.complexionArr[0];
+    epc.physicalStatusArr = ["Normal", "Physically challenged"];
+    epc.pif.physicalStatus = epc.physicalStatusArr[0];
+    epc.eatingHabitArr = ["Vegetarian", "Non-vegetarian", "Eggetarian"];
+    epc.pif.eatingHabit = epc.eatingHabitArr[0];
+    epc.drinkingHabitArr = ["No", "Yes", "Occasionally"];
+    epc.pif.drinkingHabit = epc.drinkingHabitArr[0];
+    epc.smokingHabitArr = ["No", "Yes", "Occasionally"];
+    epc.pif.smokingHabit = epc.smokingHabitArr[0];
+    epc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
+    epc.pif.subCaste = epc.subCasteArr[0];
+    epc.pif.dob = new Date();
+    epc.pif.tob = new Date();
+    epc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces"];
+    epc.pif.zodiac = epc.zodiacArr[0];
 
     // Form hide/show
-    pc.isPInfoForm = true;
-    pc.isPhotoForm = false;
-    pc.isFamilyForm = false;
-    pc.isOccupationForm = false;
-    pc.isAddressForm = false;
+    epc.isPInfoForm = true;
+    epc.isPhotoForm = false;
+    epc.isFamilyForm = false;
+    epc.isOccupationForm = false;
+    epc.isAddressForm = false;
     // Image upload
-    pc.isOwnPhotoForm = true;
-    pc.isHomePhotoForm = false;
+    epc.isOwnPhotoForm = true;
+    epc.isHomePhotoForm = false;
 
     // Occupation form
-    pc.of = {};
-    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
-    pc.of.hEducation = pc.hEducationArr[0];
-    pc.of.oHEducation;
-    pc.occupationArr = ["Job", "Farm", "Business"];
-    pc.of.occupation = pc.occupationArr[0];
+    epc.of = {};
+    epc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
+    epc.of.hEducation = epc.hEducationArr[0];
+    epc.of.oHEducation;
+    epc.occupationArr = ["Job", "Farm", "Business"];
+    epc.of.occupation = epc.occupationArr[0];
 
     // Family form
-    pc.ff = {};
-    pc.familyTypeArr = ["Joint family", "Nuclear family"];
-    pc.ff.familyType = pc.familyTypeArr[0];
-    pc.familyValuesArr = ["Traditional", "Moderate"];
-    pc.ff.familyValues = pc.familyValuesArr[0];
-    pc.familyStatusArr = ["Middle class", "Upper middle class"];
-    pc.ff.familyStatus = pc.familyStatusArr[0];
+    epc.ff = {};
+    epc.familyTypeArr = ["Joint family", "Nuclear family"];
+    epc.ff.familyType = epc.familyTypeArr[0];
+    epc.familyValuesArr = ["Traditional", "Moderate"];
+    epc.ff.familyValues = epc.familyValuesArr[0];
+    epc.familyStatusArr = ["Middle class", "Upper middle class"];
+    epc.ff.familyStatus = epc.familyStatusArr[0];
 
     // Photo form
-    pc.pf = {};
-    pc.imgs = {};
-    pc.imgs.imgURIs = [];
-    pc.imgs.imgBase64s = [];
-    pc.ownImages = {};
-    pc.ownImages.uri = [];
-    pc.ownImages.base64 = [];
-    pc.ownImages.index = 0;
-    pc.homeImages = {};
-    pc.homeImages.uri = [];
-    pc.homeImages.base64 = [];
-    pc.homeImages.index = 0;
-    pc.homeImagesLimit = 5;
-    pc.ownImagesLimit = 5;
-    pc.disableImgsUploadBtn = true;
-    //pc.ownImages.uri.push("img/sm-1.jpg");
+    epc.pf = {};
+    epc.imgs = {};
+    epc.imgs.imgURIs = [];
+    epc.imgs.imgBase64s = [];
+    epc.ownImages = {};
+    epc.ownImages.uri = [];
+    epc.ownImages.base64 = [];
+    epc.ownImages.index = 0;
+    epc.homeImages = {};
+    epc.homeImages.uri = [];
+    epc.homeImages.base64 = [];
+    epc.homeImages.index = 0;
+    epc.homeImagesLimit = 5;
+    epc.ownImagesLimit = 5;
+    epc.disableImgsUploadBtn = true;
+    //epc.ownImages.uri.push("img/sm-1.jpg");
 
     // Address form
-    pc.af = {};
-    pc.districtArr = ["A"];
-    pc.af.district = pc.districtArr[0];
-    pc.taluqaArr = ["A", "B"];
-    pc.af.taluqa = pc.taluqaArr[0];
-    pc.townArr = ["A", "B", "C"];
-    pc.af.town = pc.townArr[0];
+    epc.af = {};
+    epc.districtArr = ["A"];
+    epc.af.district = epc.districtArr[0];
+    epc.taluqaArr = ["A", "B"];
+    epc.af.taluqa = epc.taluqaArr[0];
+    epc.townArr = ["A", "B", "C"];
+    epc.af.town = epc.townArr[0];
 
     // Profiles preference
-    pc.ppf = {};
-    pc.ageArr = [];
-    pc.ppf.minAge;
-    pc.ppf.maxAge;
-    pc.ppf.minHeight;
-    pc.ppf.maxHeight;
-    pc.ppf.complexion;
-    pc.ppf.bodyType;
-    pc.ppf.subCaste;
+    epc.ppf = {};
+    epc.ageArr = [];
+    epc.ppf.minAge;
+    epc.ppf.maxAge;
+    epc.ppf.minHeight;
+    epc.ppf.maxHeight;
+    epc.ppf.complexion;
+    epc.ppf.bodyType;
+    epc.ppf.subCaste;
 
     // Filter profiles
-    pc.pff = {};
-    pc.pff.minAge;
-    pc.pff.maxAge;
-    pc.pff.minHeight;
-    pc.pff.maxHeight;
-    pc.pff.complexion;
-    pc.pff.bodyType;
-    pc.pff.subCaste;
+    epc.pff = {};
+    epc.pff.minAge;
+    epc.pff.maxAge;
+    epc.pff.minHeight;
+    epc.pff.maxHeight;
+    epc.pff.complexion;
+    epc.pff.bodyType;
+    epc.pff.subCaste;
 
-    pc.dp = {};
-    pc.dp.uri = "img/no-avatar.png";
-    pc.dp.base64;
-    pc.modalImgsArr = [];
-    pc.dataOf = sConfig.dataOf.pinfo;
-    pc.noImg = "img/noimg.gif"
-    pc.shortlited = false;
-    pc.interested = false;
+    epc.dp = {};
+    epc.dp.uri = "img/no-avatar.png";
+    epc.dp.base64;
+    epc.modalImgsArr = [];
+    epc.dataOf = sConfig.dataOf.pinfo;
+    epc.noImg = "img/noimg.gif"
+    epc.shortlited = false;
+    epc.interested = false;
 
     // Function section
     var initHeightArr = initHeightArr;
@@ -129,65 +129,65 @@
     var setFProfiles = setFProfiles;
     var ownBase64 = ownBase64;
     var homeBase64 = homeBase64;
-    pc.showImagesModal = showImagesModal;
-    pc.hideImagesModal = hideImagesModal;
-    pc.showPInfoForm = showPInfoForm;
-    pc.showPhotoForm = showPhotoForm;
-    pc.showFamilyForm = showFamilyForm;
-    pc.showOccupationForm = showOccupationForm;
-    pc.showAddressForm = showAddressForm;
-    pc.showOwnPhotoForm = showOwnPhotoForm;
-    pc.showHomePhotoForm = showHomePhotoForm;
-    pc.clickImage = clickImage;
-    pc.changeDP = changeDP;
-    pc.uploadHomeImages = uploadHomeImages;
-    pc.uploadOwnImages = uploadOwnImages;
-    pc.setModalImgs = setModalImgs;
-    pc.largeImg = largeImg;
-    pc.removeImg = removeImg;
-    pc.addImgs = addImgs;
-    pc.uploadData = uploadData;
-    pc.showProfileFModal = showProfileFModal;
-    pc.hideProfileFModal = hideProfileFModal;
-    //pc.updatePInfo = updatePInfo;
+    epc.showImagesModal = showImagesModal;
+    epc.hideImagesModal = hideImagesModal;
+    epc.showPInfoForm = showPInfoForm;
+    epc.showPhotoForm = showPhotoForm;
+    epc.showFamilyForm = showFamilyForm;
+    epc.showOccupationForm = showOccupationForm;
+    epc.showAddressForm = showAddressForm;
+    epc.showOwnPhotoForm = showOwnPhotoForm;
+    epc.showHomePhotoForm = showHomePhotoForm;
+    epc.clickImage = clickImage;
+    epc.changeDP = changeDP;
+    epc.uploadHomeImages = uploadHomeImages;
+    epc.uploadOwnImages = uploadOwnImages;
+    epc.setModalImgs = setModalImgs;
+    epc.largeImg = largeImg;
+    epc.removeImg = removeImg;
+    epc.addImgs = addImgs;
+    epc.uploadData = uploadData;
+    epc.showProfileFModal = showProfileFModal;
+    epc.hideProfileFModal = hideProfileFModal;
+    //epc.updatePInfo = updatePInfo;
 
-    pc.ownImages.uri.push('img/sm-1.jpg');
-    pc.ownImages.uri.push('img/sm-2.png');
+    epc.ownImages.uri.push('img/sm-1.jpg');
+    epc.ownImages.uri.push('img/sm-2.png');
 
-    $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
+    $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      pc.imagesModal = modal;
+      epc.imagesModal = modal;
     });
 
     function showImagesModal(index) {
       logger.debug("showImagesModal function");
       $ionicSlideBoxDelegate.slide(index);
-      pc.imagesModal.show();
+      epc.imagesModal.show();
     }
 
     function hideImagesModal() {
       logger.debug("hideImagesModal function");
-      pc.imagesModal.hide();
+      epc.imagesModal.hide();
     }
 
     $ionicModal.fromTemplateUrl('app/profiles/profile-filter-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      pc.profileFModal = modal;
+      epc.profileFModal = modal;
     });
 
     function showProfileFModal() {
       logger.debug("showProfileFModal function");
       setFProfiles();
-      pc.profileFModal.show();
+      epc.profileFModal.show();
     }
 
     function hideProfileFModal() {
       logger.debug("hideProfileFModal function");
-      pc.profileFModal.hide();
+      epc.profileFModal.hide();
     }
 
     // Cleanup the modal when we're done with it!
@@ -208,12 +208,12 @@
       try {
         logger.debug("showPInfoForm function");
 
-        pc.dataOf = sConfig.dataOf.pinfo;
-        pc.isPInfoForm = true;
-        pc.isPhotoForm = false;
-        pc.isFamilyForm = false;
-        pc.isOccupationForm = false;
-        pc.isAddressForm = false;
+        epc.dataOf = sConfig.dataOf.pinfo;
+        epc.isPInfoForm = true;
+        epc.isPhotoForm = false;
+        epc.isFamilyForm = false;
+        epc.isOccupationForm = false;
+        epc.isAddressForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -223,11 +223,11 @@
       try {
         logger.debug("showPhotoForm function");
 
-        pc.isPhotoForm = true;
-        pc.isPInfoForm = false;
-        pc.isFamilyForm = false;
-        pc.isOccupationForm = false;
-        pc.isAddressForm = false;
+        epc.isPhotoForm = true;
+        epc.isPInfoForm = false;
+        epc.isFamilyForm = false;
+        epc.isOccupationForm = false;
+        epc.isAddressForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -237,12 +237,12 @@
       try {
         logger.debug("showFamilyForm function");
 
-        pc.dataOf = sConfig.dataOf.family;
-        pc.isFamilyForm = true;
-        pc.isPhotoForm = false;
-        pc.isPInfoForm = false;
-        pc.isOccupationForm = false;
-        pc.isAddressForm = false;
+        epc.dataOf = sConfig.dataOf.family;
+        epc.isFamilyForm = true;
+        epc.isPhotoForm = false;
+        epc.isPInfoForm = false;
+        epc.isOccupationForm = false;
+        epc.isAddressForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -252,12 +252,12 @@
       try {
         logger.debug("showOccupationForm function");
 
-        pc.dataOf = sConfig.dataOf.occupation;
-        pc.isOccupationForm = true;
-        pc.isFamilyForm = false;
-        pc.isPhotoForm = false;
-        pc.isPInfoForm = false;
-        pc.isAddressForm = false;
+        epc.dataOf = sConfig.dataOf.occupation;
+        epc.isOccupationForm = true;
+        epc.isFamilyForm = false;
+        epc.isPhotoForm = false;
+        epc.isPInfoForm = false;
+        epc.isAddressForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -267,12 +267,12 @@
       try {
         logger.debug("showAddressForm function");
 
-        pc.dataOf = sConfig.dataOf.address;
-        pc.isAddressForm = true;
-        pc.isOccupationForm = false;
-        pc.isFamilyForm = false;
-        pc.isPhotoForm = false;
-        pc.isPInfoForm = false;
+        epc.dataOf = sConfig.dataOf.address;
+        epc.isAddressForm = true;
+        epc.isOccupationForm = false;
+        epc.isFamilyForm = false;
+        epc.isPhotoForm = false;
+        epc.isPInfoForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -282,9 +282,9 @@
       try {
         logger.debug("showOwnPhotoForm function");
 
-        pc.dataOf = sConfig.dataOf.pown;
-        pc.isOwnPhotoForm = true;
-        pc.isHomePhotoForm = false;
+        epc.dataOf = sConfig.dataOf.pown;
+        epc.isOwnPhotoForm = true;
+        epc.isHomePhotoForm = false;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -294,9 +294,9 @@
       try {
         logger.debug("showHomePhotoForm function");
 
-        pc.dataOf = sConfig.dataOf.phome;
-        pc.isOwnPhotoForm = false;
-        pc.isHomePhotoForm = true;
+        epc.dataOf = sConfig.dataOf.phome;
+        epc.isOwnPhotoForm = false;
+        epc.isHomePhotoForm = true;
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -310,10 +310,10 @@
         promise.then(function(imageData) {
           logger.debug("imageData: " + JSON.stringify(imageData));
           /*for (var i = 0; i < imageData.uri.length; i++) {
-            pc.ownImages.uri.push(imageData.uri[i])
+            epc.ownImages.uri.push(imageData.uri[i])
           }*/
-          pc.dp.uri = imageData.uri;
-          pc.dp.base64 = imageData.base64;
+          epc.dp.uri = imageData.uri;
+          epc.dp.base64 = imageData.base64;
         });
 
       } catch (exception) {
@@ -329,21 +329,21 @@
 
         switch (type) {
           case sConfig.picType.own:
-            promise = getImages(srcType, pc.ownImagesLimit - pc.ownImages.uri.length);
+            promise = getImages(srcType, epc.ownImagesLimit - epc.ownImages.uri.length);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
               for (var i = 0, len = imageData.uri.length; i < len; i++) {
-                pc.ownImages.uri.push(imageData.uri[i]);
+                epc.ownImages.uri.push(imageData.uri[i]);
               }
               ownBase64(imageData.uri, 0);
             });
             break;
           case sConfig.picType.home:
-            promise = getImages(srcType, pc.homeImagesLimit - pc.homeImages.uri.length);
+            promise = getImages(srcType, epc.homeImagesLimit - epc.homeImages.uri.length);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
               for (var i = 0, len = imageData.uri.length; i < len; i++) {
-                pc.homeImages.uri.push(imageData.uri[i]);
+                epc.homeImages.uri.push(imageData.uri[i]);
               }
               homeBase64(imageData.uri, 0);
             });
@@ -352,7 +352,7 @@
             promise = getImages(srcType, 1);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
-              pc.dp.uri = imageData.uri[0];
+              epc.dp.uri = imageData.uri[0];
             });
             break;
         }
@@ -364,12 +364,12 @@
     function uploadHomeImages(srcType) {
       try {
         logger.debug("uploadHomeImages function");
-        var promise = getImages(srcType, 5 - pc.homeImages.uri.length);
+        var promise = getImages(srcType, 5 - epc.homeImages.uri.length);
 
         promise.then(function(imageData) {
           logger.debug("imageData: " + JSON.stringify(imageData));
           for (var i = 0, len = imageData.uri.length; i < len; i++) {
-            pc.homeImages.uri.push(imageData.uri[i])
+            epc.homeImages.uri.push(imageData.uri[i])
           }
         });
       } catch (exception) {
@@ -380,12 +380,12 @@
     function uploadOwnImages(srcType) {
       try {
         logger.debug("uploadOwnImages function");
-        var promise = getImages(srcType, 5 - pc.ownImages.uri.length);
+        var promise = getImages(srcType, 5 - epc.ownImages.uri.length);
 
         promise.then(function(imageData) {
           logger.debug("imageData: " + JSON.stringify(imageData));
           for (var i = 0, len = imageData.uri.length; i < len; i++) {
-            pc.ownImages.uri.push(imageData.uri[i])
+            epc.ownImages.uri.push(imageData.uri[i])
           }
         });
       } catch (exception) {
@@ -398,10 +398,10 @@
         logger.debug("removeImg function");
         switch (type) {
           case sConfig.picType.own:
-            pc.ownImages.uri.splice(pc.ownImages.uri.indexOf(img), 1);
+            epc.ownImages.uri.splice(epc.ownImages.uri.indexOf(img), 1);
             break;
           case sConfig.picType.home:
-            pc.homeImages.uri.splice(pc.homeImages.uri.indexOf(img), 1);
+            epc.homeImages.uri.splice(epc.homeImages.uri.indexOf(img), 1);
             break;
         }
       } catch (exception) {
@@ -435,16 +435,16 @@
       var promise = cameraService.clickImage();
 
       promise.then(function(imageData) {
-        pc.imgs.imgURIs.push(imageData.uri);
-        pc.imgs.imgBase64s.push(imageData.base64);
+        epc.imgs.imgURIs.push(imageData.uri);
+        epc.imgs.imgBase64s.push(imageData.base64);
       });
     }
 
     function setModalImgs(imgs) {
       try {
         logger.debug("setModalImgs function");
-        pc.modalImgsArr = imgs;
-        pc.showImagesModal();
+        epc.modalImgsArr = imgs;
+        epc.showImagesModal();
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -458,21 +458,21 @@
 
         switch (type) {
           case sConfig.picType.own:
-            pc.modalImgsArr = pc.ownImages.uri;
-            index = pc.ownImages.uri.indexOf(img);
+            epc.modalImgsArr = epc.ownImages.uri;
+            index = epc.ownImages.uri.indexOf(img);
             break;
           case sConfig.picType.home:
-            pc.modalImgsArr = pc.homeImages.uri;
-            index = pc.homeImages.uri.indexOf(img);
+            epc.modalImgsArr = epc.homeImages.uri;
+            index = epc.homeImages.uri.indexOf(img);
             break;
           case sConfig.picType.dp:
-            pc.modalImgsArr[0] = pc.dp.uri;
+            epc.modalImgsArr[0] = epc.dp.uri;
             break;
           case sConfig.picType.pp:
-            pc.modalImgsArr[0] = 'img/sm-2.png';
+            epc.modalImgsArr[0] = 'img/sm-2.png';
             break;
         }
-        pc.showImagesModal(index);
+        epc.showImagesModal(index);
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -481,7 +481,7 @@
     function uploadData() {
       try {
         logger.debug("uploadData function");
-        logger.debug("pc.dataOf: " + pc.dataOf);
+        logger.debug("epc.dataOf: " + epc.dataOf);
 
         var promise;
         var req = {
@@ -490,15 +490,15 @@
 
         req.data._id = lsService.get("userId");
 
-        switch (pc.dataOf) {
+        switch (epc.dataOf) {
           case sConfig.dataOf.pinfo:
-            //logger.debug("pif: " + JSON.stringify(pc.pif));
-            req.data.pinfo = pc.pif;
+            //logger.debug("pif: " + JSON.stringify(epc.pif));
+            req.data.pinfo = epc.pif;
             promise = profileService.updatePInfo(req);
             break;
           case sConfig.dataOf.address:
-            //logger.debug("pif: " + JSON.stringify(pc.af));
-            req.data.location = pc.af;
+            //logger.debug("pif: " + JSON.stringify(epc.af));
+            req.data.location = epc.af;
             promise = profileService.updateLocation(req);
             break;
           case sConfig.dataOf.pown:
@@ -507,13 +507,13 @@
 
             break;
           case sConfig.dataOf.occupation:
-            //logger.debug("pif: " + JSON.stringify(pc.of));
-            req.data.professional = pc.of;
+            //logger.debug("pif: " + JSON.stringify(epc.of));
+            req.data.professional = epc.of;
             promise = profileService.updateProfessional(req);
             break;
           case sConfig.dataOf.family:
-            //logger.debug("pif: " + JSON.stringify(pc.ff));
-            req.data.family = pc.ff;
+            //logger.debug("pif: " + JSON.stringify(epc.ff));
+            req.data.family = epc.ff;
             promise = profileService.updateFamily(req);
             break;
         }
@@ -540,23 +540,23 @@
       try {
         logger.debug("ownBase64 function");
 
-        /*var lArr;
+        var lArr;
 
         if(imgURIs != null && imgURIs != undefined)
-          lArr = imgURIs;*/
+          lArr = imgURIs;
 
-        var len = imgURIs.length;
+        var len = lArr.length;
         if (index == null || index == undefined)
           index = 0;
         if (len == index)
           return;
 
-        utilService.base64(imgURIs[index])
+        utilService.base64(lArr[index])
           .then(function(sucResp) {
             logger.debug("sucResp: " + sucResp);
-            pc.ownImages.base64[index] = sucResp;
+            epc.ownImages.base64[index] = sucResp;
             index++;
-            ownBase64(imgURIs, index);
+            ownBase64(null, index);
           }, function(errResp) {
             logger.error("errResp: " + JSON.stringify(errResp));
           });
@@ -569,24 +569,24 @@
       try {
         logger.debug("homeBase64 function");
 
-        /*var lArr;
+        var lArr;
 
         if(imgURIs != null && imgURIs != undefined)
-          lArr = imgURIs;*/
+          lArr = imgURIs;
 
-        var len = imgURIs.length;
+        var len = lArr.length;
         if (index == null || index == undefined)
           index = 0;
         if (len == index)
           return;
 
-        utilService.base64(imgURIs[index])
+        utilService.base64(lArr[index])
           .then(function(sucResp) {
             logger.debug("sucResp: " + sucResp);
-            pc.homeImages.base64[index] = sucResp;
+            epc.homeImages.base64[index] = sucResp;
 
             index++;
-            homeBase64(imgURIs, index);
+            homeBase64(null, index);
           }, function(errResp) {
             logger.error("errResp: " + JSON.stringify(errResp));
           });
@@ -599,23 +599,23 @@
       try {
         logger.debug("setFProfiles function");
 
-        if (pc.ageArr.length == 0)
+        if (epc.ageArr.length == 0)
           initAgeArr();
 
-        if (pc.heightArr.indexOf("Any") == -1) {
-          pc.heightArr.splice(0, 0, "Any");
-          pc.complexionArr.splice(0, 0, "Any");
-          pc.bodyTypeArr.splice(0, 0, "Any");
-          pc.subCasteArr.splice(0, 0, "Any");
+        if (epc.heightArr.indexOf("Any") == -1) {
+          epc.heightArr.splice(0, 0, "Any");
+          epc.complexionArr.splice(0, 0, "Any");
+          epc.bodyTypeArr.splice(0, 0, "Any");
+          epc.subCasteArr.splice(0, 0, "Any");
         }
 
-        pc.pff.minAge = pc.ageArr[0];
-        pc.pff.maxAge = pc.ageArr[0];;
-        pc.pff.minHeight = pc.heightArr[0];
-        pc.pff.maxHeight = pc.heightArr[0];
-        pc.pff.complexion = pc.complexionArr[0];
-        pc.pff.bodyType = pc.bodyTypeArr[0];
-        pc.pff.subCaste = pc.subCasteArr[0];
+        epc.pff.minAge = epc.ageArr[0];
+        epc.pff.maxAge = epc.ageArr[0];;
+        epc.pff.minHeight = epc.heightArr[0];
+        epc.pff.maxHeight = epc.heightArr[0];
+        epc.pff.complexion = epc.complexionArr[0];
+        epc.pff.bodyType = epc.bodyTypeArr[0];
+        epc.pff.subCaste = epc.subCasteArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -625,13 +625,13 @@
       try {
         logger.debug("initAgeArr function");
 
-        pc.ageArr.push("Any");
+        epc.ageArr.push("Any");
         for (var i = 18; i <= 40; i++) {
-          pc.ageArr.push(i);
+          epc.ageArr.push(i);
         }
 
-        pc.ppf.minAge = pc.ageArr[0];
-        pc.ppf.maxAge = pc.ageArr[0];
+        epc.ppf.minAge = epc.ageArr[0];
+        epc.ppf.maxAge = epc.ageArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -645,13 +645,13 @@
         for (var i = 4; i < 7; i++) {
           for (var j = 0; j < 12; j++) {
             if (j === 0) {
-              pc.heightArr.push(i + " ft ");
+              epc.heightArr.push(i + " ft ");
               continue;
             }
-            pc.heightArr.push(i + " ft " + j + " in");
+            epc.heightArr.push(i + " ft " + j + " in");
           }
         }
-        pc.pif.height = pc.heightArr[0];
+        epc.pif.height = epc.heightArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -661,9 +661,9 @@
     function setEProfile() {
       try {
         logger.debug("setEProfile function");
-        if (pc.heightArr == 0)
+        if (epc.heightArr == 0)
           initHeightArr();
-        pc.pif.height = pc.heightArr[0];
+        epc.pif.height = epc.heightArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -673,28 +673,28 @@
       try {
         logger.debug("setProfilesP function");
 
-        if (pc.heightArr == 0)
+        if (epc.heightArr == 0)
           initHeightArr();
 
-        pc.ageArr.push("Any");
+        epc.ageArr.push("Any");
         for (var i = 18; i <= 40; i++) {
-          pc.ageArr.push(i);
+          epc.ageArr.push(i);
         }
 
-        if (pc.heightArr.indexOf("Any") == -1) {
-          pc.heightArr.splice(0, 0, "Any");
-          pc.complexionArr.splice(0, 0, "Any");
-          pc.bodyTypeArr.splice(0, 0, "Any");
-          pc.subCasteArr.splice(0, 0, "Any");
+        if (epc.heightArr.indexOf("Any") == -1) {
+          epc.heightArr.splice(0, 0, "Any");
+          epc.complexionArr.splice(0, 0, "Any");
+          epc.bodyTypeArr.splice(0, 0, "Any");
+          epc.subCasteArr.splice(0, 0, "Any");
         }
 
-        pc.ppf.minAge = pc.ageArr[0];
-        pc.ppf.maxAge = pc.ageArr[0];;
-        pc.ppf.minHeight = pc.heightArr[0];
-        pc.ppf.maxHeight = pc.heightArr[0];
-        pc.ppf.complexion = pc.complexionArr[0];
-        pc.ppf.bodyType = pc.bodyTypeArr[0];
-        pc.ppf.subCaste = pc.subCasteArr[0];
+        epc.ppf.minAge = epc.ageArr[0];
+        epc.ppf.maxAge = epc.ageArr[0];;
+        epc.ppf.minHeight = epc.heightArr[0];
+        epc.ppf.maxHeight = epc.heightArr[0];
+        epc.ppf.complexion = epc.complexionArr[0];
+        epc.ppf.bodyType = epc.bodyTypeArr[0];
+        epc.ppf.subCaste = epc.subCasteArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -720,6 +720,6 @@
     }
     bootstrap();
 
-    logger.debug("ProfilesCtrl end");
+    logger.debug("EProfileCtrl end");
   }
 })();

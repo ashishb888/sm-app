@@ -154,7 +154,7 @@
     pc.ownImages.uri.push('img/sm-1.jpg');
     pc.ownImages.uri.push('img/sm-2.png');
 
-    $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
+    $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
