@@ -1,0 +1,75 @@
+<ion-view view-title="Family">
+  <ion-nav-buttons side="right">
+  </ion-nav-buttons>
+  <ion-content>
+    <!-- Family form -->
+    <form name="familyForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family type
+        </div>
+        <select ng-model="fc.ff.familyType">
+          <option ng-repeat="ft in fc.familyTypeArr">{{ft}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family values
+        </div>
+        <select ng-model="fc.ff.familyValues">
+          <option ng-repeat="fv in fc.familyValuesArr">{{fv}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family status
+        </div>
+        <select ng-model="fc.ff.familyStatus">
+          <option ng-repeat="fs in fc.familyStatusArr">{{fs}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Brother(s)</span>
+        <input type="number" name="nBrothers" placeholder="Brother(s)" ng-model="fc.ff.nBrothers" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyForm.nBrothers.$error" ng-if="familyForm.nBrothers.$dirty">
+          <div ng-message="required">Brother(s) is required.</div>
+          <div ng-message="minlength">Brother(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Brother(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Sister(s)</span>
+        <input type="number" name="nSisters" placeholder="Sister(s)" ng-model="fc.ff.nSisters" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyForm.nSisters.$error" ng-if="familyForm.nSisters.$dirty">
+          <div ng-message="required">Sister(s) is required.</div>
+          <div ng-message="minlength">Sister(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Sister(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Uncle(s)</span>
+        <input type="number" name="nUncles" placeholder="Uncle(s)" ng-model="fc.ff.nUncles" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyForm.nUncles.$error" ng-if="familyForm.nUncles.$dirty">
+          <div ng-message="required">Uncle(s) is required.</div>
+          <div ng-message="minlength">Uncle(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Uncle(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Aunt(s)</span>
+        <input type="number" name="nAunts" placeholder="Aunt(s)" ng-model="fc.ff.nAunts" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyForm.nAunts.$error" ng-if="familyForm.nAunts.$dirty">
+          <div ng-message="required">Aunt(s) is required.</div>
+          <div ng-message="minlength">Aunt(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Aunt(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="familyForm.$invalid" ng-click="fc.postFamily()">
+          Update
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
