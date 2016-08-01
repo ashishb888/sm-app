@@ -81,7 +81,7 @@
             }
             lsService.set("isSignedIn", true);
             lsService.set("_id", resp.data._id);
-            $state.go(sc.appStates.menu.profiles);
+            $state.go(sc.appStates.menu_profiles);
             return;
 
             if (lsService.get("isAddressPresent") == "true") {
