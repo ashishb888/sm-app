@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -35,12 +35,268 @@
     pc.pff.bodyType;
     pc.pff.subCaste;
 
+    // Get profiles
+    pc.profiles = [];
+    pc.modalImgsArr = [];
+
+    // Search by id
+    pc.searchId;
+
+    // Shortlist a profiles
+    pc.isShortlist = false;
+    pc.isInterest = false;
+    pc.shortlistBtn = "Shortlist";
+    pc.interestBtn = "Show interest";
+
     // Function section
     var bootstrap = bootstrap;
     var initHeightArr = initHeightArr;
     var setFProfiles = setFProfiles;
     pc.showProfileFModal = showProfileFModal;
     pc.hideProfileFModal = hideProfileFModal;
+    pc.showProfileModal = showProfileModal;
+    pc.hideProfileModal = hideProfileModal;
+    pc.getProfiles = getProfiles;
+    /*pc.viewProfile = viewProfile;*/
+    pc.viewProfile = viewProfile;
+    pc.showImagesModal = showImagesModal;
+    pc.hideImagesModal = hideImagesModal;
+    pc.largeImg = largeImg;
+    pc.searchProfile = searchProfile;
+    pc.shortlist = shortlist;
+    pc.unShortlist = unShortlist;
+    pc.interest = interest;
+    pc.disinterest = disinterest;
+
+    // Functions definations
+    function disinterest(req) {
+      try {
+        logger.debug("disinterest function");
+
+        var promise = profileService.disinterest(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            // Add a toast here
+            pc.isInterest = false;
+            pc.interestBtn = "Show interest";
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function interest(id) {
+      try {
+        logger.debug("interest function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            id: id
+          }
+        };
+
+        if (pc.isInterest == true) {
+          pc.disinterest(req);
+          return;
+        }
+
+        var promise = profileService.interest(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            // Add a toast here
+            pc.isInterest = true;
+            pc.interestBtn = "Interest shown";
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function unShortlist(req) {
+      try {
+        logger.debug("unShortlist function");
+
+        var promise = profileService.unShortlist(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            // Add a toast here
+            pc.isShortlist = false;
+            pc.shortlistBtn = "Shortlist";
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function shortlist(id) {
+      try {
+        logger.debug("shortlist function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            id: id
+          }
+        };
+
+        if (pc.isShortlist == true) {
+          pc.unShortlist(req);
+          return;
+        }
+
+        var promise = profileService.shortlist(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            // Add a toast here
+            pc.isShortlist = true;
+            pc.shortlistBtn = "Shortlisted";
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function searchProfile(id) {
+      try {
+        logger.debug("searchProfile function");
+        var promise = profileService.searchProfile(id);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profile = resp.data.profile;
+            pc.showProfileModal();
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function viewProfile(id) {
+      try {
+        logger.debug("viewProfile function");
+        var promise = profileService.getProfile(id);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profile = resp.data.profile;
+            pc.showProfileModal();
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getProfiles() {
+      try {
+        logger.debug("getProfiles function")
+
+        logger.debug("$ionicHistory.viewHistory(): " + JSON.stringify($ionicHistory.viewHistory()));
+        /*if ($ionicHistory.backTitle().toUpperCase() == sConfig.screenTitles.profile.toUpperCase())
+          return;*/
+
+        var promise = profileService.getProfiles();
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profiles = resp.data.profiles;
+            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      pc.imagesModal = modal;
+    });
+
+    function showImagesModal(index) {
+      logger.debug("showImagesModal function");
+      $ionicSlideBoxDelegate.slide(index);
+      pc.imagesModal.show();
+    }
+
+    function hideImagesModal() {
+      logger.debug("hideImagesModal function");
+      pc.imagesModal.hide();
+    }
+
+    $ionicModal.fromTemplateUrl('app/profiles/profile-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      pc.profileModal = modal;
+    });
+
+    function showProfileModal() {
+      logger.debug("showProfileModal function");
+      pc.profileModal.show();
+    }
+
+    function hideProfileModal() {
+      logger.debug("hideProfileModal function");
+      pc.profileModal.hide();
+    }
 
     $ionicModal.fromTemplateUrl('app/profiles/profile-filter-modal.html', {
       scope: $scope,
@@ -133,16 +389,45 @@
       }
     }
 
+    function largeImg(type, img) {
+      try {
+        logger.debug("largeImg function");
+
+        var index = 0;
+
+        switch (type) {
+          case sConfig.picType.own:
+            pc.modalImgsArr = pc.ownImages.uri;
+            index = pc.ownImages.uri.indexOf(img);
+            break;
+          case sConfig.picType.home:
+            pc.modalImgsArr = pc.homeImages.uri;
+            index = pc.homeImages.uri.indexOf(img);
+            break;
+          case sConfig.picType.dp:
+            pc.modalImgsArr[0] = pc.dp.uri;
+            break;
+          case sConfig.picType.pp:
+            pc.modalImgsArr[0] = 'img/sm-2.png';
+            break;
+        }
+        pc.showImagesModal(index);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function bootstrap() {
       try {
         logger.debug("bootstrap function")
 
+        logger.debug("$ionicHistory.backTitle(): " + $ionicHistory.backTitle());
         switch ($stateParams.functionNm) {
           case "setFProfiles":
             setFProfiles();
             break;
           default:
-            setFProfiles();
+            pc.getProfiles();
         }
       } catch (exception) {
         logger.error("exception: " + exception);

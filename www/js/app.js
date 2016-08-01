@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
+  local: "/api",
+  /*local: "http://10.1.1.86:3000",*/
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -305,6 +305,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
     })
     .state('menu.profile', {
       url: '/profile',
+      params: {'functionNm': 'viewProfile', 'userId': null},
       views: {
         'menuContent': {
           templateUrl: 'app/profiles/profile.html',

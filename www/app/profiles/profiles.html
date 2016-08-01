@@ -5,13 +5,33 @@
     </div>
   </ion-nav-buttons>
   <ion-content class="has-footer">
-    <div class="list card">
-      <div class="item item-avatar" ui-sref="menu.profile">
+    <!--<div class="list card">
+      <div class="item item-avatar" ui-sref="menu.profile" ng-repeat="p in pc.profiles">
         <img src="img/sm-2.png">
-        <h2>Marty McFly</h2>
+        <h2>{{p.fullName}}</h2>
+        <p>24 Yrs, 5'6", Sangli.</p>
+      </div>
+    </div>-->
+
+    <div class="card">
+      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id)" >
+        <img src="img/sm-2.png">
+        <h2>{{p.fullName}}</h2>
+        <p>24 Yrs, 5'6", Sangli.</p>
+        <p>24 Yrs, 5'6", Sangli.</p>
         <p>24 Yrs, 5'6", Sangli.</p>
       </div>
     </div>
+
+    <!--<div class="list">
+      <div class="item item-thumbnail-left" ui-sref="menu.profile" ng-repeat="p in pc.profiles">
+        <img src="img/sm-2.png">
+        <h2>{{p.fullName}}</h2>
+        <p>24 Yrs, 5'6", Sangli.</p>
+        <p>24 Yrs, 5'6", Sangli.</p>
+        <p>24 Yrs, 5'6", Sangli.</p>
+      </div>
+    </div>-->
   </ion-content>
   <div class="bar bar-footer item-input-inset">
     <!--<button class="button ">Left</button>
@@ -19,9 +39,9 @@
         <button class="button ">Right</button>-->
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Search by ID">
+      <input type="search" ng-model="pc.searchId" placeholder="Search by ID">
     </label>
-    <button class="button">
+    <button class="button" ng-click="pc.searchProfile(pc.searchId)">
       Search
     </button>
   </div>

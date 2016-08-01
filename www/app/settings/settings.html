@@ -8,7 +8,7 @@
       <form name="updatePasswordForm" novalidate ng-show="sc.isUpdatePassword">
         <label class="item item-input item-floating-label">
           <span class="input-label">Old password</span>
-          <input type="password" name="oldPassword" placeholder="Old password" ng-model="signupCtrl.up.oldPassword" ng-required="true" ng-minlength="6">
+          <input type="password" name="oldPassword" placeholder="Old password" ng-model="sc.passuf.oldPassword" ng-required="true" ng-minlength="6">
           <div class="app-error" ng-messages="updatePasswordForm.oldPassword.$error" ng-if="updatePasswordForm.oldPassword.$dirty">
             <div ng-message="required">Password is required.</div>
             <div ng-message="minlength">Password must be at least 6 characters long.</div>
@@ -17,7 +17,7 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">New password</span>
-          <input type="password" name="newPassword" placeholder="New password" ng-model="signupCtrl.up.newPassword" ng-required="true" ng-minlength="6">
+          <input type="password" name="newPassword" placeholder="New password" ng-model="sc.passuf.password" ng-required="true" ng-minlength="6">
           <div class="app-error" ng-messages="updatePasswordForm.newPassword.$error" ng-if="updatePasswordForm.newPassword.$dirty">
             <div ng-message="required">Password is required.</div>
             <div ng-message="minlength">Password must be at least 6 characters long.</div>
@@ -26,7 +26,7 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Re-type new password</span>
-          <input type="password" name="reNewPassword" placeholder="Re-type new password" ng-model="signupCtrl.up.reNewPassword" ng-required="true" ng-minlength="6">
+          <input type="password" name="reNewPassword" placeholder="Re-type new password" ng-model="sc.passuf.rePassword" ng-required="true" ng-minlength="6">
           <div class="app-error" ng-messages="updatePasswordForm.reNewPassword.$error" ng-if="updatePasswordForm.reNewPassword.$dirty">
             <div ng-message="required">Password is required.</div>
             <div ng-message="minlength">Password must be at least 6 characters long.</div>
@@ -34,7 +34,7 @@
           </div>
         </label>
         <div class="padding">
-          <button class="button button-full button-assertive" ng-disabled="updatePasswordForm.$invalid" ng-click="signupCtrl.signup()">
+          <button class="button button-full button-assertive" ng-disabled="updatePasswordForm.$invalid" ng-click="sc.updatePassword()">
             Update password
           </button>
         </div>
@@ -44,7 +44,7 @@
       <form name="updateMobileForm" novalidate ng-hide="sc.isUpdatePassword">
         <label class="item item-input item-floating-label">
           <span class="input-label">Old mobile number</span>
-          <input type="tel" name="oldPhone" placeholder="Old mobile number" ng-model="signupCtrl.sf.oldPhone" ng-required="true" ng-minlength="10" ng-maxlength="10">
+          <input type="tel" name="oldPhone" placeholder="Old mobile number" ng-model="sc.puf.oldPhone" ng-required="true" ng-minlength="10" ng-maxlength="10">
           <div class="app-error" ng-messages="updateMobileForm.oldPhone.$error" ng-if="updateMobileForm.oldPhone.$dirty">
             <div ng-message="required">Mobile number is required.</div>
             <div ng-message="tel">Enter a valid mobile number.</div>
@@ -54,7 +54,7 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">New mobile number</span>
-          <input type="tel" name="newPhone" placeholder="New mobile number" ng-model="signupCtrl.sf.newPhone" ng-required="true" ng-minlength="10" ng-maxlength="10">
+          <input type="tel" name="newPhone" placeholder="New mobile number" ng-model="sc.puf.phone" ng-required="true" ng-minlength="10" ng-maxlength="10">
           <div class="app-error" ng-messages="updateMobileForm.newPhone.$error" ng-if="updateMobileForm.newPhone.$dirty">
             <div ng-message="required">Mobile number is required.</div>
             <div ng-message="tel">Enter a valid mobile number.</div>
@@ -63,7 +63,7 @@
           </div>
         </label>
         <div class="padding">
-          <button class="button button-full button-assertive" ng-disabled="updateMobileForm.$invalid" ng-click="signupCtrl.signup()">
+          <button class="button button-full button-assertive" ng-disabled="updateMobileForm.$invalid" ng-click="sc.updatePhone()">
             Update mobile no
           </button>
         </div>

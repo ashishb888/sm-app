@@ -42,6 +42,7 @@ angular.module('starter').constant('starterConfig', (function() {
   var screenTitles = {
     signin: "Sign in",
     signup: "Sign up",
+    profile: "Profile"
   };
   var httpKeys = {
     req: "req",
@@ -120,7 +121,9 @@ angular.module('starter').constant('starterConfig', (function() {
   var toastMsgs = {
     appExit: "Press back again to exit."
   };
-
+  var imgsURIs = {
+    noImg: "img/no-avatar.png"
+  }
   switch (env) {
     case envLs.prod:
       ws = urls.prod;
@@ -153,7 +156,8 @@ angular.module('starter').constant('starterConfig', (function() {
     picType: picType,
     picProps: picProps,
     dataOf: dataOf,
-    toastMsgs: toastMsgs
+    toastMsgs: toastMsgs,
+    imgsURIs: imgsURIs
   };
 
 })());

@@ -1,6 +1,7 @@
 (function() {
   angular.module('starter').factory('profileService', profileService);
   profileService.$inject = ['$http', 'utilService', 'starterConfig'];
+
   function profileService($http, utilService, sc) {
     var logger = utilService.getLogger();
     var ps = this;
@@ -9,6 +10,54 @@
     ps.updateLocation = updateLocation;
     ps.updateFamily = updateFamily;
     ps.updateProfession = updateProfession;
+    ps.getProfiles = getProfiles;
+    ps.getProfile = getProfile;
+    ps.searchProfile = searchProfile;
+    ps.shortlist = shortlist;
+    ps.unShortlist = unShortlist;
+    ps.interest = interest;
+    ps.disinterest = disinterest;
+    ps.getImgs = getImgs;
+
+    function getImgs(type, id) {
+      logger.debug("getImgs() service");
+      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
+    }
+
+    function disinterest(req) {
+      logger.debug("disinterest() service");
+      return $http.post(sc.ws + '/disinterest', req, sc.httpReq.config);
+    }
+
+    function interest(req) {
+      logger.debug("interest() service");
+      return $http.post(sc.ws + '/interest', req, sc.httpReq.config);
+    }
+
+    function unShortlist(req) {
+      logger.debug("unShortlist() service");
+      return $http.post(sc.ws + '/unshortlist', req, sc.httpReq.config);
+    }
+
+    function shortlist(req) {
+      logger.debug("shortlist() service");
+      return $http.post(sc.ws + '/shortlist', req, sc.httpReq.config);
+    }
+
+    function getProfile(userId) {
+      logger.debug("getProfile() service");
+      return $http.get(sc.ws + '/users/' + userId, sc.httpReq.config);
+    }
+
+    function searchProfile(userId) {
+      logger.debug("searchProfile() service");
+      return $http.get(sc.ws + '/users/search/' + userId, sc.httpReq.config);
+    }
+
+    function getProfiles() {
+      logger.debug("getProfiles() service");
+      return $http.get(sc.ws + '/users', sc.httpReq.config);
+    }
 
     function updatePInfo(req) {
       logger.debug("updatePInfo() service");

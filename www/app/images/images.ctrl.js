@@ -128,8 +128,8 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            for (var i = 0; i < resp.data.base64[0].ownImgs.length; i++) {
-              ic.ownImages.base64[i] = resp.data.base64[0].ownImgs[i];
+            for (var i = 0; i < resp.data.base64.length; i++) {
+              ic.ownImages.base64[i] = resp.data.base64[i];
             }
             // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {

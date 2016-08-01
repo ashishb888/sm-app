@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('PInfoCtrl', PInfoCtrl);
 
-  PInfoCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  PInfoCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory'];
 
-  function PInfoCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function PInfoCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory) {
     var logger = utilService.getLogger();
     logger.debug("PInfoCtrl start");
 
@@ -47,7 +47,7 @@
         logger.debug("updatePInfo function");
         var req = {
           data:{
-            _id: lsService.get("userId")
+            _id: lsService.get("_id")
           }
         };
 
@@ -95,6 +95,9 @@
     function setEProfile() {
       try {
         logger.debug("setEProfile function");
+
+        logger.debug("$ionicHistory.backTitle(): " + $ionicHistory.backTitle());
+
         if (pic.heightArr == 0)
           initHeightArr();
         pic.pif.height = pic.heightArr[0];

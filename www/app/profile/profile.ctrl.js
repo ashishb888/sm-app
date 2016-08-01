@@ -1,16 +1,16 @@
 (function() {
   angular.module('starter').controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  ProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory'];
 
-  function ProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function ProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory) {
     var logger = utilService.getLogger();
     logger.debug("ProfileCtrl start");
 
     // Variables section
     var pc = this;
-    // Personal info form
-
+    // View a profile
+    pc.profile = {};
 
     pc.modalImgsArr = [];
     pc.dataOf = sConfig.dataOf.pinfo;
@@ -23,8 +23,58 @@
     pc.hideImagesModal = hideImagesModal;
     pc.setModalImgs = setModalImgs;
     pc.largeImg = largeImg;
+    pc.viewProfile = viewProfile;
+    pc.searchProfile = searchProfile;
 
-    $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
+    // Functions definations
+    function searchProfile() {
+      try {
+        logger.debug("searchProfile function");
+        var promise = profileService.getProfile($stateParams.userId);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profile = resp.data.profile;
+            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+
+    function viewProfile() {
+      try {
+        logger.debug("viewProfile function");
+        var promise = profileService.getProfile($stateParams.userId);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profile = resp.data.profile;
+            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
@@ -96,7 +146,13 @@
     function bootstrap() {
       try {
         logger.debug("bootstrap function")
-
+        switch ($stateParams.functionNm) {
+          case 'viewProfile':
+            pc.viewProfile();
+            break;
+          default:
+            pc.viewProfile();
+        }
       } catch (exception) {
         logger.error("exception: " + exception);
       }
