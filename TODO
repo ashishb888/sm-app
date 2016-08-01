@@ -1,0 +1,19 @@
+Add Toast messages:
+  Shortlist
+  Show interest
+  Back button to exit
+  Successfull updation of:
+    Personal info
+    Family info
+    Images
+    Profession info
+    Phone
+    Password
+    DP
+    ...
+
+Push all bellow info in localstorage:
+  Age
+  Height
+  _id
+  ...
