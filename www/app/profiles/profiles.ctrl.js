@@ -42,6 +42,11 @@
     // Search by id
     pc.searchId;
 
+    //Maintain states
+    pc.isSlProfiles = false;
+    pc.isRequests = false;
+    pc.isProfiles = false;
+
     // Shortlist a profiles
     pc.isShortlist = false;
     pc.isInterest = false;
@@ -67,8 +72,60 @@
     pc.unShortlist = unShortlist;
     pc.interest = interest;
     pc.disinterest = disinterest;
+    pc.getShortlist = getShortlist;
+    pc.getRequests = getRequests;
 
     // Functions definations
+    function getRequests() {
+      try {
+        logger.debug("getRequests function");
+          //logger.debug("state: " + $ionicHistory.currentStateName());
+        pc.isSlProfiles = true;
+        var promise = profileService.getRequests(lsService.get("_id"));
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profiles = resp.data.profiles;
+            pc.isRequests = true;
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getShortlist() {
+      try {
+        logger.debug("getShortlist function")
+          //logger.debug("state: " + $ionicHistory.currentStateName());
+        pc.isSlProfiles = true;
+        var promise = profileService.getShortlist(lsService.get("_id"));
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profiles = resp.data.profiles;
+            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function disinterest(req) {
       try {
         logger.debug("disinterest function");
@@ -132,6 +189,15 @@
     function unShortlist(req) {
       try {
         logger.debug("unShortlist function");
+
+        if (typeof req !== "object") {
+          req = {
+            data: {
+              _id: lsService.get("_id"),
+              id: req
+            }
+          };
+        }
 
         var promise = profileService.unShortlist(req);
         promise.then(function(sucResp) {
@@ -239,11 +305,7 @@
       try {
         logger.debug("getProfiles function")
 
-        logger.debug("$ionicHistory.viewHistory(): " + JSON.stringify($ionicHistory.viewHistory()));
-        /*if ($ionicHistory.backTitle().toUpperCase() == sConfig.screenTitles.profile.toUpperCase())
-          return;*/
-
-        var promise = profileService.getProfiles();
+        var promise = profileService.getProfiles(lsService.get("_id"));
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -253,7 +315,7 @@
             }
 
             pc.profiles = resp.data.profiles;
-            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+            pc.isProfiles = true;
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -377,7 +439,7 @@
         for (var i = 4; i < 7; i++) {
           for (var j = 0; j < 12; j++) {
             if (j === 0) {
-              pc.heightArr.push(i + " ft ");
+              pc.heightArr.push(i + " ft");
               continue;
             }
             pc.heightArr.push(i + " ft " + j + " in");
@@ -421,10 +483,15 @@
       try {
         logger.debug("bootstrap function")
 
-        logger.debug("$ionicHistory.backTitle(): " + $ionicHistory.backTitle());
         switch ($stateParams.functionNm) {
           case "setFProfiles":
             setFProfiles();
+            break;
+          case "getShortlist":
+            pc.getShortlist();
+            break;
+          case "getRequests":
+            pc.getRequests();
             break;
           default:
             pc.getProfiles();

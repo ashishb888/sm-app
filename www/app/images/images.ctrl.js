@@ -14,6 +14,12 @@
     ic.isOwnPhotoForm = true;
     ic.isHomePhotoForm = false;
 
+    ic.noImg = "./img/noimg.gif";
+
+    // DP
+    ic.dp;
+    ic.noavatar = "./img/no-avatar.png";
+
     // Photo form
     ic.pf = {};
     ic.imgs = {};
@@ -89,7 +95,7 @@
 
         var req = {
           data:{
-            _id: lsService.get("userId"),
+            _id: lsService.get("_id"),
             type: "own"
           }
         };
@@ -119,7 +125,7 @@
       try {
         logger.debug("getOwnImgs function");
 
-        var promise = imagesService.getImgs(lsService.get("userId"));
+        var promise = imagesService.getImgs(sConfig.picType.own, lsService.get("_id"));
 
         promise.then(function(sucResp) {
           try {
@@ -196,7 +202,7 @@
             promise = getImages(srcType, 1);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
-              ic.dp.uri = imageData.uri[0];
+              ic.dp = imageData.uri[0];
             });
             break;
         }
@@ -266,7 +272,7 @@
             index = ic.homeImages.uri.indexOf(img);
             break;
           case sConfig.picType.dp:
-            ic.modalImgsArr[0] = ic.dp.uri;
+            ic.modalImgsArr[0] = ic.dp;
             break;
           case sConfig.picType.pp:
             ic.modalImgsArr[0] = 'img/sm-2.png';

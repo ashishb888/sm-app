@@ -13,9 +13,9 @@
       return $http.post(sc.ws + '/images', req, sc.httpReq.config);
     }
 
-    function getImgs(userId) {
+    function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + userId, sc.httpReq.config);
+      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
     }
 
     return is;

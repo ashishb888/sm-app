@@ -29,7 +29,7 @@
 
         var req = {
           data:{
-            _id: lsService.get("userId")
+            _id: lsService.get("_id")
           }
         };
 

@@ -1,15 +1,18 @@
 <ion-view view-title="Edit profile">
   <ion-content class="">
     <div class="card">
-      <form name="eMyProfileForm" novalidate>
+      <form>
         <div class="item item-body">
-          <img class="full-image" src="{{pc.dp.uri}}" ng-click="pc.largeImg('dp')">
+          <div class="item item-body txt-ctr-align" ng-show="!ic.dp">
+            <img src="{{ic.noavatar}}">
+          </div>
+          <img class="full-image" src="{{ic.dp.uri}}" ng-show="ic.dp" ng-click="ic.largeImg('dp')">
           <div class="padding">
-            <i class="icon ion-camera float-left xlarge" ng-click="pc.addImgs('dp', 'camera')"></i>
-            <i class="icon ion-image float-right xlarge" ng-click="pc.addImgs('dp', 'galary')"></i>
+            <i class="icon ion-camera float-left xlarge" ng-click="ic.addImgs('dp', 'camera')"></i>
+            <i class="icon ion-image float-right xlarge" ng-click="ic.addImgs('dp', 'galary')"></i>
           </div>
           <div class="padding">
-            <!--<button class="button button-full button-assertive" ng-click="pc.changeDP()">
+            <!--<button class="button button-full button-assertive" ng-click="ic.changeDP()">
               Add new image
             </button>-->
           </div>
@@ -23,7 +26,7 @@
             </div>
           </label>-->
           <div class="padding">
-            <button class="button button-full button-assertive" ng-disabled="eMyProfileForm.$invalid" ng-click="signupCtrl.signup()">
+            <button class="button button-full button-assertive" ng-disabled="!ic.dp" ng-click="signupCtrl.signup()">
               Update
             </button>
           </div>

@@ -5,15 +5,12 @@
     </div>
   </ion-nav-buttons>
   <ion-content class="has-footer">
-    <!--<div class="list card">
-      <div class="item item-avatar" ui-sref="menu.profile" ng-repeat="p in pc.profiles">
-        <img src="img/sm-2.png">
-        <h2>{{p.fullName}}</h2>
-        <p>24 Yrs, 5'6", Sangli.</p>
+    <div class="card" ng-show="pc.profiles.length === 0">
+      <div class="item item-text-wrap">
+        No matches
       </div>
-    </div>-->
-
-    <div class="card">
+    </div>
+    <div class="card" ng-show="pc.profiles.length !== 0">
       <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id)" >
         <img src="img/sm-2.png">
         <h2>{{p.fullName}}</h2>

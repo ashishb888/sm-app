@@ -355,7 +355,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       views: {
         'menuContent': {
           templateUrl: 'app/emyprofile/emyprofile.html',
-          controller: 'EMyProfileCtrl as emp'
+          controller: 'ImagesCtrl as ic'
         }
       }
     })
@@ -406,11 +406,22 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.slprofiles', {
+      params: {'functionNm': 'getShortlist'},
       url: '/slprofiles',
       views: {
         'menuContent': {
-          templateUrl: 'app/profiles/shortlisted-profiles.html',
-          controller: 'SProfilesCtrl as spc'
+          templateUrl: 'app/slprofiles/shortlisted-profiles.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
+    .state('menu.requests', {
+      params: {'functionNm': 'getRequests'},
+      url: '/requests',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/requests/requests.html',
+          controller: 'ProfilesCtrl as pc'
         }
       }
     });

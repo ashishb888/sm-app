@@ -18,17 +18,17 @@
     pic.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
     pic.pif.bodyType = pic.bodyTypeArr[0];
     pic.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
-    pic.pif.martitalStatus = pic.martitalStatusArr[0];
+    //pic.pif.martitalStatus = pic.martitalStatusArr[0];
     pic.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown", "Dark"];
     pic.pif.complexion = pic.complexionArr[0];
     pic.physicalStatusArr = ["Normal", "Physically challenged"];
-    pic.pif.physicalStatus = pic.physicalStatusArr[0];
+    //pic.pif.physicalStatus = pic.physicalStatusArr[0];
     pic.eatingHabitArr = ["Vegetarian", "Non-vegetarian", "Eggetarian"];
-    pic.pif.eatingHabit = pic.eatingHabitArr[0];
+    //pic.pif.eatingHabit = pic.eatingHabitArr[0];
     pic.drinkingHabitArr = ["No", "Yes", "Occasionally"];
-    pic.pif.drinkingHabit = pic.drinkingHabitArr[0];
+    //pic.pif.drinkingHabit = pic.drinkingHabitArr[0];
     pic.smokingHabitArr = ["No", "Yes", "Occasionally"];
-    pic.pif.smokingHabit = pic.smokingHabitArr[0];
+    //pic.pif.smokingHabit = pic.smokingHabitArr[0];
     pic.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
     pic.pif.subCaste = pic.subCasteArr[0];
     pic.pif.dob = new Date();
@@ -50,7 +50,18 @@
             _id: lsService.get("_id")
           }
         };
+        var lHeight = pic.pif.height;
+        var heightSplit = lHeight.split(" ");
+        pic.pif.height = {
+          feet: parseInt(heightSplit[0]),
+          inches: 0
+        };
+        if (heightSplit.length > 2) {
+          console.log("IF");
+          pic.pif.height.inches = parseInt(heightSplit[2]);
+        }
 
+        //pic.pif.dob = new Date(pic.pif.dob);
         req.data.pinfo = pic.pif;
         var promise = profileService.updatePInfo(req);
 
@@ -61,7 +72,7 @@
               utilService.appAlert(resp.messages);
               return;
             }
-
+            pic.pif.height = lHeight;
             utilService.appAlert(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -79,7 +90,7 @@
         for (var i = 4; i < 7; i++) {
           for (var j = 0; j < 12; j++) {
             if (j === 0) {
-              pic.heightArr.push(i + " ft ");
+              pic.heightArr.push(i + " ft");
               continue;
             }
             pic.heightArr.push(i + " ft " + j + " in");

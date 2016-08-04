@@ -18,6 +18,18 @@
     ps.interest = interest;
     ps.disinterest = disinterest;
     ps.getImgs = getImgs;
+    ps.getShortlist = getShortlist;
+    ps.getRequests = getRequests;
+
+    function getRequests(id) {
+      logger.debug("getRequests() service");
+      return $http.get(sc.ws + '/requests/' + id, sc.httpReq.config);
+    }
+
+    function getShortlist(id) {
+      logger.debug("getShortlist() service");
+      return $http.get(sc.ws + '/shortlist/' + id, sc.httpReq.config);
+    }
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
@@ -54,9 +66,14 @@
       return $http.get(sc.ws + '/users/search/' + userId, sc.httpReq.config);
     }
 
-    function getProfiles() {
+    /*function getProfiles() {
       logger.debug("getProfiles() service");
       return $http.get(sc.ws + '/users', sc.httpReq.config);
+    }*/
+    // Need to change
+    function getProfiles(id) {
+      logger.debug("getProfiles() service");
+      return $http.get(sc.ws + '/userstoken/' + id, sc.httpReq.config);
     }
 
     function updatePInfo(req) {

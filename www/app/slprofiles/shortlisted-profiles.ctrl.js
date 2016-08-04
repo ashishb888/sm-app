@@ -18,7 +18,7 @@
     spc.showProfileModal = showProfileModal;
     spc.hideProfileModal = hideProfileModal;
     //Functions definations
-    $ionicModal.fromTemplateUrl('app/profiles/profile-modal.html', {
+    $ionicModal.fromTemplateUrl('app/slprofiles/profile-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {

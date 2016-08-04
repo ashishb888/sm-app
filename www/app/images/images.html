@@ -19,28 +19,24 @@
       <div class="padding">
 
       </div>
-      Local
+
       <div class="item item-body txt-ctr-align" ng-show="ic.ownImages.uri.length == 0">
         <img src="{{ic.noImg}}">
-        <!--<div class="padding">
-          <i class="icon icon ion-camera float-left" ng-click="ic.uploadOwnImages('camera')"></i>
-          <i class="icon ion-images float-right" ng-click="ic.uploadOwnImages('galary')"></i>
-        </div>-->
       </div>
-      Server
+
       <div class="item item-body" ng-repeat="img in ic.ownImages.base64">
         <img class="full-image" ng-src="data:image/jpg;base64,{{img}}" ng-click="ic.largeImg('own', img)">
         <div class="padding">
           <i class="icon ion-trash-b float-right xlarge" ng-click="ic.removeImg('own', img)"></i>
         </div>
       </div>
-      Local
+      <!--Local
       <div class="item item-body" ng-repeat="img in ic.ownImages.uri">
         <img class="full-image" src="{{img}}" ng-click="ic.largeImg('own', img)">
         <div class="padding">
           <i class="icon ion-trash-b float-right xlarge" ng-click="ic.removeImg('own', img)"></i>
         </div>
-      </div>
+      </div>-->
       <!--<div class="item item-body">
         <img class="full-image" src="{{ic.dp.uri}}" ng-click="ic.showImagesModal()">
         <div class="padding">
@@ -71,10 +67,6 @@
       </div>
       <div class="item item-body txt-ctr-align" ng-show="ic.homeImages.uri.length == 0">
         <img src="{{ic.noImg}}">
-        <!--<div class="padding">
-          <i class="icon icon ion-camera float-left" ng-click="ic.uploadHomeImages('camera')"></i>
-          <i class="icon ion-images float-right" ng-click="ic.uploadHomeImages('galary')"></i>
-        </div>-->
       </div>
       <div class="item item-body" ng-repeat="img in ic.homeImages.uri">
         <img class="full-image" src="{{img}}" ng-click="ic.largeImg('home', img)">

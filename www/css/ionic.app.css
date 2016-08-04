@@ -9857,7 +9857,7 @@ a.button {
   white-space: initial; }
 
 .txt-right-align, .signin-fp {
-  text-align: right; }
+  text-align: right !important; }
 
 .txt-left-align, .signin-su {
   text-align: left; }
