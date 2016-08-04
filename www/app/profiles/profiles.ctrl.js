@@ -138,9 +138,9 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
             pc.isInterest = false;
             pc.interestBtn = "Show interest";
+            utilService.toastMessage(resp.messages);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -174,9 +174,10 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
+
             pc.isInterest = true;
             pc.interestBtn = "Interest shown";
+            utilService.toastMessage(resp.messages);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -210,6 +211,7 @@
             // Add a toast here
             pc.isShortlist = false;
             pc.shortlistBtn = "Shortlist";
+            utilService.toastMessage(resp.messages);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -243,9 +245,10 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
+
             pc.isShortlist = true;
             pc.shortlistBtn = "Shortlisted";
+            utilService.toastMessage(resp.messages);
           } catch (exception) {
             logger.error("exception: " + exception);
           }

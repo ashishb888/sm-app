@@ -41,7 +41,8 @@
                     return;
                 }
 
-                utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+                utilService.toastMessage(resp.messages);
+                //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
             } catch (exception) {
                 logger.error("exception: " + exception);
             }

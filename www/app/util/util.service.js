@@ -21,6 +21,23 @@
     us.selectQuery = selectQuery;
     us.insertQuery = insertQuery;
     us.base64 = base64;
+    us.toastMessage = toastMessage;
+
+    //Toast messages
+    function toastMessage(msg) {
+      try {
+        logger.debug("toastMessage service");
+
+        $cordovaToast.showShortCenter(msg).then(function(success) {
+          logger.debug("toastMessage: " + success);
+        }, function(error) {
+          logger.error("toastMessage: " + error);
+        });
+
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     /* Logs every request's data */
     function logReqResp(data, key) {
@@ -44,7 +61,7 @@
       logger.debug("errorHandler() service")
       switch (respErr.status) {
         case 400:
-            appAlert(sc.msgs.globalCommonError);
+          appAlert(sc.msgs.globalCommonError);
           break;
         case 401:
           appAlert(sc.msgs.globalCommonError);
@@ -53,7 +70,7 @@
           appAlert(sc.msgs.globalCommonError);
           break;
         default:
-            appAlert(sc.msgs.globalCommonError);
+          appAlert(sc.msgs.globalCommonError);
       }
     }
 
