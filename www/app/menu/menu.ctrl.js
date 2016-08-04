@@ -26,7 +26,8 @@
           if (res) {
             logger.debug("Signed out");
             lsService.set("isSignedIn", false);
-            lsService.set("isAddressPresent", false);
+            lsService.remove("_id");
+
             $state.go(sc.appStates.signin);
           }
         });
