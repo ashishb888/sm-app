@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('FamilyCtrl', FamilyCtrl);
 
-  FamilyCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService'];
+  FamilyCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'familyService'];
 
-  function FamilyCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService) {
+  function FamilyCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, familyService) {
     var logger = utilService.getLogger();
     logger.debug("FamilyCtrl start");
 
@@ -22,19 +22,47 @@
     // Function section
     var bootstrap = bootstrap;
     fc.updateFamily = updateFamily;
+    fc.getFamily = getFamily;
+
+    // Functions definations
+    function getFamily() {
+      try {
+        logger.debug("getFamily function");
+
+        var promise = familyService.getFamily(lsService.get("_id"));
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            if (resp.data.family) {
+              fc.ff = resp.data.family;
+            }
+            //utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function updateFamily() {
       try {
         logger.debug("updateFamily function")
 
         var req = {
-          data:{
+          data: {
             _id: lsService.get("_id")
           }
         };
 
         req.data.family = fc.ff;
-        var promise = profileService.updateFamily(req);
+        var promise = familyService.updateFamily(req);
 
         promise.then(function(sucResp) {
           try {
@@ -58,6 +86,13 @@
       try {
         logger.debug("bootstrap function")
 
+        switch ($stateParams.functionNm) {
+          case "getFamily":
+            fc.getFamily();
+            break;
+          default:
+            fc.getFamily();
+        }
       } catch (exception) {
         logger.error("exception: " + exception);
       }

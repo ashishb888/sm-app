@@ -6,6 +6,8 @@
     var logger = utilService.getLogger();
     var ps = this;
 
+    logger.debug("profileService service");
+
     ps.updatePInfo = updatePInfo;
     ps.updateLocation = updateLocation;
     ps.updateFamily = updateFamily;

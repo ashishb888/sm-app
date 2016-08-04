@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('PInfoCtrl', PInfoCtrl);
 
-  PInfoCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory'];
+  PInfoCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', '$ionicHistory'];
 
-  function PInfoCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory) {
+  function PInfoCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, $ionicHistory) {
     var logger = utilService.getLogger();
     logger.debug("PInfoCtrl start");
 
@@ -41,6 +41,43 @@
     var initHeightArr = initHeightArr;
     var bootstrap = bootstrap;
     pic.updatePInfo = updatePInfo;
+    pic.getPInfo = getPInfo;
+
+    // Functions definations
+    function getPInfo() {
+      try {
+        logger.debug("getPInfo function");
+
+        var promise = pinfoService.getPInfo(lsService.get("_id"));
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            if (resp.data.pinfo) {
+              var dob = resp.data.pinfo.dob;
+              var tob = resp.data.pinfo.tob;
+
+              delete resp.data.pinfo.dob;
+              delete resp.data.pinfo.tob;
+
+              pic.pif = resp.data.pinfo;
+              pic.pif.dob = new Date(dob);
+              pic.pif.tob = new Date(tob);
+              pic.pif.height = pic.pif.height.feet + " ft " + pic.pif.height.inches + " in";
+            }
+            //utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function updatePInfo() {
       try {
@@ -63,7 +100,7 @@
 
         //pic.pif.dob = new Date(pic.pif.dob);
         req.data.pinfo = pic.pif;
-        var promise = profileService.updatePInfo(req);
+        var promise = pinfoService.updatePInfo(req);
 
         promise.then(function(sucResp) {
           try {
@@ -107,11 +144,11 @@
       try {
         logger.debug("setEProfile function");
 
-        logger.debug("$ionicHistory.backTitle(): " + $ionicHistory.backTitle());
-
         if (pic.heightArr == 0)
           initHeightArr();
         pic.pif.height = pic.heightArr[0];
+
+        pic.getPInfo();
       } catch (exception) {
         logger.error("exception: " + exception);
       }

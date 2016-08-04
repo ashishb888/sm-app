@@ -10,6 +10,7 @@
     // Declare services here
     lss.set = set;
     lss.get = get;
+    lss.remove = remove;
 
     function get(key) {
       logger.debug("get service");
@@ -19,6 +20,11 @@
     function set(key, value) {
       logger.debug("set service");
       return localStorage.setItem(key, value);
+    }
+
+    function remove(key) {
+      logger.debug("remove service");
+      return localStorage.removeItem(key);
     }
 
     return lss;
