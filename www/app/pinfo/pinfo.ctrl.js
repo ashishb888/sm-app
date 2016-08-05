@@ -12,7 +12,7 @@
     // Personal info form
     pic.pif = {};
     pic.genderArr = ["Male", "Female"];
-    pic.pif.gender = pic.genderArr[0];
+    //pic.pif.gender = pic.genderArr[0];
     pic.heightArr = [];
     pic.pif.height;
     pic.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
@@ -54,7 +54,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             if (resp.data.pinfo) {
@@ -69,7 +69,7 @@
               pic.pif.tob = new Date(tob);
               pic.pif.height = pic.pif.height.feet + " ft " + pic.pif.height.inches + " in";
             }
-            //utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            //utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -106,11 +106,13 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             pic.pif.height = lHeight;
-            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            // $state.go(sConfig.appStates.menu_pinfo);
+            // utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }

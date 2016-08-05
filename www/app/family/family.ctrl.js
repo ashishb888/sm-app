@@ -68,11 +68,13 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
-            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            $state.go(sConfig.appStates.menu_pinfo);
+            // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }

@@ -44,10 +44,12 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
+              // utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            //sc.puf = {};
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -72,10 +74,12 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
+              //utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            //sc.passuf = {};
           } catch (exception) {
             logger.error("exception: " + exception);
           }

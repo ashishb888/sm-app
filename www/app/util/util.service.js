@@ -1,8 +1,8 @@
 (function() {
   angular.module('starter').factory('utilService', utilService);
-  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state', '$log', '$q', '$cordovaNetwork', '$cordovaFile'];
+  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state', '$log', '$q', '$cordovaNetwork', '$cordovaFile', '$cordovaToast'];
 
-  function utilService($ionicPopup, sc, $http, $state, $log, $q, $cordovaNetwork, $cordovaFile) {
+  function utilService($ionicPopup, sc, $http, $state, $log, $q, $cordovaNetwork, $cordovaFile, $cordovaToast) {
     // Variables section
     var us = this;
     var logger = $log;
@@ -24,7 +24,7 @@
     us.toastMessage = toastMessage;
 
     //Toast messages
-    function toastMessage(msg) {
+    function toastMessage(msg, state, title) {
       try {
         logger.debug("toastMessage service");
 
@@ -33,8 +33,8 @@
         }, function(error) {
           logger.error("toastMessage: " + error);
         });
-
       } catch (exception) {
+        us.appAlert(msg, state, title);
         logger.error("exception: " + exception);
       }
     }
@@ -128,11 +128,11 @@
      passed as parameter. */
     function appAlert(msg, state, title) {
       var alertPopup = $ionicPopup.alert({
-        title: (title == null || title == undefined) ? "Error" : title,
+        title: (!title) ? "Error" : title,
         template: msg
       });
       alertPopup.then(function(res) {
-        if (state != undefined || state != null) {
+        if (state) {
           $state.go(state);
         }
       });

@@ -41,7 +41,8 @@
                     return;
                 }
 
-                utilService.toastMessage(resp.messages);
+                utilService.toastMessage(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+                $state.go(sConfig.appStates.signin);
                 //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
             } catch (exception) {
                 logger.error("exception: " + exception);
