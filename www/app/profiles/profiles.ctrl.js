@@ -231,6 +231,11 @@
           return;
         }
 
+        if (pc.isShortlist == true) {
+          utilService.toastMessage("You can choose either Shortlist or Show interest");
+          return;
+        }
+
         var promise = profileService.interest(req);
         promise.then(function(sucResp) {
           try {
@@ -332,12 +337,17 @@
           return;
         }
 
+        if (pc.isInterest == true) {
+          utilService.toastMessage("You can choose either Shortlist or Show interest");
+          return;
+        }
+
         var promise = profileService.shortlist(req);
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             pc.sId = id;

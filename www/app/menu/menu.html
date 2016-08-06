@@ -14,43 +14,56 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-assertive">
-      <h1 class="title"><!--<i class="icon ion-help float-left xlarge" ng-click="mc.signout();"></i>-->Matrimony <i class="icon ion-log-out float-right xlarge" ng-click="mc.signout();"></i></h1>
+      <h1 class="title">Marry me 
+      <i class="icon ion-log-out float-right xlarge" ng-click="mc.signout();"></i>
+    </h1>
     </ion-header-bar>
     <ion-content class="bar-assertive">
       <ion-list>
-        <div class="list card">
-          <div class="item item-body">
-            <img class="full-image" src="{{mc.dp.uri}}">
-            <h2 class="xlarge gray-clr"> {{mc.fullName}} <i menu-close class="icon ion-edit float-right xlarge" ui-sref="menu.emyprofile"></i> <!--<span menu-close class="float-right" ui-sref="menu.emyprofile">edit</span>--></h2>
-            <!--<p>November 05, 1955</p>-->
-            <!--<p>
-              <a href="#" class="subdued">Edit profile</a>
-              <a ui-sref="menu.settings" class="subdued">Settings</a>
-            </p>-->
+        <div class="card">
+          <div class="item item-text-wrap txt-ctr-align">
+            <img class="w50" src="{{mc.dp.uri}}" ng-hide="rootDP">
+            <img class="w50" ng-src="data:image/jpg;base64,{{rootDP}}" ng-show="rootDP"/>
+          </div>
+          <div class="item item-text-wrap">
+            <h2 class="xlarge gray-clr">
+              {{mc.fullName}}
+              <i menu-close class="icon ion-edit txt-color float-right xlarge" ui-sref="menu.emyprofile"></i>
+            </h2>
           </div>
         </div>
-        <ion-item menu-close ui-sref="menu.profiles">
+        <!--<li class="item ion-android-search" menu-close ui-sref="menu.profiles"> Search profiles</li>-->
+
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.profiles">
+          <i class="icon ion-android-search txt-color"></i>
           Browse profiles
         </ion-item>
-        <ion-item menu-close ui-sref="menu.requests">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.requests">
+          <i class="icon ion-person-stalker txt-color"></i>
           Requests
         </ion-item>
-        <ion-item menu-close ui-sref="menu.slprofiles">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.slprofiles">
+          <i class="icon ion-ios-star txt-color"></i>
           Shortlisted profiles
         </ion-item>
-        <ion-item menu-close ui-sref="menu.profilesp">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.profilesp">
+          <i class="icon ion-university txt-color"></i>
           Profiles preference
         </ion-item>
-        <ion-item menu-close ui-sref="menu.pinfo">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.pinfo">
+          <i class="icon ion-edit txt-color"></i>
           Edit profile
         </ion-item>
-        <ion-item menu-close ui-sref="menu.settings">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.settings">
+          <i class="icon ion-gear-a txt-color"></i>
           Settings
         </ion-item>
-        <ion-item menu-close ui-sref="menu.tc">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.tc">
+          <i class="icon ion-android-clipboard txt-color"></i>
           Terms & conditions
         </ion-item>
-        <ion-item menu-close ui-sref="menu.help">
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.help">
+          <i class="icon ion-help txt-color"></i>
           Help
         </ion-item>
         <!--<ion-item menu-close ng-click="mc.signout();">

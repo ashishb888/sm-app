@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  local: "/api",
-  /*local: "http://10.1.1.86:3000",*/
+  /*local: "/api",*/
+  local: "http://10.1.1.86:3000",
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -323,6 +323,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.images', {
+      params: {'functionNm': 'getOwnImgs'},
       url: '/images',
       views: {
         'menuContent': {
@@ -351,6 +352,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.emyprofile', {
+      params: {'functionNm': 'getDP'},
       url: '/emyprofile',
       views: {
         'menuContent': {

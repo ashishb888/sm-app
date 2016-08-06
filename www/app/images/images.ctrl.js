@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ImagesCtrl', ImagesCtrl);
 
-  ImagesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'imagesService'];
+  ImagesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'imagesService', '$rootScope'];
 
-  function ImagesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, imagesService) {
+  function ImagesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, imagesService, $rootScope) {
     var logger = utilService.getLogger();
     logger.debug("ImagesCtrl start");
 
@@ -17,8 +17,10 @@
     ic.noImg = "./img/noimg.gif";
 
     ic.title = "Personal images";
+
     // DP
-    ic.dp;
+    ic.fullName;
+    ic.dp = {};
     ic.noavatar = "./img/no-avatar.png";
     ic.modalImgsArr = [];
 
@@ -61,8 +63,80 @@
 
     ic.removeImg = removeImg;
     ic.getHomeImgs = getHomeImgs
+    ic.getDP = getDP;
+    ic.updateDP = updateDP;
 
     // Functions definations
+    function updateDP() {
+      try {
+        logger.debug("updateDP function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            type: "dp"
+          }
+        };
+
+        req.data.base64 = [];
+
+        if (ic.dp._id != "local") {
+          utilService.toastMessage("Nothing to upload.", null, sConfig.msgs.success);
+          return;
+        }
+
+        req.data.base64.push(ic.dp.base64);
+
+        var promise = imagesService.updateDP(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            
+            $rootScope.rootDP = ic.dp.base64;
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getDP() {
+      try {
+        logger.debug("getDP function");
+
+        ic.fullName = lsService.get("fullName");
+        var promise = imagesService.getImgs(sConfig.picType.dp, lsService.get("_id"));
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            if (resp.data.images && resp.data.images.length > 0) {
+              ic.dp = resp.data.images[0];
+              if (ic.dp.base64) {
+                $rootScope.rootDP = ic.dp.base64;
+              }
+            }
+
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function getHomeImgs() {
       try {
         logger.debug("getHomeImgs function");
@@ -124,17 +198,19 @@
         var req = {
           data: {
             _id: lsService.get("_id"),
-            type: "own"
+            type: "home"
           }
         };
 
+        req.data.base64 = [];
+
         for (var i = 0, len = ic.homeImgs.length; i < len; i++) {
           if (ic.homeImgs[i]._id == "local") {
-            req.data.base64.push(ic.ownImgs[i].base64);
+            req.data.base64.push(ic.homeImgs[i].base64);
           }
         }
         if (!req.data.base64 || req.data.base64.length === 0) {
-          utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          utilService.toastMessage("Nothing to upload.", null, sConfig.msgs.success);
           return;
         }
         //req.data.base64 = ic.ownImages.base64;
@@ -169,13 +245,15 @@
           }
         };
 
+        req.data.base64 = [];
+
         for (var i = 0, len = ic.ownImgs.length; i < len; i++) {
           if (ic.ownImgs[i]._id == "local") {
             req.data.base64.push(ic.ownImgs[i].base64);
           }
         }
         if (!req.data.base64 || req.data.base64.length === 0) {
-          utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          utilService.toastMessage("Nothing to upload.", null, sConfig.msgs.success);
           return;
         }
         //req.data.base64 = ic.ownImages.base64;
@@ -263,7 +341,7 @@
           case sConfig.picType.own:
             promise = getImages(srcType, ic.ownImagesLimit - ic.ownImgs.length);
             promise.then(function(imageData) {
-              logger.debug("imageData: " + JSON.stringify(imageData));
+              // logger.debug("imageData: " + JSON.stringify(imageData));
               /*for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 ic.ownImgsUri.push(imageData.uri[i]);
               }*/
@@ -271,12 +349,12 @@
             });
             break;
           case sConfig.picType.home:
-            promise = getImages(srcType, ic.homeImagesLimit - ic.homeImages.uri.length);
+            promise = getImages(srcType, ic.homeImagesLimit - ic.homeImgs.length);
             promise.then(function(imageData) {
-              logger.debug("imageData: " + JSON.stringify(imageData));
-              for (var i = 0, len = imageData.uri.length; i < len; i++) {
+              // logger.debug("imageData: " + JSON.stringify(imageData));
+              /*for (var i = 0, len = imageData.uri.length; i < len; i++) {
                 ic.homeImages.uri.push(imageData.uri[i]);
-              }
+              }*/
               homeBase64(imageData.uri, 0);
             });
             break;
@@ -284,7 +362,16 @@
             promise = getImages(srcType, 1);
             promise.then(function(imageData) {
               logger.debug("imageData: " + JSON.stringify(imageData));
-              ic.dp = imageData.uri[0];
+              utilService.base64(imageData.uri[0])
+                .then(function(sucResp) {
+                  //logger.debug("sucResp: " + sucResp);
+                  ic.dp = {
+                    base64: sucResp,
+                    _id: "local"
+                  };
+                }, function(errResp) {
+                  logger.error("errResp: " + JSON.stringify(errResp));
+                });
             });
             break;
         }
@@ -421,7 +508,9 @@
             ic.modalImgsArr = ic.homeImgs;
             break;
           case sConfig.picType.dp:
-            ic.modalImgsArr[0] = ic.noavatar;
+            ic.modalImgsArr[0] = {
+              base64: ic.dp.base64
+            };
             break;
         }
         ic.showImagesModal(index);
@@ -494,8 +583,9 @@
           case "getOwnImgs":
             ic.getOwnImgs();
             break;
-          default:
-            ic.getOwnImgs();
+          case "getDP":
+            ic.getDP();
+            break;
         }
       } catch (exception) {
         logger.error("exception: " + exception);

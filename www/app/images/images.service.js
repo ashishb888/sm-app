@@ -8,6 +8,12 @@
     is.updateImgs = updateImgs;
     is.getImgs = getImgs;
     is.removeImg = removeImg;
+    is.updateDP = updateDP;
+
+    function updateDP(req) {
+      logger.debug("updateDP() service");
+      return $http.post(sc.ws + '/images/dp', req, sc.httpReq.config);
+    }
 
     function removeImg(id) {
       logger.debug("removeImg() service");
