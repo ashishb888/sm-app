@@ -9,7 +9,6 @@
     logger.debug("SigninCtrl start");
 
     var signinCtrl = this;
-    signinCtrl.isAddressPresent = false;
     var functionNm = $stateParams.functionNm;
 
     // Functions section
@@ -43,9 +42,6 @@
     function signin() {
       logger.debug("signin starts");
 
-      /*$state.go(sc.appStates.menu_profiles);
-      return;*/
-
       if (!utilService.isAppOnlineService()) {
         utilService.appAlert(sc.msgs.noConnMsg);
         return;
@@ -54,22 +50,6 @@
       var req = {};
       req.data = signinCtrl.sf;
 
-      /*var promise = Ionic.Auth.login('basic', {
-        'remember': true
-      }, req);
-      promise.then(function(sucResp) {
-        try {
-          logger.debug("success");
-          var resp = sucResp.data;
-
-          if (resp.status !== SUCCESS) {
-            utilService.showAlert(resp);
-            return;
-          }
-        } catch (exception) {
-          logger.error("exception: " + exception);
-        }
-      }, function(errResp) {});*/
       var promise = signinService.signin(req);
       promise.then(function(sucResp) {
           try {
@@ -81,71 +61,23 @@
             }
             lsService.set("isSignedIn", true);
             lsService.set("_id", resp.data._id);
+            lsService.set("fullName", resp.data.fullName);
             $state.go(sc.appStates.menu_profiles);
             return;
-
-            if (lsService.get("isAddressPresent") == "true") {
-              $state.go(sc.appStates.placeorder);
-              return;
-            } else {
-              addressService.getAddress(lsService.get("custId"))
-                .then(function(sucResp1) {
-                  var resp1 = sucResp1.data;
-                  if (resp1.status !== sc.httpStatus.SUCCESS) {
-                    utilService.appAlert(resp1.messages);
-                    return;
-                  }
-
-                  if (resp1.data.isAddressPresent == true) {
-                    lsService.set("isAddressPresent", true);
-                    $state.go(sc.appStates.placeorder);
-                    return;
-                  }
-                  $state.go(sc.appStates.address);
-                }, function(errResp1) {});
-            }
           } catch (exception) {
             logger.error("exception: " + exception);
           }
         }, function(errResp) {});
-        /*.then(function(resp) {
-          if (lsService.get("isAddressPresent") == "true") {
-            $state.go(sc.appStates.placeorder);
-            return;
-          } else {
-            addressService.getAddress(lsService.get("custId"))
-              .then(function(sucResp1) {
-                var resp1 = sucResp1.data;
-                if (resp1.status !== sc.httpStatus.SUCCESS) {
-                  utilService.appAlert(resp1.messages);
-                  return;
-                }
-
-                if (resp1.data.isAddressPresent == true) {
-                  lsService.set("isAddressPresent", true);
-                  $state.go(sc.appStates.placeorder);
-                  return;
-                }
-                $state.go(sc.appStates.address);
-              }, function(errResp1) {});
-          }
-        });*/
-
-      /*if (signinCtrl.isAddressPresent) {
-        $state.go(sc.appStates.placeorder);
-      }else{
-        $state.go(sc.appStates.address);
-      }*/
 
       logger.debug("signin ends");
     }
 
     /**/
     function setView() {
-      var isSignedIn = JSON.parse(lsService.get("isSignedIn"));
-      if (isSignedIn) {
-        //$state.go(sc.appStates.menu_profiles);
-        $state.go("menu.profiles");
+      var isSignedIn = lsService.get("isSignedIn");
+      if (isSignedIn == "true") {
+        $state.go(sc.appStates.menu_profiles);
+        //$state.go("menu.profiles");
       }
     }
 

@@ -7,6 +7,12 @@
 
     is.updateImgs = updateImgs;
     is.getImgs = getImgs;
+    is.removeImg = removeImg;
+
+    function removeImg(id) {
+      logger.debug("removeImg() service");
+      return $http.delete(sc.ws + '/images/' + id, sc.httpReq.config);
+    }
 
     function updateImgs(req) {
       logger.debug("updateImgs() service");

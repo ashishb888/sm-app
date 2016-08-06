@@ -21,11 +21,17 @@
     ps.disinterest = disinterest;
     ps.getImgs = getImgs;
     ps.getShortlist = getShortlist;
-    ps.getRequests = getRequests;
+    ps.getRequestsOut = getRequestsOut;
+    ps.getRequestsIn = getRequestsIn;
 
-    function getRequests(id) {
-      logger.debug("getRequests() service");
-      return $http.get(sc.ws + '/requests/' + id, sc.httpReq.config);
+    function getRequestsIn(id) {
+      logger.debug("getRequestsIn() service");
+      return $http.get(sc.ws + '/requestsin/' + id, sc.httpReq.config);
+    }
+
+    function getRequestsOut(id) {
+      logger.debug("getRequestsOut() service");
+      return $http.get(sc.ws + '/requestsout/' + id, sc.httpReq.config);
     }
 
     function getShortlist(id) {

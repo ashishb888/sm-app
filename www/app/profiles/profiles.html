@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0">
-      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id)" >
+      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)" >
         <img src="img/sm-2.png">
         <h2>{{p.fullName}}</h2>
         <p>{{p.userId}}</p>
@@ -38,7 +38,7 @@
       <i class="icon ion-ios-search placeholder-icon"></i>
       <input type="search" ng-model="pc.searchId" placeholder="Search by ID">
     </label>
-    <button class="button" ng-click="pc.searchProfile(pc.searchId)">
+    <button class="button" ng-disabled="pc.searchId.length != 8" ng-click="pc.searchProfile(pc.searchId)">
       Search
     </button>
   </div>

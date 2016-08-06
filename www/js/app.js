@@ -416,7 +416,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.requests', {
-      params: {'functionNm': 'getRequests'},
+      params: {'functionNm': 'getRequestsOut'},
       url: '/requests',
       views: {
         'menuContent': {

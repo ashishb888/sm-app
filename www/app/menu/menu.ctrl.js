@@ -11,6 +11,8 @@
     var mc = this;
     mc.dp = {};
     mc.dp.uri = "img/no-avatar.png";
+    mc.fullName = lsService.get("fullName");
+
     // Functions section
     mc.signout = signout;
 

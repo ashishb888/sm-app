@@ -10,9 +10,12 @@
         <img src="img/sm-2.png" ng-click="pc.viewProfile(p._id)">
         <h2>
           {{p.fullName}}
-          <i ng-show="pc.isSlProfiles" class="icon ion-android-delete float-right" ng-click="pc.unShortlist(pc.profile._id)"></i>
+          <!--<i ng-show="pc.isSlProfiles" class="icon ion-android-delete float-right" ng-click="pc.removeFromShortlist(p._id, $index)"></i>-->
         </h2>
-        <div class="" ng-click="pc.viewProfile(p._id)">
+        <button class="button button-assertive button-clear float-right" ng-click="pc.removeFromShortlist(p._id, $index)">
+          <i class="icon ion-android-delete"></i>
+        </button>
+        <div class="" ng-click="pc.viewProfile(p._id, $index)">
           <p>24 Yrs, 5'6", Sangli.</p>
           <p>24 Yrs, 5'6", Sangli.</p>
           <p>24 Yrs, 5'6", Sangli.</p>

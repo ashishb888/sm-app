@@ -199,3 +199,27 @@ p.info {
 .mtop0 {
   margin-top: 0px !important;
 }
+
+.w50 {
+  width: 50% !important;
+}
+
+.icons {
+  @extend .button;
+  @extend .button-clear;
+  @extend .button-assertive;
+}
+
+.r-icons {
+  @extend .icons;
+  @extend .float-right;
+}
+
+.l-icons {
+  @extend .icons;
+  @extend .float-left;
+}
+
+.m-top1 {
+  margin-top: 1% !important;
+}

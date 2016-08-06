@@ -16,19 +16,23 @@
 
     ic.noImg = "./img/noimg.gif";
 
+    ic.title = "Personal images";
     // DP
     ic.dp;
     ic.noavatar = "./img/no-avatar.png";
+    ic.modalImgsArr = [];
 
     // Photo form
     ic.pf = {};
     ic.imgs = {};
     /*ic.imgs.imgURIs = [];
     ic.imgs.imgBase64s = [];*/
+    ic.ownImgs = [];
     ic.ownImages = {};
     ic.ownImages.uri = [];
     ic.ownImages.base64 = [];
     ic.ownImages.index = 0;
+    ic.homeImgs = [];
     ic.homeImages = {};
     ic.homeImages.uri = [];
     ic.homeImages.base64 = [];
@@ -47,6 +51,7 @@
     ic.showOwnPhotoForm = showOwnPhotoForm;
     ic.showHomePhotoForm = showHomePhotoForm;
     ic.updateOwnImgs = updateOwnImgs;
+    ic.updateHomeImgs = updateHomeImgs;
     ic.getOwnImgs = getOwnImgs;
 
     // These functions should be common place.
@@ -55,9 +60,32 @@
     ic.addImgs = addImgs;
 
     ic.removeImg = removeImg;
+    ic.getHomeImgs = getHomeImgs
 
-    /*ic.ownImages.uri.push('img/sm-1.jpg');
-    ic.ownImages.uri.push('img/sm-2.png');*/
+    // Functions definations
+    function getHomeImgs() {
+      try {
+        logger.debug("getHomeImgs function");
+
+        var promise = imagesService.getImgs(sConfig.picType.home, lsService.get("_id"));
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            ic.homeImgs = resp.data.images;
+            // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     $ionicModal.fromTemplateUrl('app/images/images-modal.html', {
       scope: $scope,
@@ -89,18 +117,27 @@
       logger.debug('Modal is shown!');
     });
 
-    function updateOwnImgs() {
+    function updateHomeImgs() {
       try {
-        logger.debug("updateOwnImgs function");
+        logger.debug("updateHomeImgs function");
 
         var req = {
-          data:{
+          data: {
             _id: lsService.get("_id"),
             type: "own"
           }
         };
 
-        req.data.ownImgs = ic.ownImages.base64;
+        for (var i = 0, len = ic.homeImgs.length; i < len; i++) {
+          if (ic.homeImgs[i]._id == "local") {
+            req.data.base64.push(ic.ownImgs[i].base64);
+          }
+        }
+        if (!req.data.base64 || req.data.base64.length === 0) {
+          utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          return;
+        }
+        //req.data.base64 = ic.ownImages.base64;
         var promise = imagesService.updateImgs(req);
 
         promise.then(function(sucResp) {
@@ -111,7 +148,48 @@
               return;
             }
 
-            utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function updateOwnImgs() {
+      try {
+        logger.debug("updateOwnImgs function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            type: "own"
+          }
+        };
+
+        for (var i = 0, len = ic.ownImgs.length; i < len; i++) {
+          if (ic.ownImgs[i]._id == "local") {
+            req.data.base64.push(ic.ownImgs[i].base64);
+          }
+        }
+        if (!req.data.base64 || req.data.base64.length === 0) {
+          utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          return;
+        }
+        //req.data.base64 = ic.ownImages.base64;
+        var promise = imagesService.updateImgs(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -134,9 +212,10 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            for (var i = 0; i < resp.data.base64.length; i++) {
+            /*for (var i = 0; i < resp.data.base64.length; i++) {
               ic.ownImages.base64[i] = resp.data.base64[i];
-            }
+            }*/
+            ic.ownImgs = resp.data.images;
             // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -154,6 +233,7 @@
         ic.dataOf = sConfig.dataOf.pown;
         ic.isOwnPhotoForm = true;
         ic.isHomePhotoForm = false;
+        ic.title = "Personal imagess";
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -166,12 +246,54 @@
         ic.dataOf = sConfig.dataOf.phome;
         ic.isOwnPhotoForm = false;
         ic.isHomePhotoForm = true;
+        ic.title = "Home images";
+        ic.getHomeImgs();
       } catch (exception) {
         logger.error("exception: " + exception);
       }
     }
 
     function addImgs(type, srcType) {
+      try {
+        logger.debug("addImgs function");
+
+        var promise;
+
+        switch (type) {
+          case sConfig.picType.own:
+            promise = getImages(srcType, ic.ownImagesLimit - ic.ownImgs.length);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              /*for (var i = 0, len = imageData.uri.length; i < len; i++) {
+                ic.ownImgsUri.push(imageData.uri[i]);
+              }*/
+              ownBase64(imageData.uri, 0);
+            });
+            break;
+          case sConfig.picType.home:
+            promise = getImages(srcType, ic.homeImagesLimit - ic.homeImages.uri.length);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              for (var i = 0, len = imageData.uri.length; i < len; i++) {
+                ic.homeImages.uri.push(imageData.uri[i]);
+              }
+              homeBase64(imageData.uri, 0);
+            });
+            break;
+          case sConfig.picType.dp:
+            promise = getImages(srcType, 1);
+            promise.then(function(imageData) {
+              logger.debug("imageData: " + JSON.stringify(imageData));
+              ic.dp = imageData.uri[0];
+            });
+            break;
+        }
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    /*function addImgs(type, srcType) {
       try {
         logger.debug("addImgs function");
 
@@ -209,19 +331,50 @@
       } catch (exception) {
         logger.error("exception: " + exception);
       }
-    }
+    }*/
 
-    function removeImg(type, img) {
+    function removeImg(type, id, index) {
       try {
         logger.debug("removeImg function");
+
+        var promise;
+
         switch (type) {
           case sConfig.picType.own:
-            ic.ownImages.uri.splice(ic.ownImages.uri.indexOf(img), 1);
+            if (id === "local") {
+              ic.ownImgs.splice(index, 1);
+              return;
+            }
+            promise = imagesService.removeImg(id);
+
             break;
           case sConfig.picType.home:
-            ic.homeImages.uri.splice(ic.homeImages.uri.indexOf(img), 1);
+            if (id === "local") {
+              ic.homeImgs.splice(index, 1);
+              return;
+            }
+            promise = imagesService.removeImg(id);
             break;
         }
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              //utilService.toastMessage(resp.messages);
+              return;
+            }
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            if (type === sConfig.picType.home) {
+              ic.homeImgs.splice(index, 1);
+              return;
+            }
+            ic.ownImgs.splice(index, 1);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -256,26 +409,19 @@
       }
     }
 
-    function largeImg(type, img) {
+    function largeImg(type, index) {
       try {
         logger.debug("largeImg function");
 
-        var index = 0;
-
         switch (type) {
           case sConfig.picType.own:
-            ic.modalImgsArr = ic.ownImages.uri;
-            index = ic.ownImages.uri.indexOf(img);
+            ic.modalImgsArr = ic.ownImgs;
             break;
           case sConfig.picType.home:
-            ic.modalImgsArr = ic.homeImages.uri;
-            index = ic.homeImages.uri.indexOf(img);
+            ic.modalImgsArr = ic.homeImgs;
             break;
           case sConfig.picType.dp:
-            ic.modalImgsArr[0] = ic.dp;
-            break;
-          case sConfig.picType.pp:
-            ic.modalImgsArr[0] = 'img/sm-2.png';
+            ic.modalImgsArr[0] = ic.noavatar;
             break;
         }
         ic.showImagesModal(index);
@@ -297,7 +443,11 @@
         utilService.base64(imgURIs[index])
           .then(function(sucResp) {
             logger.debug("sucResp: " + sucResp);
-            ic.ownImages.base64[index] = sucResp;
+            //ic.ownImages.base64[index] = sucResp;
+            ic.ownImgs.push({
+              base64: sucResp,
+              _id: "local"
+            });
             index++;
             ownBase64(imgURIs, index);
           }, function(errResp) {
@@ -321,8 +471,11 @@
         utilService.base64(imgURIs[index])
           .then(function(sucResp) {
             logger.debug("sucResp: " + sucResp);
-            ic.homeImages.base64[index] = sucResp;
-
+            //ic.homeImages.base64[index] = sucResp;
+            ic.homeImgs.push({
+              base64: sucResp,
+              _id: "local"
+            });
             index++;
             homeBase64(imgURIs, index);
           }, function(errResp) {

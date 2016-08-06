@@ -35,6 +35,8 @@
     pc.pff.bodyType;
     pc.pff.subCaste;
 
+    var cIndex;
+
     // Get profiles
     pc.profiles = [];
     pc.modalImgsArr = [];
@@ -43,13 +45,15 @@
     pc.searchId;
 
     //Maintain states
-    pc.isSlProfiles = false;
-    pc.isRequests = false;
+    pc.isRequestsOut = false;
+    pc.isRequestsOut = false;
+    pc.isRequestsIn = false;
     pc.isProfiles = false;
 
     // Shortlist a profiles
     pc.isShortlist = false;
     pc.isInterest = false;
+    pc.sId;
     pc.shortlistBtn = "Shortlist";
     pc.interestBtn = "Show interest";
 
@@ -73,15 +77,76 @@
     pc.interest = interest;
     pc.disinterest = disinterest;
     pc.getShortlist = getShortlist;
-    pc.getRequests = getRequests;
+    pc.getRequestsIn = getRequestsIn;
+    pc.getRequestsOut = getRequestsOut;
+    pc.removeFromShortlist = removeFromShortlist;
+    pc.removeFromInterest = removeFromInterest;
 
     // Functions definations
-    function getRequests() {
+    function removeFromInterest(id, index) {
       try {
-        logger.debug("getRequests function");
-          //logger.debug("state: " + $ionicHistory.currentStateName());
-        pc.isSlProfiles = true;
-        var promise = profileService.getRequests(lsService.get("_id"));
+        logger.debug("removeFromInterest function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            id: id
+          }
+        };
+
+        var promise = profileService.disinterest(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            if (!index)
+              index = cIndex;
+            pc.profiles.splice(index, 1);
+            pc.profileModal.hide();
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getRequestsOut() {
+      try {
+        logger.debug("getRequestsOut function");
+        //logger.debug("state: " + $ionicHistory.currentStateName());
+        pc.isRequestsOut = true;
+        var promise = profileService.getRequestsOut(lsService.get("_id"));
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profiles = resp.data.profiles;
+            pc.isRequests = true;
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getRequestsIn() {
+      try {
+        logger.debug("getRequestsIn function");
+        //logger.debug("state: " + $ionicHistory.currentStateName());
+        pc.isRequestsIn = true;
+        var promise = profileService.getRequestsIn(lsService.get("_id"));
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -140,7 +205,7 @@
             }
             pc.isInterest = false;
             pc.interestBtn = "Show interest";
-            utilService.toastMessage(resp.messages);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -177,7 +242,38 @@
 
             pc.isInterest = true;
             pc.interestBtn = "Interest shown";
-            utilService.toastMessage(resp.messages);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function removeFromShortlist(id, index) {
+      try {
+        logger.debug("removeFromShortlist function");
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            id: id
+          }
+        };
+        var promise = profileService.unShortlist(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            if (!index)
+              index = cIndex;
+            pc.profiles.splice(index, 1);
+            pc.profileModal.hide();
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -208,10 +304,9 @@
               utilService.appAlert(resp.messages);
               return;
             }
-            // Add a toast here
             pc.isShortlist = false;
             pc.shortlistBtn = "Shortlist";
-            utilService.toastMessage(resp.messages);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -221,7 +316,7 @@
       }
     }
 
-    function shortlist(id) {
+    function shortlist(id, index) {
       try {
         logger.debug("shortlist function");
 
@@ -245,10 +340,11 @@
               utilService.appAlert(resp.messages);
               return;
             }
-
+            pc.sId = id;
+            pc.sIndex = index;
             pc.isShortlist = true;
             pc.shortlistBtn = "Shortlisted";
-            utilService.toastMessage(resp.messages);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -281,7 +377,7 @@
       }
     }
 
-    function viewProfile(id) {
+    function viewProfile(id, index) {
       try {
         logger.debug("viewProfile function");
         var promise = profileService.getProfile(id);
@@ -293,6 +389,7 @@
               return;
             }
 
+            cIndex = index;
             pc.profile = resp.data.profile;
             pc.showProfileModal();
           } catch (exception) {
@@ -360,6 +457,17 @@
 
     function hideProfileModal() {
       logger.debug("hideProfileModal function");
+
+      if (pc.isShortlist === true) {
+        pc.profiles.splice(cIndex, 1);
+      }
+
+      if (pc.isInterest === true) {
+        pc.profiles.splice(cIndex, 1);
+      }
+
+      pc.isInterest = false;
+      pc.isShortlist = false;
       pc.profileModal.hide();
     }
 
@@ -493,8 +601,8 @@
           case "getShortlist":
             pc.getShortlist();
             break;
-          case "getRequests":
-            pc.getRequests();
+          case "getRequestsOut":
+            pc.getRequestsOut();
             break;
           default:
             pc.getProfiles();

@@ -5,7 +5,7 @@
 
   <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
     <ion-slide ng-repeat="img in ic.modalImgsArr">
-      <img ng-src="{{img}}" class="fullscreen-image" />
+      <img ng-src="data:image/jpg;base64,{{img.base64}}" class="fullscreen-image" />
       <!--<p class="info">{{oImage.msg}}</p>-->
     </ion-slide>
   </ion-slide-box>
