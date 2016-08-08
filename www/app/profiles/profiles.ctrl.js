@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory', 'hwBackBtnService'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory, hwBackBtnService) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -425,9 +425,9 @@
             }
 
             cIndex = index;
-
-            pc.pp = resp.data.profile.dp;
-            var bDetails = resp.data.profile.basicDetails;
+            pc.profile = resp.data.profile;
+            pc.pp = pc.profile.dp;
+            var bDetails = pc.profile.basicDetails;
 
             if (bDetails) {
               if (bDetails.dob) {
@@ -438,7 +438,7 @@
               pc.bdf = bDetails;
             }
 
-            var rInfo = resp.data.profile.religiousInfo;
+            var rInfo = pc.profile.religiousInfo;
             if (rInfo) {
               var tob = rInfo.tob;
               delete rInfo.tob;
@@ -447,14 +447,14 @@
               pc.rif.tob = new Date(tob);
             }
 
-            if (resp.data.profile.professionInfo)
-              pc.pif = resp.data.profile.professionInfo;
+            if (pc.profile.professionInfo)
+              pc.pif = pc.profile.professionInfo;
 
-            if (resp.data.profile.locationInfo)
-              pc.lif = resp.data.profile.locationInfo;
+            if (pc.profile.locationInfo)
+              pc.lif = pc.profile.locationInfo;
 
-            if (resp.data.profile.familyInfo)
-              pc.fif = resp.data.profile.familyInfo;
+            if (pc.profile.familyInfo)
+              pc.fif = pc.profile.familyInfo;
 
             var imgsPromise = profileService.getImgsById(id);
             imgsPromise.then(function(sucResp) {
@@ -506,6 +506,8 @@
             logger.error("exception: " + exception);
           }
         }, function(errResp) {});
+
+        hwBackBtnService.enableHWBackBtn();
       } catch (exception) {
         logger.error("exception: " + exception);
       }

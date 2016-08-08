@@ -37,7 +37,9 @@ angular.module('starter').constant('starterConfig', (function() {
     menu_emyprofile: "menu.emyprofile",
     menu_profilesp: "menu.profilesp",
     menu_slprofiles: "menu.slprofiles",
-    menu_pinfo: "menu.pinfo"
+    menu_pinfo: "menu.pinfo",
+    welcome: "welcome",
+    dp: "dp"
   };
   var screenTitles = {
     signin: "Sign in",

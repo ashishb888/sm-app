@@ -22,7 +22,7 @@
     eps.getImgs = getImgs;
     eps.removeImg = removeImg;
     eps.updateDP = updateDP;
-
+    
     function updateDP(req) {
       logger.debug("updateDP() service");
       return $http.post(sc.ws + '/images/dp', req, sc.httpReq.config);

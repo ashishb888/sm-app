@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('EditProfileCtrl', EditProfileCtrl);
 
-  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService'];
+  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService'];
 
-  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService) {
+  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -91,6 +91,10 @@
     epc.pp;
     epc.noavatar = "./img/no-avatar.png";
 
+    //DP
+    epc.isDP = false;
+    epc.isDPUpload = false;
+
     // Function section
     var initHeightArr = initHeightArr;
     var bootstrap = bootstrap;
@@ -139,8 +143,87 @@
     epc.getHomeImgs = getHomeImgs;
     epc.largeImg = largeImg;
     epc.addImgs = addImgs;
+    epc.removeImg = removeImg;
+    epc.dpFunction = dpFunction;
+
+    // Do nothing
+    epc.doNothing = doNothing;
 
     // Functions definations
+    epc.getDP = getDP;
+    epc.updateDP = updateDP;
+
+    // Functions definations
+    function updateDP() {
+      try {
+        logger.debug("updateDP function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id")
+          }
+        };
+
+        req.data.base64 = [];
+
+        if (epc.dp._id != "local") {
+          utilService.toastMessage("Nothing to upload.", null, sConfig.msgs.success);
+          return;
+        }
+
+        req.data.base64.push(epc.dp.base64);
+
+        var promise = editProfileService.updateDP(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            $rootScope.rootDP = epc.dp.base64;
+            epc.isDPUpload = true;
+            lsService.set("isDP", true);
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getDP() {
+      try {
+        logger.debug("getDP function");
+
+        var promise = editProfileService.getImgs(sConfig.picType.dp, lsService.get("_id"));
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+            if (resp.data.dp) {
+              epc.dp = resp.data.dp;
+              epc.dp.base64 = epc.dp.dp;
+              $rootScope.rootDP = epc.dp.base64;
+
+              epc.isDP = true;
+            }
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function getHomeImgs() {
       try {
         logger.debug("getHomeImgs function");
@@ -156,7 +239,7 @@
             }
             epc.homeImgs = resp.data.images;
 
-            if (!epc.pp){
+            if (!epc.pp) {
               if (epc.homeImgs && epc.homeImgs.length >= 1)
                 epc.pp = epc.homeImgs[0].base64;
             }
@@ -228,7 +311,7 @@
           return;
         }
         //req.data.base64 = epc.ownImages.base64;
-        var promise = imagesService.updateImgs(req);
+        var promise = editProfileService.updateImgs(req);
 
         promise.then(function(sucResp) {
           try {
@@ -239,6 +322,7 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            epc.hideUploadImgsModal();
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -271,7 +355,7 @@
           return;
         }
         //req.data.base64 = epc.ownImages.base64;
-        var promise = imagesService.updateImgs(req);
+        var promise = editProfileService.updateImgs(req);
 
         promise.then(function(sucResp) {
           try {
@@ -282,6 +366,7 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            epc.hideUploadImgsModal();
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -355,6 +440,7 @@
                     base64: sucResp,
                     _id: "local"
                   };
+                  epc.isDP = true;
                 }, function(errResp) {
                   logger.error("errResp: " + JSON.stringify(errResp));
                 });
@@ -378,7 +464,7 @@
               epc.ownImgs.splice(index, 1);
               return;
             }
-            promise = imagesService.removeImg(id);
+            promise = editProfileService.removeImg(id);
 
             break;
           case sConfig.picType.home:
@@ -386,7 +472,7 @@
               epc.homeImgs.splice(index, 1);
               return;
             }
-            promise = imagesService.removeImg(id);
+            promise = editProfileService.removeImg(id);
             break;
         }
 
@@ -458,11 +544,12 @@
             break;
           case sConfig.picType.dp:
             epc.modalImgsArr[0] = {
-              base64: epc.dp.base64
+              base64: epc.dp
             };
             break;
           case sConfig.picType.pp:
-            epc.modalImgsArr = epc.ownImgs.concat(epc.homeImgs);
+            var ownImgs = epc.ownImgs;
+            epc.modalImgsArr = ownImgs.concat(epc.homeImgs);
             break;
         }
         epc.showImagesModal(index);
@@ -1064,6 +1151,19 @@
       }
     }
 
+    function doNothing() {
+      logger.debug("doNothing function");
+    }
+
+    function dpFunction() {
+      try {
+        logger.debug("setEProfile function");
+
+        hwBackBtnService.disableHWBackBtn();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function bootstrap() {
       try {
@@ -1078,6 +1178,15 @@
             break;
           case "viewProfile":
             epc.viewProfile();
+            break;
+          case "doNothing":
+            epc.doNothing();
+            break;
+          case "getDP":
+            epc.getDP();
+            break;
+          case "dpFunction":
+            epc.dpFunction();
             break;
           default:
             epc.viewProfile();

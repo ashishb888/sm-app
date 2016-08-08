@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  local: "/api",
-  /*local: "http://10.1.1.86:3000",*/
+  /*local: "/api",*/
+  local: "http://10.1.1.86:3000",
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -305,7 +305,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
     })
     .state('menu.profile', {
       url: '/profile',
-      params: {'functionNm': 'viewProfile', 'userId': null},
+      params: {
+        'functionNm': 'viewProfile',
+        'userId': null
+      },
       views: {
         'menuContent': {
           templateUrl: 'app/profiles/profile.html',
@@ -323,7 +326,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.images', {
-      params: {'functionNm': 'getOwnImgs'},
+      params: {
+        'functionNm': 'getOwnImgs'
+      },
       url: '/images',
       views: {
         'menuContent': {
@@ -342,7 +347,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.eprofile', {
-      params: {'functionNm': 'setEProfile'},
+      params: {
+        'functionNm': 'setEProfile'
+      },
       url: '/eprofile',
       views: {
         'menuContent': {
@@ -352,7 +359,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.emyprofile', {
-      params: {'functionNm': 'getDP'},
+      params: {
+        'functionNm': 'getDP'
+      },
       url: '/emyprofile',
       views: {
         'menuContent': {
@@ -362,7 +371,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.profilesp', {
-      params: {'functionNm': 'setProfilesP'},
+      params: {
+        'functionNm': 'setProfilesP'
+      },
       url: '/profilesp',
       views: {
         'menuContent': {
@@ -408,7 +419,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.slprofiles', {
-      params: {'functionNm': 'getShortlist'},
+      params: {
+        'functionNm': 'getShortlist'
+      },
       url: '/slprofiles',
       views: {
         'menuContent': {
@@ -418,7 +431,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.requests', {
-      params: {'functionNm': 'getRequestsOut'},
+      params: {
+        'functionNm': 'getRequestsOut'
+      },
       url: '/requests',
       views: {
         'menuContent': {
@@ -428,11 +443,41 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       }
     })
     .state('menu.editprofile', {
-      params: {'functionNm': 'viewProfile'},
+      params: {
+        'functionNm': 'viewProfile'
+      },
       url: '/editprofile',
       views: {
         'menuContent': {
           templateUrl: 'app/editprofile/edit-profile.html',
+          controller: 'EditProfileCtrl as epc'
+        }
+      }
+    })
+    .state('welcome', {
+      params: {
+        'functionNm': 'doNothing'
+      },
+      url: '/welcome',
+      templateUrl: 'app/welcome/welcome.html',
+      controller: 'EditProfileCtrl as epc'
+    })
+    .state('dp', {
+      params: {
+        'functionNm': 'dpFunction'
+      },
+      url: '/dp',
+      templateUrl: 'app/editprofile/dp.html',
+      controller: 'EditProfileCtrl as epc'
+    })
+    .state('menu.inneerdp', {
+      params: {
+        'functionNm': 'getDP'
+      },
+      url: '/inneerdp',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/editprofile/inner-dp.html',
           controller: 'EditProfileCtrl as epc'
         }
       }
@@ -456,7 +501,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
           controller: 'EditProfileCtrl as epc'
         }
       }
-    })*/;
+    })*/
+  ;
 
   $urlRouterProvider.otherwise('/signin');
   console.debug("config() end");
