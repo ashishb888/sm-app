@@ -37,12 +37,18 @@
 
     var cIndex;
 
+    pc.noavatar = "img/no-avatar.png";
+
     // Get profiles
     pc.profiles = [];
     pc.modalImgsArr = [];
 
     // Search by id
     pc.searchId;
+
+    // View profile
+    pc.pp;
+    pc.ppImgs = [];
 
     //Maintain states
     pc.isRequestsOut = false;
@@ -56,6 +62,9 @@
     pc.sId;
     pc.shortlistBtn = "Shortlist";
     pc.interestBtn = "Show interest";
+
+    // Edit profile
+    //pc.isEditProfile = false;
 
     // Function section
     var bootstrap = bootstrap;
@@ -81,8 +90,20 @@
     pc.getRequestsOut = getRequestsOut;
     pc.removeFromShortlist = removeFromShortlist;
     pc.removeFromInterest = removeFromInterest;
+    pc.editProfile = editProfile;
 
     // Functions definations
+    function editProfile() {
+      try {
+        logger.debug("editProfile function");
+
+        pc.isEditProfile = true;
+        pc.viewProfile(lsService.get("_id"));
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function removeFromInterest(id, index) {
       try {
         logger.debug("removeFromInterest function");
@@ -234,6 +255,10 @@
         if (pc.isShortlist == true) {
           utilService.toastMessage("You can choose either Shortlist or Show interest");
           return;
+        }
+
+        if (pc.isSlProfiles == true) {
+          req.data.isSlProfiles = true;
         }
 
         var promise = profileService.interest(req);
@@ -400,7 +425,58 @@
             }
 
             cIndex = index;
-            pc.profile = resp.data.profile;
+
+            pc.pp = resp.data.profile.dp;
+            var bDetails = resp.data.profile.basicDetails;
+
+            if (bDetails) {
+              if (bDetails.dob) {
+                var dob = bDetails.dob;
+                delete bDetails.dob;
+                bDetails.dob = new Date(dob);
+              }
+              pc.bdf = bDetails;
+            }
+
+            var rInfo = resp.data.profile.religiousInfo;
+            if (rInfo) {
+              var tob = rInfo.tob;
+              delete rInfo.tob;
+
+              pc.rif = rInfo;
+              pc.rif.tob = new Date(tob);
+            }
+
+            if (resp.data.profile.professionInfo)
+              pc.pif = resp.data.profile.professionInfo;
+
+            if (resp.data.profile.locationInfo)
+              pc.lif = resp.data.profile.locationInfo;
+
+            if (resp.data.profile.familyInfo)
+              pc.fif = resp.data.profile.familyInfo;
+
+            var imgsPromise = profileService.getImgsById(id);
+            imgsPromise.then(function(sucResp) {
+              try {
+                var resp = sucResp.data;
+                if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                  utilService.appAlert(resp.messages);
+                  return;
+                }
+
+                pc.ppImgs = resp.data.images;
+
+                /*if (!pc.pp){
+                  if (pc.ppImgs && pc.ppImgs.length > 0) {
+                    pc.pp = pc.ppImgs[0].base64;
+                  }
+                }*/
+
+              } catch (exception) {
+                logger.error("exception: " + exception);
+              }
+            }, function(errResp) {});
             pc.showProfileModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -591,7 +667,7 @@
             pc.modalImgsArr[0] = pc.dp.uri;
             break;
           case sConfig.picType.pp:
-            pc.modalImgsArr[0] = 'img/sm-2.png';
+            pc.modalImgsArr = pc.ppImgs;
             break;
         }
         pc.showImagesModal(index);
@@ -613,6 +689,9 @@
             break;
           case "getRequestsOut":
             pc.getRequestsOut();
+            break;
+          case "editProfile":
+            pc.editProfile();
             break;
           default:
             pc.getProfiles();

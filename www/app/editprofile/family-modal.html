@@ -1,0 +1,80 @@
+<ion-modal-view view-title="Family information">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Family information
+    <button class="button button-clear float-left m-top1" ng-click="epc.hideFamilyModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <!-- Family form -->
+    <form name="familyInfoForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family type
+        </div>
+        <select ng-required="true" ng-model="epc.fif.familyType">
+          <option ng-repeat="ft in epc.familyTypeArr">{{ft}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family values
+        </div>
+        <select ng-required="true" ng-model="epc.fif.familyValues">
+          <option ng-repeat="fv in epc.familyValuesArr">{{fv}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Family status
+        </div>
+        <select ng-required="true" ng-model="epc.fif.familyStatus">
+          <option ng-repeat="fs in epc.familyStatusArr">{{fs}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Brother(s)</span>
+        <input type="number" name="nBrothers" placeholder="Brother(s)" ng-model="epc.fif.nBrothers" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyInfoForm.nBrothers.$error" ng-if="familyInfoForm.nBrothers.$dirty">
+          <div ng-message="required">Brother(s) is required.</div>
+          <div ng-message="minlength">Brother(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Brother(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Sister(s)</span>
+        <input type="number" name="nSisters" placeholder="Sister(s)" ng-model="epc.fif.nSisters" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyInfoForm.nSisters.$error" ng-if="familyInfoForm.nSisters.$dirty">
+          <div ng-message="required">Sister(s) is required.</div>
+          <div ng-message="minlength">Sister(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Sister(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Uncle(s)</span>
+        <input type="number" name="nUncles" placeholder="Uncle(s)" ng-model="epc.fif.nUncles" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyInfoForm.nUncles.$error" ng-if="familyInfoForm.nUncles.$dirty">
+          <div ng-message="required">Uncle(s) is required.</div>
+          <div ng-message="minlength">Uncle(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Uncle(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Aunt(s)</span>
+        <input type="number" name="nAunts" placeholder="Aunt(s)" ng-model="epc.fif.nAunts" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <div class="app-error" ng-messages="familyInfoForm.nAunts.$error" ng-if="familyInfoForm.nAunts.$dirty">
+          <div ng-message="required">Aunt(s) is required.</div>
+          <div ng-message="minlength">Aunt(s) must be at least 1 characters long.</div>
+          <div ng-message="maxlength">Aunt(s) can be at most 2 characters long.</div>
+        </div>
+      </label>
+
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="familyInfoForm.$invalid" ng-click="epc.updateFamilyInfo()">
+          Update
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

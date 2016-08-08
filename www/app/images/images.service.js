@@ -9,7 +9,13 @@
     is.getImgs = getImgs;
     is.removeImg = removeImg;
     is.updateDP = updateDP;
+    is.getImgsById = getImgsById;
 
+    function getImgsById(type, id) {
+      logger.debug("getImgsById() service");
+      return $http.get(sc.ws + '/images/' + id, sc.httpReq.config);
+    }
+    
     function updateDP(req) {
       logger.debug("updateDP() service");
       return $http.post(sc.ws + '/images/dp', req, sc.httpReq.config);

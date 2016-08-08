@@ -19,10 +19,16 @@
   </ion-header-bar>
   <ion-content ng-class="{'has-footer': !pc.isRequestsOut}">
     <div class="card">
+
       <div class="item item-body">
-        <img class="full-image" src="img/sm-2.png" ng-click="pc.largeImg('pp')">
-        <h2>{{pc.profile.fullName}}</h2>
-        <p>24 Yrs, 5'6", {{pc.profile.location.district}}.</p>
+        <div class="txt-ctr-align">
+          <img class="w50" src="{{pc.noavatar}}" ng-hide="pc.pp">
+          <img class="w50" ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
+        </div>
+        <!--<img ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">-->
+        <!--<img class="full-image" src="img/sm-2.png" ng-click="pc.largeImg('pp')">-->
+        <h2>{{pc.bdf.fullName}}</h2>
+        <p>24 Yrs, 5'6", {{pc.lif.district}}.</p>
       </div>
       <div class="card">
         <div class="item item-divider">
@@ -32,24 +38,28 @@
           Name: {{pc.profile.fullName}}
         </div>-->
         <div class="row">
-          <div class="col col-40">Name:</div>
-          <div class="col col-60">{{pc.profile.fullName}}</div>
+          <div class="col col-40">Name</div>
+          <div class="col col-60">{{pc.bdf.fullName}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Gender:</div>
-          <div class="col col-60">{{pc.profile.gender}}</div>
+          <div class="col col-40">Gender</div>
+          <div class="col col-60">{{pc.bdf.gender}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Weight:</div>
-          <div class="col col-60">{{pc.profile.pinfo.weight}}</div>
+          <div class="col col-40">Date of birth</div>
+          <div class="col col-60">{{epc.bdf.dob}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Body type:</div>
-          <div class="col col-60">{{pc.profile.pinfo.bodyType}}</div>
+          <div class="col col-40">Weight</div>
+          <div class="col col-60">{{pc.bdf.weight}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Complexion:</div>
-          <div class="col col-60">{{pc.profile.pinfo.complexion}}</div>
+          <div class="col col-40">Body type</div>
+          <div class="col col-60">{{pc.bdf.bodyType}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Complexion</div>
+          <div class="col col-60">{{pc.bdf.complexion}}</div>
         </div>
       </div>
       <div class="card">
@@ -57,16 +67,16 @@
           Religious information
         </div>
         <div class="row">
-          <div class="col col-40">Sub-caste:</div>
-          <div class="col col-60">{{pc.profile.pinfo.subCaste}}</div>
+          <div class="col col-40">Sub-caste</div>
+          <div class="col col-60">{{pc.rif.subCaste}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Time of birth:</div>
-          <div class="col col-60">{{pc.profile.pinfo.tob}}</div>
+          <div class="col col-40">Time of birth</div>
+          <div class="col col-60">{{pc.rif.tob}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Zodiac:</div>
-          <div class="col col-60">{{pc.profile.pinfo.zodiac}}</div>
+          <div class="col col-40">Zodiac</div>
+          <div class="col col-60">{{pc.rif.zodiac}}</div>
         </div>
       </div>
       <div class="card">
@@ -74,20 +84,20 @@
           Professional information
         </div>
         <div class="row">
-          <div class="col col-40">Education:</div>
-          <div class="col col-60">{{pc.profile.profession.hEducation}}</div>
+          <div class="col col-40">Education</div>
+          <div class="col col-60">{{pc.pif.hEducation}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Occupation:</div>
-          <div class="col col-60">{{pc.profile.profession.occupation}}</div>
+          <div class="col col-40">Occupation</div>
+          <div class="col col-60">{{pc.pif.occupation}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Occupation desc:</div>
-          <div class="col col-60">{{pc.profile.profession.occupationDesc}}</div>
+          <div class="col col-40">Occupation desc</div>
+          <div class="col col-60">{{pc.pif.occupationDesc}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Annual income:</div>
-          <div class="col col-60">{{pc.profile.profession.aIncome}}</div>
+          <div class="col col-40">Annual income</div>
+          <div class="col col-60">{{pc.pif.aIncome}}</div>
         </div>
       </div>
       <div class="card">
@@ -95,16 +105,16 @@
           Location
         </div>
         <div class="row">
-          <div class="col col-40">District:</div>
-          <div class="col col-60">{{pc.profile.location.district}}</div>
+          <div class="col col-40">District</div>
+          <div class="col col-60">{{pc.lif.district}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Taluqa:</div>
-          <div class="col col-60">{{pc.profile.location.taluqa}}</div>
+          <div class="col col-40">Taluqa</div>
+          <div class="col col-60">{{pc.lif.taluqa}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Town:</div>
-          <div class="col col-60">{{pc.profile.location.town}}</div>
+          <div class="col col-40">Town</div>
+          <div class="col col-60">{{pc.lif.town}}</div>
         </div>
       </div>
       <div class="card">
@@ -112,46 +122,46 @@
           Family details
         </div>
         <div class="row">
-          <div class="col col-40">Family type:</div>
-          <div class="col col-60">{{pc.profile.family.familyType}}</div>
+          <div class="col col-40">Family type</div>
+          <div class="col col-60">{{pc.fif.familyType}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Family values:</div>
-          <div class="col col-60">{{pc.profile.family.familyValues}}</div>
+          <div class="col col-40">Family values</div>
+          <div class="col col-60">{{pc.fif.familyValues}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Family status:</div>
-          <div class="col col-60">{{pc.profile.family.familyStatus}}</div>
+          <div class="col col-40">Family status</div>
+          <div class="col col-60">{{pc.fif.familyStatus}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Brother(s):</div>
-          <div class="col col-60">{{pc.profile.family.nBrothers}}</div>
+          <div class="col col-40">Brother(s)</div>
+          <div class="col col-60">{{pc.fif.nBrothers}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Sister(s):</div>
-          <div class="col col-60">{{pc.profile.family.nSisters}}</div>
+          <div class="col col-40">Sister(s)</div>
+          <div class="col col-60">{{pc.fif.nSisters}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Uncle(s):</div>
-          <div class="col col-60">{{pc.profile.family.nUncles}}</div>
+          <div class="col col-40">Uncle(s)</div>
+          <div class="col col-60">{{pc.fif.nUncles}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Aunt(s):</div>
-          <div class="col col-60">{{pc.profile.family.nAunts}}</div>
+          <div class="col col-40">Aunt(s)</div>
+          <div class="col col-60">{{pc.fif.nAunts}}</div>
         </div>
       </div>
     </div>
   </ion-content>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isProfiles">
-    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}</button>
+    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}&nbsp;</button>
+    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
   </div>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isRequestsIn">
-    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">Accept</button>
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">Reject</button>
+    <button ng-click="" class="button icon-right button-assertive icon ion-checkmark-circled">Accept&nbsp;</button>
+    <button ng-click="" class="button icon-right button-assertive ion-close-circled">Reject&nbsp;</button>
   </div>
   <div class="bar bar-footer" ng-show="pc.isSlProfiles">
     <!--<button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>-->
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}</button>
+    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
   </div>
 </ion-modal-view>

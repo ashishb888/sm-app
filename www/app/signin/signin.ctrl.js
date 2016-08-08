@@ -52,22 +52,22 @@
 
       var promise = signinService.signin(req);
       promise.then(function(sucResp) {
-          try {
-            var resp = sucResp.data;
+        try {
+          var resp = sucResp.data;
 
-            if (resp.status !== sc.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
-              return;
-            }
-            lsService.set("isSignedIn", true);
-            lsService.set("_id", resp.data._id);
-            lsService.set("fullName", resp.data.fullName);
-            $state.go(sc.appStates.menu_profiles);
+          if (resp.status !== sc.httpStatus.SUCCESS) {
+            utilService.appAlert(resp.messages);
             return;
-          } catch (exception) {
-            logger.error("exception: " + exception);
           }
-        }, function(errResp) {});
+          lsService.set("isSignedIn", true);
+          lsService.set("_id", resp.data._id);
+          lsService.set("fullName", resp.data.basicDetails.fullName);
+          $state.go(sc.appStates.menu_profiles);
+          return;
+        } catch (exception) {
+          logger.error("exception: " + exception);
+        }
+      }, function(errResp) {});
 
       logger.debug("signin ends");
     }

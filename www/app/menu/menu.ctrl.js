@@ -59,6 +59,7 @@
             logger.debug("Signed out");
             lsService.set("isSignedIn", false);
             lsService.remove("_id");
+            lsService.remove("fullName");
             $rootScope.rootDP = undefined;
             $state.go(sConfig.appStates.signin);
           }

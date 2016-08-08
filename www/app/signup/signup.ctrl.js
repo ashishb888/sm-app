@@ -27,11 +27,13 @@
             return;
         }
 
+        if (sc.sf.password !== sc.sf.rePassword) {
+          utilService.toastMessage("Password mismatches");
+          return;
+        }
         var req = {};
         req.data = sc.sf;
-        /*req.email = sc.sf.email;
-        req.password = sc.sf.password;
-        req.custom = sc.sf;*/
+
         var promise = signupService.signup(req);
         promise.then(function(sucResp){
             try {

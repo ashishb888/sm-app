@@ -1,0 +1,151 @@
+<ion-view view-title="Edit profile">
+  <ion-content>
+    <div class="card">
+    <!--  <div class="item item-divider">
+        Images
+        <i ng-click="epc.showBasicDetailsModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+      </div>-->
+      <div class="item item-body">
+        <div class="txt-ctr-align">
+          <img class="w50" src="{{epc.noavatar}}" ng-hide="epc.pp">
+          <img class="w50" ng-src="data:image/jpg;base64,{{epc.pp}}" ng-click="epc.largeImg('pp', $index)">
+        </div>
+
+        <div class="m-top1">
+          <span ng-click="epc.showOwnImgsModal()">
+            Persional images
+          </span>
+          <span ng-click="epc.showHomeImgsModal()" class="float-right">
+            Home images
+          </span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Basic details
+          <i ng-click="epc.showBasicDetailsModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">Name</div>
+          <div class="col col-60">{{epc.bdf.fullName}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Gender</div>
+          <div class="col col-60">{{epc.bdf.gender}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Date of birth</div>
+          <div class="col col-60">{{epc.bdf.dob}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Height</div>
+          <div class="col col-60">{{epc.bdf.height}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Weight</div>
+          <div class="col col-60">{{epc.bdf.weight}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Body type</div>
+          <div class="col col-60">{{epc.bdf.bodyType}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Complexion</div>
+          <div class="col col-60">{{epc.bdf.complexion}}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Religious information
+          <i ng-click="epc.showReligiousModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">Sub-caste</div>
+          <div class="col col-60">{{epc.rif.subCaste}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Time of birth</div>
+          <div class="col col-60">{{epc.rif.tob}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Zodiac</div>
+          <div class="col col-60">{{epc.rif.zodiac}}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Professional information
+          <i ng-click="epc.showProfessionModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">Education</div>
+          <div class="col col-60">{{epc.pif.hEducation}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Occupation</div>
+          <div class="col col-60">{{epc.pif.occupation}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Occupation desc</div>
+          <div class="col col-60">{{epc.pif.occupationDesc}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Annual income</div>
+          <div class="col col-60">{{epc.pif.aIncome}}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Location
+          <i ng-click="epc.showLocationModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">District</div>
+          <div class="col col-60">{{epc.lif.district}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Taluqa</div>
+          <div class="col col-60">{{epc.lif.taluqa}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Town</div>
+          <div class="col col-60">{{epc.lif.town}}</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="item item-divider">
+          Family details
+          <i ng-click="epc.showFamilyModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">Family type</div>
+          <div class="col col-60">{{epc.fif.familyType}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Family values</div>
+          <div class="col col-60">{{epc.fif.familyValues}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Family status</div>
+          <div class="col col-60">{{epc.fif.familyStatus}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Brother(s)</div>
+          <div class="col col-60">{{epc.fif.nBrothers}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Sister(s)</div>
+          <div class="col col-60">{{epc.fif.nSisters}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Uncle(s)</div>
+          <div class="col col-60">{{epc.fif.nUncles}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Aunt(s)</div>
+          <div class="col col-60">{{epc.fif.nAunts}}</div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
+  local: "/api",
+  /*local: "http://10.1.1.86:3000",*/
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -426,7 +426,37 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
           controller: 'ProfilesCtrl as pc'
         }
       }
-    });
+    })
+    .state('menu.editprofile', {
+      params: {'functionNm': 'viewProfile'},
+      url: '/editprofile',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/editprofile/edit-profile.html',
+          controller: 'EditProfileCtrl as epc'
+        }
+      }
+    })
+    /*.state('menu.basicdetails', {
+      params: {'functionNm': 'getBasicDetails'},
+      url: '/basicdetails',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/editprofile/basicdetails.html',
+          controller: 'EditProfileCtrl as epc'
+        }
+      }
+    })*/
+    /*.state('menu.religiousinfo', {
+      params: {'functionNm': 'getReligiousInfo'},
+      url: '/religiousinfo',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/editprofile/religious.html',
+          controller: 'EditProfileCtrl as epc'
+        }
+      }
+    })*/;
 
   $urlRouterProvider.otherwise('/signin');
   console.debug("config() end");

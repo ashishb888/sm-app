@@ -1,0 +1,63 @@
+<ion-modal-view view-title="Professional information">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Professional information
+    <button class="button button-clear float-left m-top1" ng-click="epc.hideProfessionModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <!-- Profession form -->
+    <form name="professionInfoForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Higher education
+        </div>
+        <select ng-required="true" ng-model="epc.pif.hEducation">
+          <option ng-repeat="e in epc.hEducationArr">{{e}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label" ng-show="epc.pif.hEducation == 'Other'">
+        <span class="input-label">Other higher education</span>
+        <input type="text" name="oHEducation" placeholder="Other higher education" ng-model="epc.pif.oHEducation" ng-required="epc.pif.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
+        <div class="app-error" ng-messages="professionInfoForm.oHEducation.$error" ng-if="professionInfoForm.oHEducation.$dirty">
+          <div ng-message="required">Other higher education is required.</div>
+          <div ng-message="minlength">Other higher education must be at least 2 characters long.</div>
+          <div ng-message="maxlength">Other higher education can be at most 20 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Occupation
+        </div>
+        <select ng-required="true" ng-model="epc.pif.occupation">
+          <option ng-repeat="o in epc.occupationArr">{{o}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">{{epc.pif.occupation}} description</span>
+        <input type="text" name="occupationDesc" placeholder="{{epc.pif.occupation}} description" ng-model="epc.pif.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
+        <div class="app-error" ng-messages="professionInfoForm.occupationDesc.$error" ng-if="professionInfoForm.occupationDesc.$dirty">
+          <div ng-message="required">{{epc.pif.occupation}} description is required.</div>
+          <div ng-message="minlength">{{epc.pif.occupation}} description must be at least 2 characters long.</div>
+          <div ng-message="maxlength">{{epc.pif.occupation}} description can be at most 100 characters long.</div>
+        </div>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Annual income</span>
+        <input type="number" name="aIncome" placeholder="Annual income" ng-model="epc.pif.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
+        <div class="app-error" ng-messages="professionInfoForm.aIncome.$error" ng-if="professionInfoForm.aIncome.$dirty">
+          <div ng-message="required">Annual income is required.</div>
+          <div ng-message="minlength">Annual income must be at least 2 characters long.</div>
+          <div ng-message="maxlength">Annual income can be at most 20 characters long.</div>
+        </div>
+      </label>
+
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="professionInfoForm.$invalid" ng-click="epc.updateProfessionInfo()">
+          Update
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

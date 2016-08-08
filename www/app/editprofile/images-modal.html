@@ -1,6 +1,6 @@
-<ion-modal-view class="modal image-modal transparent" ng-click="pc.hideImagesModal()">
+<ion-modal-view class="modal image-modal transparent" ng-click="epc.hideImagesModal()">
   <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="false">
-    <ion-slide ng-repeat="img in pc.modalImgsArr">
+    <ion-slide ng-repeat="img in epc.modalImgsArr">
       <img ng-src="data:image/jpg;base64,{{img.base64}}" class="fullscreen-image" />
     </ion-slide>
   </ion-slide-box>

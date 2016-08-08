@@ -1,0 +1,42 @@
+<ion-modal-view view-title="Religious information">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Religious information
+    <button class="button button-clear float-left m-top1" ng-click="epc.hideReligiousModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content class="">
+    <!-- Update persional information -->
+    <form name="religiousInfoForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Sub-caste
+        </div>
+        <select ng-required="true" ng-model="epc.rif.subCaste">
+          <option ng-repeat="sc in epc.subCasteArr">{{sc}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Time of birth</span>
+        <input type="time" name="tob" placeholder="Time of birth" ng-model="epc.rif.tob" ng-required="true">
+        <div class="app-error" ng-messages="religiousInfoForm.tob.$error" ng-if="religiousInfoForm.tob.$dirty">
+          <div ng-message="required">Time of birth is required.</div>
+        </div>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Zodiac
+        </div>
+        <select ng-required="true" ng-model="epc.rif.zodiac">
+          <option ng-repeat="z in epc.zodiacArr">{{z}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="religiousInfoForm.$invalid" ng-click="epc.updateReligiousInfo()">
+          Update profile
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

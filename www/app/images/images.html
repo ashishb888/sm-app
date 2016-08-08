@@ -37,13 +37,23 @@
         <i class="icon icon ion-camera float-left xlarge" ng-click="ic.addImgs('own', 'camera')"></i>
         <i class="icon ion-images float-right xlarge" ng-click="ic.addImgs('own', 'galary')"></i>
       </div>-->
-      <div class="card" ng-show="ic.ownImgs.length == 0 || ic.ownImgs.length < ic.ownImagesLimit">
-        <div class="item item-text-wrap">
+      <div class="card">
+        <div class="item item-divider">
+          <span class="float-left">
+            Added: {{ic.ownImgs.length}}
+          </span>
+          <span class="float-right">
+            Remaining: {{ic.ownImagesLimit - ic.ownImgs.length}}
+          </span>
+        </div>
+
+        <div class="item item-text-wrap" ng-show="ic.ownImgs.length == 0 || ic.ownImgs.length < ic.ownImagesLimit">
           <button class="button button-assertive button-clear" ng-click="ic.addImgs('own', 'camera')">
-            <i class="icon icon ion-camera xlarge" ></i>
+            <i class="icon icon ion-camera xlarge"></i>
           </button>
+
           <button class="button button-assertive button-clear float-right" ng-click="ic.addImgs('own', 'galary')">
-            <i class="icon ion-images  xlarge" ></i>
+            <i class="icon ion-images  xlarge"></i>
           </button>
           <!--<i class="icon icon ion-camera float-left xlarge" ng-click="ic.addImgs('own', 'camera')"></i>
           <i class="icon ion-images float-right xlarge" ng-click="ic.addImgs('own', 'galary')"></i>-->
@@ -52,7 +62,6 @@
       <!--<div class="padding">
 
       </div>-->
-
       <div class="card" ng-show="ic.ownImgs.length == 0">
         <div class="item item-text-wrap txt-ctr-align">
           <img src="{{ic.noImg}}">
@@ -63,7 +72,7 @@
           <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="ic.largeImg('own', $index)">
 
           <button class="button button-assertive button-clear float-right" ng-click="ic.removeImg('own', img._id, $index)">
-            <i class="icon ion-trash-b xlarge" ></i>
+            <i class="icon ion-trash-b xlarge"></i>
           </button>
         </div>
       </div>
@@ -77,18 +86,26 @@
 
     <!-- Home photos -->
     <form name="homePhotoForm" ng-show="ic.isHomePhotoForm">
-    <!--  <div class="padding" ng-show="ic.homeImgs.length == 0 || ic.homeImgs.length < ic.homeImagesLimit">
+      <!--  <div class="padding" ng-show="ic.homeImgs.length == 0 || ic.homeImgs.length < ic.homeImagesLimit">
         <i class="icon icon ion-camera float-left xlarge" ng-click="ic.addImgs('home', 'camera')"></i>
         <i class="icon ion-images float-right xlarge" ng-click="ic.addImgs('home', 'galary')"></i>
       </div>-->
 
-      <div class="card" ng-show="ic.homeImgs.length == 0 || ic.homeImgs.length < ic.homeImagesLimit">
-        <div class="item item-text-wrap">
+      <div class="card">
+        <div class="item item-divider">
+          <span class="float-left">
+            Added: {{ic.homeImgs.length}}
+          </span>
+          <span class="float-right">
+            Remaining: {{ic.homeImagesLimit - ic.homeImgs.length}}
+          </span>
+        </div>
+        <div class="item item-text-wrap" ng-show="ic.homeImgs.length == 0 || ic.homeImgs.length < ic.homeImagesLimit">
           <button class="button button-assertive button-clear" ng-click="ic.addImgs('home', 'camera')">
-            <i class="icon icon ion-camera xlarge" ></i>
+            <i class="icon icon ion-camera xlarge"></i>
           </button>
           <button class="button button-assertive button-clear float-right" ng-click="ic.addImgs('home', 'galary')">
-            <i class="icon ion-images  xlarge" ></i>
+            <i class="icon ion-images  xlarge"></i>
           </button>
         </div>
       </div>
@@ -105,7 +122,7 @@
           <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="ic.largeImg('home', $index)">
           <!--<i class="icon ion-trash-b float-right xlarge" ng-click="ic.removeImg('home', $index)"></i>-->
           <button class="button button-assertive button-clear float-right" ng-click="ic.removeImg('home', img._id, $index)">
-            <i class="icon ion-trash-b xlarge" ></i>
+            <i class="icon ion-trash-b xlarge"></i>
           </button>
         </div>
       </div>

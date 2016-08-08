@@ -1,0 +1,103 @@
+<ion-modal-view view-title="Images">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">{{epc.imgTitle}}
+    <button class="button button-clear float-left m-top1" ng-click="epc.hideUploadImgsModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content class="has-footer">
+    <!-- Home images -->
+    <form name="homePhotoForm" ng-hide="epc. isOwnImgs">
+      <div class="card">
+        <div class="item item-divider">
+          <span class="float-left">
+            Added: {{epc.homeImgs.length}}
+          </span>
+          <span class="float-right">
+            Remaining: {{epc.homeImagesLimit - epc.homeImgs.length}}
+          </span>
+        </div>
+      </div>
+      <div class="card" ng-show="epc.homeImgs.length == 0">
+        <div class="item item-text-wrap txt-ctr-align">
+          <img src="{{epc.noImg}}">
+        </div>
+      </div>
+      <div class="card" ng-repeat="img in epc.homeImgs">
+        <div class="item item-text-wrap txt-ctr-align">
+          <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('home', $index)">
+          <!--<i class="icon ion-trash-b float-right xlarge" ng-click="epc.removeImg('home', $index)"></i>-->
+          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImg('home', img._id, $index)">
+            <i class="icon ion-trash-b xlarge"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Own images -->
+    <form name="ownPhotoForm" ng-show="epc.isOwnImgs">
+      <div class="card">
+        <div class="item item-divider">
+          <span class="float-left">
+            Added: {{epc.ownImgs.length}}
+          </span>
+          <span class="float-right">
+            Remaining: {{epc.ownImagesLimit - epc.ownImgs.length}}
+          </span>
+        </div>
+      </div>
+      <div class="card" ng-show="epc.ownImgs.length == 0">
+        <div class="item item-text-wrap txt-ctr-align">
+          <img src="{{epc.noImg}}">
+        </div>
+      </div>
+      <div class="card" ng-repeat="img in epc.ownImgs">
+        <div class="item item-text-wrap txt-ctr-align">
+          <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('own', $index)">
+
+          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImg('own', img._id, $index)">
+            <i class="icon ion-trash-b xlarge"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+  <!-- Home images -->
+  <div class="bar bar-footer" ng-hide="epc.isOwnImgs">
+    <div class="row">
+      <div class="col col-20 m-top-2" >
+        <button class="button button-assertive button-clear" ng-disabled="epc.homeImgs.length == epc.homeImagesLimit" ng-click="epc.addImgs('home', 'camera')">
+          <i class="icon icon ion-camera"></i>
+        </button>
+      </div>
+      <div class="col col-60 m-top-2">
+        <button ng-click="epc.updateHomeImgs()" ng-disabled="epc.homeImgs.length == 0" class="button button-full button-assertive mtop0">Upload</button>
+      </div>
+      <div class="col col-20 m-top-2 txt-right-align">
+        <button class="button button-assertive button-clear" ng-disabled="epc.homeImgs.length == epc.homeImagesLimit" ng-click="epc.addImgs('home', 'galary')">
+          <i class="icon icon ion-images"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Own images -->
+  <div class="bar bar-footer" ng-show="epc.isOwnImgs">
+    <div class="row">
+      <div class="col col-20 m-top-2">
+        <button class="button button-assertive button-clear" ng-disabled="epc.ownImgs.length == epc.ownImagesLimit" ng-click="epc.addImgs('own', 'camera')">
+          <i class="icon icon ion-camera"></i>
+        </button>
+      </div>
+      <div class="col col-60 m-top-2">
+        <button ng-click="epc.updateOwnImgs()" ng-disabled="epc.ownImgs.length == 0" class="button button-full button-assertive mtop0">Upload</button>
+      </div>
+      <div class="col col-20 m-top-2 txt-right-align">
+        <button class="button button-assertive button-clear" ng-disabled="epc.ownImgs.length == epc.ownImagesLimit" ng-click="epc.addImgs('own', 'galary')">
+          <i class="icon icon ion-images"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-modal-view>

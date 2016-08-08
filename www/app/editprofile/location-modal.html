@@ -1,0 +1,43 @@
+<ion-modal-view view-title="Location information">
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Location information
+    <button class="button button-clear float-left m-top1" ng-click="epc.hideLocationModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <!-- Location upload form -->
+    <form name="locationInfoForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          District
+        </div>
+        <select ng-required="true" ng-model="epc.lif.district">
+          <option ng-repeat="d in epc.districtArr">{{d}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Taluqa
+        </div>
+        <select ng-required="true" ng-model="epc.lif.taluqa">
+          <option ng-repeat="t in epc.taluqaArr">{{t}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Town
+        </div>
+        <select ng-required="true" ng-model="epc.lif.town">
+          <option ng-repeat="t in epc.townArr">{{t}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
+          Update address
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

@@ -23,6 +23,12 @@
     ps.getShortlist = getShortlist;
     ps.getRequestsOut = getRequestsOut;
     ps.getRequestsIn = getRequestsIn;
+    ps.getImgsById = getImgsById;
+
+    function getImgsById(id) {
+      logger.debug("getImgsById() service");
+      return $http.get(sc.ws + '/images/' + id, sc.httpReq.config);
+    }
 
     function getRequestsIn(id) {
       logger.debug("getRequestsIn() service");
