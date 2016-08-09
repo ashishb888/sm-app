@@ -37,7 +37,7 @@
 
     var cIndex;
 
-    pc.noavatar = "img/no-avatar.png";
+    pc.noavatar = "./img/no-avatar.png";
 
     // Get profiles
     pc.profiles = [];
@@ -392,6 +392,26 @@
     function searchProfile(id) {
       try {
         logger.debug("searchProfile function");
+
+
+        /*var promise = profileService.searchProfile(id);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            pc.profile = resp.data.profile;
+
+            pc.showProfileModal();
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});*/
+
+
         var promise = profileService.searchProfile(id);
         promise.then(function(sucResp) {
           try {
@@ -402,6 +422,53 @@
             }
 
             pc.profile = resp.data.profile;
+            pc.pp = pc.profile.dp;
+            var bDetails = pc.profile.basicDetails;
+
+            if (bDetails) {
+              if (bDetails.dob) {
+                var dob = bDetails.dob;
+                delete bDetails.dob;
+                bDetails.dob = new Date(dob);
+              }
+              pc.bdf = bDetails;
+            }
+
+            var rInfo = pc.profile.religiousInfo;
+            if (rInfo) {
+              var tob = rInfo.tob;
+              delete rInfo.tob;
+
+              pc.rif = rInfo;
+              pc.rif.tob = new Date(tob);
+            }
+
+            if (pc.profile.professionInfo)
+              pc.pif = pc.profile.professionInfo;
+
+            if (pc.profile.locationInfo)
+              pc.lif = pc.profile.locationInfo;
+
+            if (pc.profile.familyInfo)
+              pc.fif = pc.profile.familyInfo;
+
+            var imgsPromise = profileService.getImgsById(pc.profile._id);
+            imgsPromise.then(function(sucResp) {
+              try {
+                var resp = sucResp.data;
+                if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                  utilService.appAlert(resp.messages);
+                  return;
+                }
+
+                pc.ppImgs = resp.data.images;
+                pc.ppImgs.splice(0, 0, {
+                  base64: pc.pp
+                });
+              } catch (exception) {
+                logger.error("exception: " + exception);
+              }
+            }, function(errResp) {});
             pc.showProfileModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -415,6 +482,7 @@
     function viewProfile(id, index) {
       try {
         logger.debug("viewProfile function");
+
         var promise = profileService.getProfile(id);
         promise.then(function(sucResp) {
           try {
@@ -466,7 +534,9 @@
                 }
 
                 pc.ppImgs = resp.data.images;
-
+                pc.ppImgs.splice(0, 0, {
+                  base64: pc.pp
+                });
                 /*if (!pc.pp){
                   if (pc.ppImgs && pc.ppImgs.length > 0) {
                     pc.pp = pc.ppImgs[0].base64;

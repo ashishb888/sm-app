@@ -23,11 +23,11 @@
       <div class="item item-body">
         <div class="txt-ctr-align">
           <img class="w50" src="{{pc.noavatar}}" ng-hide="pc.pp">
-          <img class="w50" ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
+          <img class="w50" ng-show="pc.pp" ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
         </div>
         <!--<img ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">-->
         <!--<img class="full-image" src="img/sm-2.png" ng-click="pc.largeImg('pp')">-->
-        <h2>{{pc.bdf.fullName}}</h2>
+        <h2 class="">{{pc.bdf.fullName}}</h2>
         <p>24 Yrs, 5'6", {{pc.lif.district}}.</p>
       </div>
       <div class="card">

@@ -26,6 +26,16 @@ $dark:                            #444 !default;
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
+@import url(../font/OpenSans-Bold.ttf);
+@import url(../font/OpenSans-BoldItalic.ttf);
+@import url(../font/OpenSans-ExtraBold.ttf);
+@import url(../font/OpenSans-ExtraBoldItalic.ttf);
+@import url(../font/OpenSans-Italic.ttf);
+@import url(../font/OpenSans-Light.ttf);
+@import url(../font/OpenSans-LightItalic.ttf);
+@import url(../font/OpenSans-Regular.ttf);
+@import url(../font/OpenSans-Semibold.ttf);
+@import url(../font/OpenSans-SemiboldItalic.ttf);
 @font-face {
   font-family: "Ionicons";
   src: url("../lib/ionic/fonts/ionicons.eot?v=2.0.1");

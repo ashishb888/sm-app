@@ -7,10 +7,9 @@
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0">
       <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles">
-        <img src="img/sm-2.png" ng-click="pc.viewProfile(p._id)">
+        <img ng-src="data:image/jpg;base64,{{p.dp}}" ng-click="pc.viewProfile(p._id)">
         <h2>
-          {{p.fullName}}
-          <!--<i ng-show="pc.isSlProfiles" class="icon ion-android-delete float-right" ng-click="pc.removeFromShortlist(p._id, $index)"></i>-->
+          {{p.basicDetails.fullName}}
         </h2>
         <button class="button button-assertive button-clear float-right" ng-click="pc.removeFromShortlist(p._id, $index)">
           <i class="icon ion-android-delete"></i>

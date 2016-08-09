@@ -59,14 +59,14 @@
             utilService.appAlert(resp.messages);
             return;
           }
-          lsService.set("isSignedIn", true);
+          
           lsService.set("_id", resp.data._id);
           lsService.set("fullName", resp.data.basicDetails.fullName);
           if (resp.data.isDP == true) {
             $state.go(sc.appStates.menu_profiles);
             return;
           }
-          
+
           $state.go(sc.appStates.welcome);
         } catch (exception) {
           logger.error("exception: " + exception);

@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
+  local: "/api",
+  /*local: "http://10.1.1.86:3000",*/
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -456,7 +456,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
     })
     .state('welcome', {
       params: {
-        'functionNm': 'doNothing'
+        'functionNm': 'wcFunction'
       },
       url: '/welcome',
       templateUrl: 'app/welcome/welcome.html',
@@ -470,7 +470,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       templateUrl: 'app/editprofile/dp.html',
       controller: 'EditProfileCtrl as epc'
     })
-    .state('menu.inneerdp', {
+    .state('menu.innerdp', {
       params: {
         'functionNm': 'getDP'
       },

@@ -8,7 +8,7 @@
       <div class="item item-body">
         <div class="txt-ctr-align">
           <img class="w50" src="{{epc.noavatar}}" ng-hide="epc.pp">
-          <img class="w50" ng-src="data:image/jpg;base64,{{epc.pp}}" ng-click="epc.largeImg('pp', $index)">
+          <img class="w50" ng-src="data:image/jpg;base64,{{epc.ownImgs[0].base64}}" ng-click="epc.largeImg('pp', $index)">
         </div>
 
         <div class="m-top1">

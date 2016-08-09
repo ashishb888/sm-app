@@ -1,4 +1,51 @@
+@import url(../font/OpenSans-Bold.ttf);
+@import url(../font/OpenSans-BoldItalic.ttf);
+@import url(../font/OpenSans-ExtraBold.ttf);
+@import url(../font/OpenSans-ExtraBoldItalic.ttf);
+@import url(../font/OpenSans-Italic.ttf);
+@import url(../font/OpenSans-Light.ttf);
+@import url(../font/OpenSans-LightItalic.ttf);
+@import url(../font/OpenSans-Regular.ttf);
+@import url(../font/OpenSans-Semibold.ttf);
+@import url(../font/OpenSans-SemiboldItalic.ttf);
+
 @import "mixins";
+
+@font-face {
+    font-family: 'OpenSans'; /*a name to be used later*/
+    src: url('../font/OpenSans-Regular.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'OpenSans-Semibold';
+    src: url('../font/OpenSans-Semibold.ttf');
+}
+
+@font-face {
+    font-family: 'OpenSans-Light';
+    src: url('../font/OpenSans-Light.ttf');
+}
+
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('../font/OpenSans-Bold.ttf');
+}
+
+.open-sans {
+    @include text-font('OpenSans');
+}
+
+.open-sans-semibold {
+    @include text-font('OpenSans-Semibold');
+}
+
+.open-sans-light {
+    @include text-font('OpenSans-Light');
+}
+
+.open-sans-bold {
+    @include text-font('OpenSans-Bold');
+}
 
 /* Overriding positive */
 .button.button-positive {

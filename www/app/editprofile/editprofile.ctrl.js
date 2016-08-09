@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('EditProfileCtrl', EditProfileCtrl);
 
-  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService'];
+  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService', '$ionicPopup'];
 
-  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService) {
+  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopupb) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -145,6 +145,7 @@
     epc.addImgs = addImgs;
     epc.removeImg = removeImg;
     epc.dpFunction = dpFunction;
+    epc.wcFunction = wcFunction;
 
     // Do nothing
     epc.doNothing = doNothing;
@@ -160,7 +161,8 @@
 
         var req = {
           data: {
-            _id: lsService.get("_id")
+            _id: lsService.get("_id"),
+            isDP: true
           }
         };
 
@@ -186,6 +188,7 @@
             $rootScope.rootDP = epc.dp.base64;
             epc.isDPUpload = true;
             lsService.set("isDP", true);
+            lsService.set("isSignedIn", true);
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -456,44 +459,53 @@
       try {
         logger.debug("removeImg function");
 
-        var promise;
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Delete images',
+          template: 'Are you sure you want to delete the image?'
+        });
 
-        switch (type) {
-          case sConfig.picType.own:
-            if (id === "local") {
-              epc.ownImgs.splice(index, 1);
-              return;
-            }
-            promise = editProfileService.removeImg(id);
+        confirmPopup.then(function(res) {
+          if (res) {
+            var promise;
 
-            break;
-          case sConfig.picType.home:
-            if (id === "local") {
-              epc.homeImgs.splice(index, 1);
-              return;
-            }
-            promise = editProfileService.removeImg(id);
-            break;
-        }
+            switch (type) {
+              case sConfig.picType.own:
+                if (id === "local") {
+                  epc.ownImgs.splice(index, 1);
+                  return;
+                }
+                promise = editProfileService.removeImg(id);
 
-        promise.then(function(sucResp) {
-          try {
-            var resp = sucResp.data;
-            if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
-              //utilService.toastMessage(resp.messages);
-              return;
+                break;
+              case sConfig.picType.home:
+                if (id === "local") {
+                  epc.homeImgs.splice(index, 1);
+                  return;
+                }
+                promise = editProfileService.removeImg(id);
+                break;
             }
-            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            if (type === sConfig.picType.home) {
-              epc.homeImgs.splice(index, 1);
-              return;
-            }
-            epc.ownImgs.splice(index, 1);
-          } catch (exception) {
-            logger.error("exception: " + exception);
+
+            promise.then(function(sucResp) {
+              try {
+                var resp = sucResp.data;
+                if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                  utilService.appAlert(resp.messages);
+                  //utilService.toastMessage(resp.messages);
+                  return;
+                }
+                utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+                if (type === sConfig.picType.home) {
+                  epc.homeImgs.splice(index, 1);
+                  return;
+                }
+                epc.ownImgs.splice(index, 1);
+              } catch (exception) {
+                logger.error("exception: " + exception);
+              }
+            }, function(errResp) {});
           }
-        }, function(errResp) {});
+        });
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -576,6 +588,7 @@
               base64: sucResp,
               _id: "local"
             });
+
             index++;
             ownBase64(imgURIs, index);
           }, function(errResp) {
@@ -1155,9 +1168,19 @@
       logger.debug("doNothing function");
     }
 
+    function wcFunction() {
+      try {
+        logger.debug("wcFunction function");
+
+        hwBackBtnService.disableHWBackBtn();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function dpFunction() {
       try {
-        logger.debug("setEProfile function");
+        logger.debug("dpFunction function");
 
         hwBackBtnService.disableHWBackBtn();
       } catch (exception) {
@@ -1187,6 +1210,9 @@
             break;
           case "dpFunction":
             epc.dpFunction();
+            break;
+          case "wcFunction":
+            epc.wcFunction();
             break;
           default:
             epc.viewProfile();
