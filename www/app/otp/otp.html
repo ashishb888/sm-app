@@ -1,0 +1,28 @@
+<ion-view side="right" view-title="One time password" title="One time password" hide-back-button="true" hide-nav-bar="false">
+  <!--<ion-nav-buttons side="left">
+    <button class="button button-clear float-left" ui-sref="signin">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+  </ion-nav-buttons>-->
+  <ion-content>
+    <div class="list">
+      <form name="otpForm" novalidate>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">One time password</span>
+          <input type="number" name="otp" placeholder="One time password" ng-model="fpCtrl.fp.otp" ng-required="true" ng-minlength="6" ng-maxlength="6">
+          <div class="app-error" ng-messages="otpForm.otp.$error" ng-if="otpForm.otp.$dirty">
+            <div ng-message="required">OTP is required.</div>
+            <div ng-message="number">Enter a valid OTP number.</div>
+            <div ng-message="minlength">OTP must be at least 6 digits long.</div>
+            <div ng-message="maxlength">OTP can be at most 6 digits long.</div>
+          </div>
+        </label>
+        <div class="padding">
+          <button class="button button-full button-assertive" ng-disabled="otpForm.$invalid" ng-click="fpCtrl.forgotPassword()">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>

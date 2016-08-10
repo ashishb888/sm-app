@@ -9921,6 +9921,36 @@ a.button, a.icons, a.r-icons, a.l-icons {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+@font-face {
+  font-family: 'OpenSans';
+  /*a name to be used later*/
+  src: url("../font/OpenSans-Regular.ttf");
+  /*URL to font*/ }
+
+@font-face {
+  font-family: 'OpenSans-Semibold';
+  src: url("../font/OpenSans-Semibold.ttf"); }
+
+@font-face {
+  font-family: 'OpenSans-Light';
+  src: url("../font/OpenSans-Light.ttf"); }
+
+@font-face {
+  font-family: 'OpenSans-Bold';
+  src: url("../font/OpenSans-Bold.ttf"); }
+
+.open-sans {
+  font-family: "OpenSans" !important; }
+
+.open-sans-semibold {
+  font-family: "OpenSans-Semibold" !important; }
+
+.open-sans-light {
+  font-family: "OpenSans-Light" !important; }
+
+.open-sans-bold {
+  font-family: "OpenSans-Bold" !important; }
+
 /* Overriding positive */
 .button.button-positive, .button-positive.icons, .button-positive.r-icons, .button-positive.l-icons {
   background-color: #ef473a !important; }

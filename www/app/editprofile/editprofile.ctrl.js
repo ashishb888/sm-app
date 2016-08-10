@@ -37,6 +37,7 @@
     epc.smokingHabitArr = ["No", "Yes", "Occasionally"];
     //epc.bdf.smokingHabit = epc.smokingHabitArr[0];
     epc.bdf.dob;
+    epc.bdf.dobLocal;
 
     //Religious info
     epc.rif = {};
@@ -150,11 +151,18 @@
     // Do nothing
     epc.doNothing = doNothing;
 
-    // Functions definations
     epc.getDP = getDP;
     epc.updateDP = updateDP;
+    epc.enableHWBackBtn = enableHWBackBtn;
 
     // Functions definations
+    function enableHWBackBtn() {
+      logger.debug("enableHWBackBtn function");
+
+      hwBackBtnService.enableHWBackBtn();
+      $state.go(sConfig.appStates.menu_profiles);
+    }
+
     function updateDP() {
       try {
         logger.debug("updateDP function");
@@ -188,7 +196,7 @@
             $rootScope.rootDP = epc.dp.base64;
             epc.isDPUpload = true;
             lsService.set("isDP", true);
-            lsService.set("isSignedIn", true);
+
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -325,6 +333,8 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+
+            epc.getHomeImgs();
             epc.hideUploadImgsModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -369,6 +379,8 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+
+            epc.getOwnImgs();
             epc.hideUploadImgsModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -816,28 +828,33 @@
               epc.bdf.fullName = bDetails.fullName;
               epc.bdf.gender = bDetails.gender;
 
-              if (bDetails.dob && bDetails.height && bDetails.weight) {
-                var dob = bDetails.dob;
-                var tob = bDetails.tob;
+              if (bDetails.dob) {
+                var dobArr = bDetails.dob.split("-");
+                bDetails.dobLocal = new Date(dobArr[2], dobArr[1] - 1, dobArr[0]);
+              } else {
+                epc.bdf.dobLocal = new Date();
+              }
 
-                delete bDetails.dob;
-                delete bDetails.tob;
+              //delete bDetails.dob;
 
+              if (bDetails.height && bDetails.weight) {
                 epc.bdf = bDetails;
-                epc.bdf.dob = new Date(dob);
+                //epc.bdf.dob = new Date(dob);
                 epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height.inches + " in";
               }
             }
 
             var rInfo = resp.data.profile.religiousInfo;
-            if (rInfo) {
-              var tob = rInfo.tob;
-
-              delete rInfo.tob;
-
-              epc.rif = rInfo;
-              //epc.rif.tob = new Date(tob);
+            if (rInfo.tob) {
+              var tobArr = rInfo.tob.split(":");
+              rInfo.tobLocal = new Date();
+              rInfo.tobLocal.setHours(tobArr[0] - 1);
+              rInfo.tobLocal.setMinutes(tobArr[1] - 1);
+            } else {
+              epc.rif.tobLocal = new Date();
             }
+
+            epc.rif = rInfo;
 
             if (resp.data.profile.professionInfo)
               epc.pif = resp.data.profile.professionInfo;
@@ -1007,8 +1024,12 @@
           }
         };
 
-        epc.rif.tob = new Date(epc.rif.tob);
+        var tobText = (epc.rif.tobLocal.getHours() + 1) + ":" + (epc.rif.tobLocal.getMinutes() + 1);
+        epc.rif.tob = tobText
+
+        // epc.rif.tob = new Date(epc.rif.tob);
         req.data.religiousInfo = epc.rif;
+
         var promise = editProfileService.updateReligiousInfo(req);
 
         promise.then(function(sucResp) {
@@ -1105,12 +1126,18 @@
           inches: 0
         };
         if (heightSplit.length > 2) {
-          console.log("IF");
           epc.bdf.height.inches = parseInt(heightSplit[2]);
         }
 
-        epc.bdf.dob = new Date(epc.bdf.dob);
+        var dobText;
+        /*if (epc.bdf.dob instanceof Date) {
+          dobText = epc.bdf.dob.getDate() + "-" + (epc.bdf.dob.getMonth() + 1) + "-" + epc.bdf.dob.getFullYear();
+        }*/
+        var dobText = epc.bdf.dobLocal.getDate() + "-" + (epc.bdf.dobLocal.getMonth() + 1) + "-" + epc.bdf.dobLocal.getFullYear();
+        epc.bdf.dob = dobText;
+        // epc.bdf.dob = epc.bdf.dob.toString().split("T")[0];
         req.data.basicDetails = epc.bdf;
+        //req.data.basicDetails.dob = dobText;
         var promise = editProfileService.updateBasicDetails(req);
 
         promise.then(function(sucResp) {
@@ -1122,6 +1149,8 @@
             }
             epc.bdf.height = lHeight;
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+            /*var dobArr = dobText.split("-");
+            epc.bdf.dob = new Date(dobArr[2], dobArr[1] - 1, dobArr[0]);*/
             epc.hideBasicDetailsModal();
           } catch (exception) {
             logger.error("exception: " + exception);

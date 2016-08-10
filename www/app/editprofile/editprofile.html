@@ -1,23 +1,48 @@
 <ion-view view-title="Edit profile">
   <ion-content>
     <div class="card">
-    <!--  <div class="item item-divider">
-        Images
-        <i ng-click="epc.showBasicDetailsModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+      <!--<div class="card" ng-hide="epc.ownImgs.length > 0">
+        <div class="item item-thumbnail-left">
+          <img ng-src="{{epc.noavatar}}">
+          <button menu-close class="button button-small button-assertive icon-right icon ion-edit" ng-click="epc.showOwnImgsModal()">
+            Personal images
+          </button>
+          <button menu-close class="button button-small button-assertive icon-right icon ion-edit float-right" ng-click="epc.showHomeImgsModal()">
+            Home images
+          </button>
+        </div>
+      </div>
+      <div class="card" ng-show="epc.ownImgs.length > 0">
+        <div class="item item-thumbnail-left">
+          <img ng-src="data:image/jpg;base64,{{epc.ownImgs[0].base64}}" ng-click="epc.largeImg('pp', $index)">
+          <div class="">
+            <button class="button button-small button-assertive icon-right icon ion-edit" ng-click="epc.showOwnImgsModal()">
+              Personal images
+            </button>
+          </div>
+          <div class="">
+            <button class="button button-small button-assertive icon-right icon ion-edit" ng-click="epc.showHomeImgsModal()">
+              Home images
+            </button>
+          </div>
+        </div>
       </div>-->
+
       <div class="item item-body">
-        <div class="txt-ctr-align">
-          <img class="w50" src="{{epc.noavatar}}" ng-hide="epc.pp">
+        <div class="txt-ctr-align" ng-hide="epc.ownImgs.length > 0">
+          <img class="w50" ng-src="{{epc.noavatar}}" >
+        </div>
+        <div class="txt-ctr-align" ng-show="epc.ownImgs.length > 0">
           <img class="w50" ng-src="data:image/jpg;base64,{{epc.ownImgs[0].base64}}" ng-click="epc.largeImg('pp', $index)">
         </div>
 
         <div class="m-top1">
-          <span ng-click="epc.showOwnImgsModal()">
-            Persional images
-          </span>
-          <span ng-click="epc.showHomeImgsModal()" class="float-right">
+          <button class="button button-small button-assertive icon-right icon ion-edit" ng-click="epc.showOwnImgsModal()">
+            Personal images
+          </button>
+          <button class="button button-small button-assertive icon-right icon ion-edit float-right" ng-click="epc.showHomeImgsModal()">
             Home images
-          </span>
+          </button>
         </div>
       </div>
       <div class="card">
@@ -35,8 +60,13 @@
         </div>
         <div class="row">
           <div class="col col-40">Date of birth</div>
-          <div class="col col-60">{{epc.bdf.dob}}</div>
+          <div class="col col-60">{{epc.bdf.dobLocal | date: "d MMM yyyy"}}</div>
         </div>
+        <div class="row">
+          <div class="col col-40">Age</div>
+          <div class="col col-60" ><age></age> </div>
+        </div>
+        <!--<alerter dob={{15}}>alert 15</alerter>-->
         <div class="row">
           <div class="col col-40">Height</div>
           <div class="col col-60">{{epc.bdf.height}}</div>
@@ -65,7 +95,7 @@
         </div>
         <div class="row">
           <div class="col col-40">Time of birth</div>
-          <div class="col col-60">{{epc.rif.tob}}</div>
+          <div class="col col-60">{{epc.rif.tobLocal | date: "h:mm a"}}</div>
         </div>
         <div class="row">
           <div class="col col-40">Zodiac</div>

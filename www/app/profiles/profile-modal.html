@@ -1,10 +1,5 @@
 <ion-modal-view>
   <ion-header-bar class="bar-assertive">
-    <!--<h1 class="title txt-ctr-align">Profile
-      <i class="icon ion-android-arrow-back float-left xlarge" ng-click="pc.hideProfileModal()"></i>
-      <i ng-show="pc.isSlProfiles" class="icon ion-android-delete float-right xlarge" ng-click="pc.removeFromShortlist(pc.profile._id)"></i>
-      <i ng-show="pc.isRequestsOut" class="icon ion-android-delete float-right xlarge" ng-click="pc.removeFromInterest(pc.profile._id)"></i>
-    </h1>-->
     <h1 class="title txt-ctr-align">Profile
     <button class="button button-clear float-left m-top1" ng-click="pc.hideProfileModal()">
       <i class="icon ion-android-arrow-back"></i>
@@ -19,24 +14,25 @@
   </ion-header-bar>
   <ion-content ng-class="{'has-footer': !pc.isRequestsOut}">
     <div class="card">
-
-      <div class="item item-body">
+      <div class="card" ng-show="pc.profiles.length !== 0">
+        <div class="item item-thumbnail-left">
+          <img ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
+          <h2 class="">{{pc.bdf.fullName}}</h2>
+          <p>24 Yrs, 5'6", {{pc.lif.district}}.</p>
+        </div>
+      </div>
+      <!--<div class="item item-body">
         <div class="txt-ctr-align">
-          <img class="w50" src="{{pc.noavatar}}" ng-hide="pc.pp">
+          <img class="w50" ng-src="{{pc.noavatar}}" ng-hide="pc.pp">
           <img class="w50" ng-show="pc.pp" ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
         </div>
-        <!--<img ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">-->
-        <!--<img class="full-image" src="img/sm-2.png" ng-click="pc.largeImg('pp')">-->
         <h2 class="">{{pc.bdf.fullName}}</h2>
         <p>24 Yrs, 5'6", {{pc.lif.district}}.</p>
-      </div>
+      </div>-->
       <div class="card">
         <div class="item item-divider">
           Basic details
         </div>
-        <!--<div class="item item-text-wrap">
-          Name: {{pc.profile.fullName}}
-        </div>-->
         <div class="row">
           <div class="col col-40">Name</div>
           <div class="col col-60">{{pc.bdf.fullName}}</div>

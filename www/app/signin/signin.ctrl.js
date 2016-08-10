@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('SigninCtrl', SigninCtrl);
 
-  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'addressService', 'hwBackBtnService'];
+  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'addressService', 'hwBackBtnService', '$rootScope', '$auth'];
 
-  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, addressService, hwBackBtnService) {
+  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, addressService, hwBackBtnService, $rootScope, $auth) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SigninCtrl start");
@@ -59,10 +59,15 @@
             utilService.appAlert(resp.messages);
             return;
           }
-          
+
+          lsService.set("isSignedIn", true);
           lsService.set("_id", resp.data._id);
+          lsService.set("userId", resp.data.userId);
+          $rootScope.userId = resp.data.userId;
           lsService.set("fullName", resp.data.basicDetails.fullName);
+
           if (resp.data.isDP == true) {
+            $rootScope.rootDP = resp.data.dp;
             $state.go(sc.appStates.menu_profiles);
             return;
           }
@@ -73,16 +78,45 @@
         }
       }, function(errResp) {});
 
+      /*$auth.login(credentials).then(function() {
+        // Return an $http request for the authenticated user
+        $http.get('http://localhost:8000/api/authenticate/user').success(function(response) {
+            // Stringify the retured data
+            var user = JSON.stringify(response.user);
+
+            // Set the stringified user data into local storage
+            localStorage.setItem('user', user);
+
+            // Getting current user data from local storage
+            $rootScope.currentUser = response.user;
+            // $rootScope.currentUser = localStorage.setItem('user');;
+
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
+            $state.go('app.jokes');
+          })
+          .error(function() {
+            $scope.loginError = true;
+            $scope.loginErrorText = error.data.error;
+            console.log($scope.loginErrorText);
+          })
+      });*/
+
       logger.debug("signin ends");
     }
 
     /**/
     function setView() {
-      var isSignedIn = lsService.get("isSignedIn");
-      if (isSignedIn == "true") {
-        $state.go(sc.appStates.menu_profiles);
-        //$state.go("menu.profiles");
-      }
+      if (lsService.get("isSignedIn") != "true")
+        return;
+
+      /*if (lsService.get("isDP") != "true") {
+        $state.go(sc.appStates.welcome);
+        return;
+      }*/
+
+      $state.go(sc.appStates.menu_profiles);
     }
 
     /* Executes function according function name */

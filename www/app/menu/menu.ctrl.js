@@ -60,6 +60,7 @@
             lsService.set("isSignedIn", false);
             lsService.remove("_id");
             lsService.remove("fullName");
+            lsService.remove("isDP");
             $rootScope.rootDP = undefined;
             $state.go(sConfig.appStates.signin);
           }
@@ -75,10 +76,10 @@
 
         switch ($stateParams.functionNm) {
           case "getDP":
-            mc.getDP();
+            // mc.getDP();
             break;
           default:
-            mc.getDP();
+            // mc.getDP();
         }
       } catch (exception) {
         logger.error("exception: " + exception);

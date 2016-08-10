@@ -26,7 +26,7 @@ var urls = {
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
+angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 'satellizer'])
 
 .run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService, $state) {
   $ionicPlatform.ready(function() {
@@ -78,7 +78,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
   });*/
 })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider, $logProvider, $sceDelegateProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $httpProvider, $logProvider, $sceDelegateProvider, $authProvider) {
   console.debug("config() start");
   console.debug("env: " + env);
   var urlWhiteListSuffix = "/**";
@@ -119,6 +119,35 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
     default:
       urlWhiteList.push(urls.prod + urlWhiteListSuffix);
   }
+
+  /* Depending upon env it sets backend URLs */
+  switch (env) {
+    case envLs.prod:
+      $authProvider.loginUrl = urls.prod + "/login";
+      $authProvider.signupUrl = urls.prod + "/numberverify";
+      urlWhiteList.push(urls.prod + urlWhiteListSuffix);
+      break;
+    case envLs.uat:
+      $authProvider.loginUrl = urls.uat + "/login";
+      $authProvider.signupUrl = urls.uat + "/numberverify";
+      urlWhiteList.push(urls.uat + urlWhiteListSuffix);
+      break;
+    case envLs.dev:
+      $authProvider.loginUrl = urls.dev + "/login";
+      $authProvider.signupUrl = urls.dev + "/numberverify";
+      urlWhiteList.push(urls.dev + urlWhiteListSuffix);
+      break;
+    case envLs.local:
+      $authProvider.loginUrl = urls.local + "/signin";
+      $authProvider.signupUrl = urls.local + "/otp";
+      urlWhiteList.push(urls.local + urlWhiteListSuffix);
+      break;
+    default:
+      $authProvider.loginUrl = urls.prod + "/login";
+      $authProvider.signupUrl = urls.prod + "/numberverify";
+      urlWhiteList.push(urls.prod + urlWhiteListSuffix);
+  }
+
 
   /* Whitelists URLs */
   $sceDelegateProvider.resourceUrlWhitelist(urlWhiteList);
@@ -216,6 +245,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
   /* Checks if URL start with HTTP or HTTPS */
   function urlCheck(url) {
     url = url.toLowerCase();
+
+    if (url.includes("images"))
+      return false;
+
     if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("/api")) {
       return true;
     }
@@ -449,7 +482,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
       url: '/editprofile',
       views: {
         'menuContent': {
-          templateUrl: 'app/editprofile/edit-profile.html',
+          templateUrl: 'app/editprofile/editprofile.html',
           controller: 'EditProfileCtrl as epc'
         }
       }
@@ -482,6 +515,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
         }
       }
     })
+    .state('otp', {
+      url: '/otp',
+      templateUrl: 'app/otp/otp.html'
+    })
     /*.state('menu.basicdetails', {
       params: {'functionNm': 'getBasicDetails'},
       url: '/basicdetails',
@@ -506,4 +543,24 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5'])
 
   $urlRouterProvider.otherwise('/signin');
   console.debug("config() end");
-});
+})
+.directive('age',
+    function() {
+      return {
+    template: "Name:<script> moment().diff('1990-08-17', 'years')</script>"
+  };
+      /*return {
+        model: {
+			size: '@'
+        },
+        link: function($scope, element, attrs, controller) {
+          alert("Hi");
+          var aaa = moment().diff('1990-08-17', 'years');
+          console.log("Age: " + aaa);
+          return {
+        template: 'Name:'
+      }
+        }
+      };*/
+    }
+  );;

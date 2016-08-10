@@ -20,7 +20,7 @@
     </ion-header-bar>
     <ion-content class="bar-assertive">
       <ion-list>
-        <div class="card">
+        <!--<div class="card">
           <div class="item item-text-wrap txt-ctr-align">
             <img class="w50" src="{{mc.dp.uri}}" ng-hide="rootDP">
             <img class="w50" ng-src="data:image/jpg;base64,{{rootDP}}" ng-show="rootDP"/>
@@ -31,44 +31,53 @@
               {{mc.fullName}}
             </h2>
           </div>
+        </div>-->
+
+        <div class="card">
+          <div class="item item-thumbnail-left">
+            <!--<img ng-src="{{mc.dp.uri}}" ng-hide="rootDP">-->
+            <img ng-src="data:image/jpg;base64,{{rootDP}}" ng-show="rootDP" />
+            <h2>
+              {{mc.fullName}}
+            </h2>
+            <p>
+              {{userId}}
+            </p>
+            <!--<p>24 Yrs, Sangli.</p>-->
+            <button menu-close class="button button-assertive button-clear float-right" ui-sref="menu.innerdp">
+              <i class="icon ion-edit"></i>
+            </button>
+          </div>
         </div>
         <!--<li class="item ion-android-search" menu-close ui-sref="menu.profiles"> Search profiles</li>-->
 
         <ion-item class="item-icon-left" menu-close ui-sref="menu.profiles">
-          <i class="icon ion-android-search txt-color"></i>
-          Browse profiles
+          <i class="icon ion-android-search txt-color"></i> Browse profiles
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.requests">
-          <i class="icon ion-person-stalker txt-color"></i>
-          Requests
+          <i class="icon ion-person-stalker txt-color"></i> Requests
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.slprofiles">
-          <i class="icon ion-ios-star txt-color"></i>
-          Shortlisted profiles
+          <i class="icon ion-ios-star txt-color"></i> Shortlisted profiles
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.profilesp">
-          <i class="icon ion-university txt-color"></i>
-          Profiles preference
+          <i class="icon ion-university txt-color"></i> Profiles preference
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.editprofile">
-          <i class="icon ion-edit txt-color"></i>
-          Edit profile
+          <i class="icon ion-edit txt-color"></i> Edit profile
         </ion-item>
         <!--<ion-item class="item-icon-left" menu-close ui-sref="menu.pinfo">
           <i class="icon ion-edit txt-color"></i>
           Edit profile
         </ion-item>-->
         <ion-item class="item-icon-left" menu-close ui-sref="menu.settings">
-          <i class="icon ion-gear-a txt-color"></i>
-          Settings
+          <i class="icon ion-gear-a txt-color"></i> Settings
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.tc">
-          <i class="icon ion-android-clipboard txt-color"></i>
-          Terms & conditions
+          <i class="icon ion-android-clipboard txt-color"></i> Terms & conditions
         </ion-item>
         <ion-item class="item-icon-left" menu-close ui-sref="menu.help">
-          <i class="icon ion-help txt-color"></i>
-          Help
+          <i class="icon ion-help txt-color"></i> Help
         </ion-item>
         <!--<ion-item menu-close ng-click="mc.signout();">
           Sign out
