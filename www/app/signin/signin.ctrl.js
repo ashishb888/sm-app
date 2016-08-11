@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('SigninCtrl', SigninCtrl);
 
-  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'addressService', 'hwBackBtnService', '$rootScope', '$auth'];
+  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'hwBackBtnService', '$rootScope', '$auth'];
 
-  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, addressService, hwBackBtnService, $rootScope, $auth) {
+  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, hwBackBtnService, $rootScope, $auth) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SigninCtrl start");
@@ -63,11 +63,12 @@
           lsService.set("isSignedIn", true);
           lsService.set("_id", resp.data._id);
           lsService.set("userId", resp.data.userId);
-          $rootScope.userId = resp.data.userId;
+          // $rootScope.userId = resp.data.userId;
           lsService.set("fullName", resp.data.basicDetails.fullName);
 
           if (resp.data.isDP == true) {
-            $rootScope.rootDP = resp.data.dp;
+            // $rootScope.rootDP = resp.data.dp;
+            lsService.set("dp", resp.data.dp);
             $state.go(sc.appStates.menu_profiles);
             return;
           }
@@ -76,7 +77,9 @@
         } catch (exception) {
           logger.error("exception: " + exception);
         }
-      }, function(errResp) {});
+      }, function(errResp) {}).finally(function() {
+        // $rootScope.$broadcast("setBanner");
+      });
 
       /*$auth.login(credentials).then(function() {
         // Return an $http request for the authenticated user
@@ -108,6 +111,7 @@
 
     /**/
     function setView() {
+      $rootScope.$broadcast("setBanner");
       if (lsService.get("isSignedIn") != "true")
         return;
 

@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('EditProfileCtrl', EditProfileCtrl);
 
-  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService', '$ionicPopup'];
+  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService', '$ionicPopup', '$ionicActionSheet'];
 
-  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopup) {
+  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopup, $ionicActionSheet) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -100,6 +100,8 @@
     // Function section
     var initHeightArr = initHeightArr;
     var bootstrap = bootstrap;
+    var dateToString = dateToString;
+    var formatHeight = formatHeight;
     epc.viewProfile = viewProfile;
 
     epc.updateBasicDetails = updateBasicDetails;
@@ -155,8 +157,103 @@
     epc.getDP = getDP;
     epc.updateDP = updateDP;
     epc.enableHWBackBtn = enableHWBackBtn;
+    epc.moveToApp = moveToApp;
+    epc.imgActionSheet = imgActionSheet;
 
     // Functions definations
+    function imgActionSheet() {
+      logger.debug("imgActionSheet function");
+
+      $ionicActionSheet.show({
+        titleText: "Upload images",
+        buttons: [{
+          text: "<i class='txt-color icon ion-person'></i> Personal"
+        }, {
+          text: "<i class='txt-color icon ion-home'></i> Home"
+        }],
+        cancelText: 'Cancel',
+        cancel: function() {
+          logger.debug("Canceled");
+        },
+        buttonClicked: function(index) {
+          logger.debug("Button clicked", index);
+
+          switch (index) {
+            case 0:
+              epc.showOwnImgsModal();
+              break;
+            case 1:
+              epc.showHomeImgsModal();
+              break;
+            default:
+              epc.showOwnImgsModal();
+          }
+          return true;
+        }
+      });
+
+      /*$ionicActionSheet.show({
+        titleText: 'ActionSheet Example',
+        buttons: [{
+          text: '<i class="icon ion-share"></i> Share'
+        }, {
+          text: '<i class="icon ion-arrow-move"></i> Move'
+        }, ],
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        cancel: function() {
+          console.log('CANCELLED');
+        },
+        buttonClicked: function(index) {
+          console.log('BUTTON CLICKED', index);
+          return true;
+        },
+        destructiveButtonClicked: function() {
+          console.log('DESTRUCT');
+          return true;
+        }
+      });*/
+    }
+
+    function moveToApp() {
+      try {
+        logger.debug("moveToApp function");
+        /*$rootScope.$broadcast("setBanner");*/
+        epc.enableHWBackBtn();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function formatHeight(height) {
+      try {
+        logger.debug("formatHeight function");
+
+        var heightSplit = height.split(" ");
+        var height = {
+          feet: parseInt(heightSplit[0]),
+          inches: 0
+        };
+        if (heightSplit.length > 2) {
+          height.inches = parseInt(heightSplit[2]);
+        }
+
+        return height;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function dateToString(date) {
+      try {
+        logger.debug("dateToString function");
+
+        return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function enableHWBackBtn() {
       logger.debug("enableHWBackBtn function");
 
@@ -194,7 +291,9 @@
               return;
             }
 
-            $rootScope.rootDP = epc.dp.base64;
+            // $rootScope.rootDP = epc.dp.base64;
+            lsService.set("dp", epc.dp.base64);
+            $rootScope.$broadcast("setBanner");
             epc.isDPUpload = true;
             lsService.set("isDP", true);
 
@@ -744,6 +843,9 @@
               return;
             }
 
+            lsService.set("location", JSON.stringify(epc.lif));
+            $rootScope.$broadcast("setBanner");
+
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
             epc.hideLocationModal();
           } catch (exception) {
@@ -829,9 +931,18 @@
               /*epc.bdf.fullName = bDetails.fullName;
               epc.bdf.gender = bDetails.gender;*/
 
-              if (bDetails.dob) {
+              // Commented for new date format
+              /*if (bDetails.dob) {
                 var dobArr = bDetails.dob.split("-");
                 bDetails.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+                epc.isShowDOB = true;
+              } else {
+                bDetails.dobLocal = new Date();
+                epc.isShowDOB = false;
+              }*/
+
+              if (bDetails.dob) {
+                bDetails.dobLocal = moment(bDetails.dob.toString())._d;
                 epc.isShowDOB = true;
               } else {
                 bDetails.dobLocal = new Date();
@@ -841,11 +952,9 @@
               epc.bdf = bDetails;
               //delete bDetails.dob;
 
-              /*if (bDetails.height && bDetails.weight) {
-                epc.bdf = bDetails;
-                //epc.bdf.dob = new Date(dob);
+              if (bDetails.height) {
                 epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height.inches + " in";
-              }*/
+              }
             }
 
             var rInfo = resp.data.profile.religiousInfo;
@@ -858,7 +967,7 @@
                 rInfo.tobLocal.setHours(tobArr[0] - 1);
                 rInfo.tobLocal.setMinutes(tobArr[1] - 1);
                 epc.isShowTOB = true;
-              }else {
+              } else {
                 epc.isShowTOB = false;
                 rInfo.tobLocal = new Date();
               }
@@ -1129,6 +1238,7 @@
             _id: lsService.get("_id")
           }
         };
+
         var lHeight = epc.bdf.height;
         var heightSplit = lHeight.split(" ");
         epc.bdf.height = {
@@ -1139,12 +1249,13 @@
           epc.bdf.height.inches = parseInt(heightSplit[2]);
         }
 
+        //epc.bdf.height = formatHeight(epc.bdf.height)
         var dobText;
         /*if (epc.bdf.dob instanceof Date) {
           dobText = epc.bdf.dob.getDate() + "-" + (epc.bdf.dob.getMonth() + 1) + "-" + epc.bdf.dob.getFullYear();
         }*/
-        var dobText = epc.bdf.dobLocal.getFullYear() + "-" + (epc.bdf.dobLocal.getMonth() + 1) + "-" + epc.bdf.dobLocal.getDate();
-        epc.bdf.dob = dobText;
+        // var dobText = epc.bdf.dobLocal.getFullYear() + "-" + (epc.bdf.dobLocal.getMonth() + 1) + "-" + epc.bdf.dobLocal.getDate();
+        epc.bdf.dob = parseInt(moment(epc.bdf.dobLocal).format('YYYYMMDD'));
         // epc.bdf.dob = epc.bdf.dob.toString().split("T")[0];
         req.data.basicDetails = epc.bdf;
         //req.data.basicDetails.dob = dobText;
@@ -1159,9 +1270,13 @@
             }
             epc.bdf.height = lHeight;
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            /*var dobArr = dobText.split("-");
-            epc.bdf.dob = new Date(dobArr[2], dobArr[1] - 1, dobArr[0]);*/
+
+            lsService.set("fullName", epc.bdf.fullName);
+            lsService.set("dob", epc.bdf.dob);
+            lsService.set("height", epc.bdf.height);
+            $rootScope.$broadcast("setBanner");
             epc.isShowDOB = true;
+
             epc.hideBasicDetailsModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -1185,7 +1300,7 @@
             epc.heightArr.push(i + " ft " + j + " in");
           }
         }
-        epc.bdf.height = epc.heightArr[0];
+        //epc.bdf.height = epc.heightArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -1198,7 +1313,7 @@
 
         if (epc.heightArr == 0)
           initHeightArr();
-        epc.bdf.height = epc.heightArr[0];
+        // epc.bdf.height = epc.heightArr[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }

@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory', 'hwBackBtnService'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet'];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory, hwBackBtnService) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -62,6 +62,9 @@
     pc.sId;
     pc.shortlistBtn = "Shortlist";
     pc.interestBtn = "Show interest";
+
+    // Search by userId
+    pc.isSearchByUserId = false;
 
     // Edit profile
     //pc.isEditProfile = false;
@@ -503,6 +506,7 @@
                 logger.error("exception: " + exception);
               }
             }, function(errResp) {});
+            pc.isSearchByUserId = true;
             pc.showProfileModal();
           } catch (exception) {
             logger.error("exception: " + exception);
@@ -539,21 +543,20 @@
               }*/
               pc.bdf = bDetails;
               if (bDetails.dob) {
-                var dobArr = bDetails.dob.split("-");
-                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+                // var dobArr = bDetails.dob.split("-");
+                pc.bdf.dobLocal = moment(bDetails.dob.toString())._d;
+                // pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
               }
             }
 
             var rInfo = pc.profile.religiousInfo;
-            if (rInfo)
+            if (rInfo) {
               pc.rif = rInfo;
-            /*if (rInfo) {
-              var tob = rInfo.tob;
-              delete rInfo.tob;
-
-              pc.rif = rInfo;
-              pc.rif.tob = new Date(tob);
-            }*/
+              var timeSplit = pc.rif.tob.split(":");
+              pc.rif.tob = new Date();
+              pc.rif.tob.setHours(timeSplit[0])
+              pc.rif.tob.setMinutes(timeSplit[1])
+            }
 
             if (pc.profile.professionInfo)
               pc.pif = pc.profile.professionInfo;
@@ -661,12 +664,18 @@
 
       if (pc.isShortlist === true) {
         pc.profiles.splice(cIndex, 1);
+        if (pc.isSearchByUserId === true)
+          pc.getProfiles();
       }
 
       if (pc.isInterest === true) {
         pc.profiles.splice(cIndex, 1);
+        if (pc.isSearchByUserId === true)
+          pc.getProfiles();
       }
 
+
+      pc.isSearchByUserId = false;
       pc.isInterest = false;
       pc.isShortlist = false;
       pc.profileModal.hide();

@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0">
-      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)" >
+      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)">
         <img ng-src="data:image/jpg;base64,{{p.dp}}" >
         <h2>{{p.basicDetails.fullName}}</h2>
         <p>{{p.userId}}</p>

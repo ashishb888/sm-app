@@ -10005,7 +10005,7 @@ a.button, a.icons, a.r-icons, a.l-icons {
   text-decoration: underline; }
 
 .txt-color {
-  color: #ef473a; }
+  color: #ef473a !important; }
 
 .signin-links, .signin-su, .signin-fp {
   color: #ef473a; }
@@ -10110,3 +10110,9 @@ p.info {
 
 .m-top-3 {
   margin-top: -3% !important; }
+
+.w100 {
+  width: 100% !important; }
+
+.ml83 {
+  margin-left: 83% !important; }

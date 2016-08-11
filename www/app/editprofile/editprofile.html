@@ -27,13 +27,28 @@
           </div>
         </div>
       </div>-->
+      <div class="row" ng-show="epc.ownImgs.length == 0">
+        <div class="col col-33 col-offset-33">
+          <img class="w100" ng-src="{{epc.noavatar}}">
+        </div>
+      </div>
 
-      <div class="item item-body">
-        <div class="txt-ctr-align" ng-hide="epc.ownImgs.length > 0">
-          <img class="w50" ng-src="{{epc.noavatar}}" >
+      <div class="row">
+        <div class="col" ng-repeat="img in epc.ownImgs">
+          <img class="w100" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index)" />
+        </div>
+      </div>
+
+      <div class="row">
+        <button ng-click="epc.imgActionSheet()" class="button icon-right button-dark button-full icon ion-edit">Add/edit images&nbsp;</button>
+      </div>
+
+      <!--<div class="item item-body">
+        <div class="txt-ctr-align" ng-if="epc.ownImgs.length == 0">
+          <img class="w50" ng-src="{{epc.noavatar}}">
         </div>
         <div class="txt-ctr-align" ng-show="epc.ownImgs.length > 0">
-          <img class="w50" ng-src="data:image/jpg;base64,{{epc.ownImgs[0].base64}}" ng-click="epc.largeImg('pp', $index)">
+          <img class="w50" ng-src="data:image/jpg;base64,{{epc.ownImgs[0].base64}}" ng-click="epc.largeImg('pp', $index)" />
         </div>
 
         <div class="m-top1">
@@ -43,8 +58,9 @@
           <button class="button button-small button-assertive icon-right icon ion-edit float-right" ng-click="epc.showHomeImgsModal()">
             Home images
           </button>
+          <a ng-click="epc.imgActionSheet()">Test</a>
         </div>
-      </div>
+      </div>-->
       <div class="card">
         <div class="item item-divider">
           Basic details

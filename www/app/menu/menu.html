@@ -36,12 +36,18 @@
         <div class="card">
           <div class="item item-thumbnail-left">
             <!--<img ng-src="{{mc.dp.uri}}" ng-hide="rootDP">-->
-            <img menu-close ui-sref="menu.innerdp" ng-src="data:image/jpg;base64,{{rootDP}}"/>
+            <img menu-close ui-sref="menu.innerdp" ng-src="data:image/jpg;base64,{{mc.dp}}"/>
             <h2>
               {{mc.fullName}}
             </h2>
             <p>
-              {{userId}}
+              {{mc.userId}}
+            </p>
+            <p ng-show="mc.age">
+              {{mc.age}} Yrs, {{mc.height.feet}}' {{mc.height.inches}}"
+            </p>
+            <p ng-show="mc.location.town">
+              {{mc.location.town}}, {{mc.location.district}}.
             </p>
             <!--<button menu-close class="button button-assertive button-clear float-right" ui-sref="menu.innerdp">
               <i class="icon ion-edit"></i>

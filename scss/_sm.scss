@@ -113,7 +113,7 @@
 }
 
 .txt-color {
-  color: $assertive;
+  color: $assertive !important;
 }
 
 .signin-links {
@@ -277,4 +277,12 @@ p.info {
 
 .m-top-3 {
   margin-top: -3% !important;
+}
+
+.w100 {
+  width: 100% !important;
+}
+
+.ml83 {
+  margin-left: 83% !important;
 }

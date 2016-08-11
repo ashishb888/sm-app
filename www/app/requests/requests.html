@@ -11,14 +11,14 @@
         <h2>
           {{p.fullName}}
         </h2>-->
-        <img ng-src="data:image/jpg;base64,{{p.dp}}" ng-click="pc.viewProfile(p._id)">
+        <img ng-src="data:image/jpg;base64,{{p.dp}}" ng-click="pc.viewProfile(p._id, $index)">
         <h2>
           {{p.basicDetails.fullName}}
         </h2>
         <button class="button button-assertive button-clear float-right" ng-click="pc.removeFromInterest(p._id, $index)">
           <i class="icon ion-android-delete"></i>
         </button>
-        <div class="" ng-click="pc.viewProfile(p._id)">
+        <div class="" ng-click="pc.viewProfile(p._id, $index)">
           <p>{{p.userId}}</p>
           <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
           <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>

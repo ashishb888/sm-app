@@ -59,14 +59,14 @@ angular.module('starter').constant('starterConfig', (function() {
   };
 
   var dbConfig = {
-    dbName: "ashtest",
+    dbName: "appdb",
     dbVersion: "1.0",
-    dbDescription: "Test database",
+    dbDescription: "App database",
     dbSize: -1,
     tables: [{
-      name: 'documents',
+      name: 'images',
       columns: [{
-        name: 'id',
+        name: '_id',
         type: 'text'
       }, {
         name: 'title',

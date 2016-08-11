@@ -9,13 +9,56 @@
     logger.debug("MenuCtrl start");
 
     var mc = this;
-    mc.dp = {};
-    mc.dp.uri = "img/no-avatar.png";
-    mc.fullName = lsService.get("fullName");
+    /*mc.dp = {};
+    mc.dp.uri = "img/no-avatar.png";*/
+    mc.fullName;
+    mc.dp;
+    mc.age;
+    mc.height;
+    mc.location;
 
     // Functions section
     mc.signout = signout;
     mc.getDP = getDP;
+    mc.setDP = setDP;
+
+    $rootScope.$on('setBanner', function(event, data) {
+      try {
+        logger.debug("setBanner function");
+
+        mc.fullName = lsService.get("fullName");
+        mc.dp = lsService.get("dp");
+        mc.userId = lsService.get("userId");
+        mc.location = JSON.parse(lsService.get("location"));
+        mc.age = moment().diff(lsService.get("dob"), "years");
+
+        if (lsService.get("height")) {
+          var heightSplit = lsService.get("height").split(" ");
+
+          mc.height = {
+            feet: parseInt(heightSplit[0]),
+            inches: 0
+          };
+          if (heightSplit.length > 2) {
+            mc.height.inches = parseInt(heightSplit[2]);
+          }
+        }
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    });
+
+    function setDP() {
+      try {
+        logger.debug("setDP function");
+
+        mc.fullName = lsService.get("fullName");
+        mc.dp = lsService.get("dp");
+        mc.userId = lsService.get("userId");
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function getDP() {
       try {
@@ -57,11 +100,10 @@
         confirmPopup.then(function(res) {
           if (res) {
             logger.debug("Signed out");
+            localStorage.clear();
             lsService.set("isSignedIn", false);
-            lsService.remove("_id");
-            lsService.remove("fullName");
-            lsService.remove("isDP");
-            $rootScope.rootDP = undefined;
+
+            // $rootScope.rootDP = undefined;
             $state.go(sConfig.appStates.signin);
           }
         });
@@ -79,7 +121,7 @@
             // mc.getDP();
             break;
           default:
-            // mc.getDP();
+            $rootScope.$broadcast("setBanner");
         }
       } catch (exception) {
         logger.error("exception: " + exception);

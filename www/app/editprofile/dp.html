@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="padding">
-      <button ng-click="epc.enableHWBackBtn()" ng-show="epc.isDPUpload" class="button button-full button-assertive">Next</button>
+      <button ng-click="epc.moveToApp()" ng-show="epc.isDPUpload" class="button button-full button-assertive">Next</button>
     </div>
 
     <!--<div class="card">
@@ -36,7 +36,7 @@
         <button ng-click="epc.updateDP()" ng-disabled="!epc.isDP" class="button button-full button-assertive mtop0">Upload</button>
       </div>
       <div class="col col-20 m-top-2 txt-right-align">
-        <button class="button button-assertive button-clear" ng-click="epc.addImgs('dp', 'galary')">
+        <button class="button button-assertive button-clear" ng-disabled="!epc.isDP" ng-click="epc.addImgs('dp', 'galary')">
           <i class="icon icon ion-images"></i>
         </button>
       </div>

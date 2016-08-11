@@ -28,7 +28,7 @@ var urls = {
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 'satellizer'])
 
-.run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService, $state) {
+.run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService, $state, dbService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -41,6 +41,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    // Init database
+    dbService.initDB()
   });
 
   /* Logs every request. */
