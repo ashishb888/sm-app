@@ -5,6 +5,12 @@
     </div>
   </ion-nav-buttons>
   <ion-content class="has-footer">
+    <ion-refresher
+         on-refresh = "pc.pullRefresher()"
+         pulling-icon = "ion-android-refresh"
+         spinner = "ios"
+       >
+    </ion-refresher>
     <div class="card" ng-show="pc.profiles.length === 0">
       <div class="item item-text-wrap">
         No matches
@@ -15,8 +21,8 @@
         <img ng-src="data:image/jpg;base64,{{p.dp}}" >
         <h2>{{p.basicDetails.fullName}}</h2>
         <p>{{p.userId}}</p>
-        <p>24 Yrs, 5'6", Sangli.</p>
-        <p>24 Yrs, 5'6", Sangli.</p>
+        <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
+        <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
       </div>
     </div>
 

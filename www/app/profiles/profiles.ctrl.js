@@ -91,8 +91,30 @@
     pc.removeFromShortlist = removeFromShortlist;
     pc.removeFromInterest = removeFromInterest;
     pc.editProfile = editProfile;
+    pc.pullRefresher = pullRefresher;
+    pc.filterProfiles = filterProfiles;
 
     // Functions definations
+    function filterProfiles() {
+      try {
+        logger.debug("filterProfiles() function");
+
+        logger.debug("pc.pff: " + JSON.stringify(pc.pff));
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    /* Function will refresh the screen on screen pull event*/
+    function pullRefresher() {
+      try {
+        logger.debug("pullRefresher() function");
+        pc.getProfiles();
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function editProfile() {
       try {
         logger.debug("editProfile function");
@@ -425,7 +447,7 @@
             pc.pp = pc.profile.dp;
             var bDetails = pc.profile.basicDetails;
 
-            if (bDetails) {
+            /*if (bDetails) {
               if (bDetails.dob) {
                 var dob = bDetails.dob;
                 delete bDetails.dob;
@@ -441,7 +463,19 @@
 
               pc.rif = rInfo;
               pc.rif.tob = new Date(tob);
+            }*/
+
+            if (bDetails) {
+              pc.bdf = bDetails;
+              if (bDetails.dob) {
+                var dobArr = bDetails.dob.split("-");
+                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+              }
             }
+
+            var rInfo = pc.profile.religiousInfo;
+            if (rInfo)
+              pc.rif = rInfo;
 
             if (pc.profile.professionInfo)
               pc.pif = pc.profile.professionInfo;
@@ -498,22 +532,28 @@
             var bDetails = pc.profile.basicDetails;
 
             if (bDetails) {
-              if (bDetails.dob) {
+              /*if (bDetails.dob) {
                 var dob = bDetails.dob;
                 delete bDetails.dob;
                 bDetails.dob = new Date(dob);
-              }
+              }*/
               pc.bdf = bDetails;
+              if (bDetails.dob) {
+                var dobArr = bDetails.dob.split("-");
+                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+              }
             }
 
             var rInfo = pc.profile.religiousInfo;
-            if (rInfo) {
+            if (rInfo)
+              pc.rif = rInfo;
+            /*if (rInfo) {
               var tob = rInfo.tob;
               delete rInfo.tob;
 
               pc.rif = rInfo;
               pc.rif.tob = new Date(tob);
-            }
+            }*/
 
             if (pc.profile.professionInfo)
               pc.pif = pc.profile.professionInfo;
@@ -563,19 +603,22 @@
 
         var promise = profileService.getProfiles(lsService.get("_id"));
         promise.then(function(sucResp) {
-          try {
-            var resp = sucResp.data;
-            if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
-              return;
-            }
+            try {
+              var resp = sucResp.data;
+              if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                utilService.appAlert(resp.messages);
+                return;
+              }
 
-            pc.profiles = resp.data.profiles;
-            pc.isProfiles = true;
-          } catch (exception) {
-            logger.error("exception: " + exception);
-          }
-        }, function(errResp) {});
+              pc.profiles = resp.data.profiles;
+              pc.isProfiles = true;
+            } catch (exception) {
+              logger.error("exception: " + exception);
+            }
+          }, function(errResp) {})
+          .finally(function() {
+            $scope.$broadcast("scroll.refreshComplete");
+          });
 
         hwBackBtnService.enableHWBackBtn();
       } catch (exception) {
@@ -665,6 +708,8 @@
 
         if (pc.ageArr.length == 0)
           initAgeArr();
+        if (pc.heightArr.length == 0)
+          initHeightArr();
 
         if (pc.heightArr.indexOf("Any") == -1) {
           pc.heightArr.splice(0, 0, "Any");

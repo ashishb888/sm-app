@@ -19,9 +19,9 @@
           <i class="icon ion-android-delete"></i>
         </button>
         <div class="" ng-click="pc.viewProfile(p._id)">
-          <p>24 Yrs, 5'6", Sangli.</p>
-          <p>24 Yrs, 5'6", Sangli.</p>
-          <p>24 Yrs, 5'6", Sangli.</p>
+          <p>{{p.userId}}</p>
+          <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
+          <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
         </div>
 
       </div>

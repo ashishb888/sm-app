@@ -18,7 +18,8 @@
         <div class="item item-thumbnail-left">
           <img ng-src="data:image/jpg;base64,{{pc.pp}}" ng-click="pc.largeImg('pp')">
           <h2 class="">{{pc.bdf.fullName}}</h2>
-          <p>24 Yrs, 5'6", {{pc.lif.district}}.</p>
+          <p>{{pc.bdf.age}} Yrs, {{pc.bdf.height.feet}}' {{pc.bdf.height.inches}}"</p>
+          <p>{{pc.lif.town}}, {{pc.lif.district}}.</p>
         </div>
       </div>
       <!--<div class="item item-body">
@@ -43,7 +44,7 @@
         </div>
         <div class="row">
           <div class="col col-40">Date of birth</div>
-          <div class="col col-60">{{epc.bdf.dob}}</div>
+          <div class="col col-60">{{pc.bdf.dobLocal | date: "d MMM yyyy"}}</div>
         </div>
         <div class="row">
           <div class="col col-40">Weight</div>

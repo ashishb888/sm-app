@@ -3,7 +3,7 @@
 
   EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService', '$ionicPopup'];
 
-  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopupb) {
+  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopup) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -12,7 +12,8 @@
 
     // Entire profile
     epc.profile;
-
+    $scope.date = '1990-08-17';
+    epc.data1 = '1990-08-17';
     // Personal info form
     epc.bdf = {};
     epc.genderArr = ["Male", "Female"];
@@ -825,36 +826,45 @@
             }
             var bDetails = resp.data.profile.basicDetails;
             if (bDetails) {
-              epc.bdf.fullName = bDetails.fullName;
-              epc.bdf.gender = bDetails.gender;
+              /*epc.bdf.fullName = bDetails.fullName;
+              epc.bdf.gender = bDetails.gender;*/
 
               if (bDetails.dob) {
                 var dobArr = bDetails.dob.split("-");
-                bDetails.dobLocal = new Date(dobArr[2], dobArr[1] - 1, dobArr[0]);
+                bDetails.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+                epc.isShowDOB = true;
               } else {
-                epc.bdf.dobLocal = new Date();
+                bDetails.dobLocal = new Date();
+                epc.isShowDOB = false;
               }
 
+              epc.bdf = bDetails;
               //delete bDetails.dob;
 
-              if (bDetails.height && bDetails.weight) {
+              /*if (bDetails.height && bDetails.weight) {
                 epc.bdf = bDetails;
                 //epc.bdf.dob = new Date(dob);
                 epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height.inches + " in";
-              }
+              }*/
             }
 
             var rInfo = resp.data.profile.religiousInfo;
-            if (rInfo.tob) {
-              var tobArr = rInfo.tob.split(":");
-              rInfo.tobLocal = new Date();
-              rInfo.tobLocal.setHours(tobArr[0] - 1);
-              rInfo.tobLocal.setMinutes(tobArr[1] - 1);
-            } else {
-              epc.rif.tobLocal = new Date();
-            }
+            epc.rif.tobLocal = new Date();
 
-            epc.rif = rInfo;
+            if (rInfo) {
+              if (rInfo.tob) {
+                var tobArr = rInfo.tob.split(":");
+                rInfo.tobLocal = new Date();
+                rInfo.tobLocal.setHours(tobArr[0] - 1);
+                rInfo.tobLocal.setMinutes(tobArr[1] - 1);
+                epc.isShowTOB = true;
+              }else {
+                epc.isShowTOB = false;
+                rInfo.tobLocal = new Date();
+              }
+
+              epc.rif = rInfo;
+            }
 
             if (resp.data.profile.professionInfo)
               epc.pif = resp.data.profile.professionInfo;
@@ -1039,7 +1049,7 @@
               utilService.toastMessage(resp.messages);
               return;
             }
-
+            epc.isShowTOB = true;
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
             epc.hideReligiousModal();
           } catch (exception) {
@@ -1133,7 +1143,7 @@
         /*if (epc.bdf.dob instanceof Date) {
           dobText = epc.bdf.dob.getDate() + "-" + (epc.bdf.dob.getMonth() + 1) + "-" + epc.bdf.dob.getFullYear();
         }*/
-        var dobText = epc.bdf.dobLocal.getDate() + "-" + (epc.bdf.dobLocal.getMonth() + 1) + "-" + epc.bdf.dobLocal.getFullYear();
+        var dobText = epc.bdf.dobLocal.getFullYear() + "-" + (epc.bdf.dobLocal.getMonth() + 1) + "-" + epc.bdf.dobLocal.getDate();
         epc.bdf.dob = dobText;
         // epc.bdf.dob = epc.bdf.dob.toString().split("T")[0];
         req.data.basicDetails = epc.bdf;
@@ -1151,6 +1161,7 @@
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
             /*var dobArr = dobText.split("-");
             epc.bdf.dob = new Date(dobArr[2], dobArr[1] - 1, dobArr[0]);*/
+            epc.isShowDOB = true;
             epc.hideBasicDetailsModal();
           } catch (exception) {
             logger.error("exception: " + exception);

@@ -36,17 +36,16 @@
         <div class="card">
           <div class="item item-thumbnail-left">
             <!--<img ng-src="{{mc.dp.uri}}" ng-hide="rootDP">-->
-            <img ng-src="data:image/jpg;base64,{{rootDP}}" ng-show="rootDP" />
+            <img menu-close ui-sref="menu.innerdp" ng-src="data:image/jpg;base64,{{rootDP}}"/>
             <h2>
               {{mc.fullName}}
             </h2>
             <p>
               {{userId}}
             </p>
-            <!--<p>24 Yrs, Sangli.</p>-->
-            <button menu-close class="button button-assertive button-clear float-right" ui-sref="menu.innerdp">
+            <!--<button menu-close class="button button-assertive button-clear float-right" ui-sref="menu.innerdp">
               <i class="icon ion-edit"></i>
-            </button>
+            </button>-->
           </div>
         </div>
         <!--<li class="item ion-android-search" menu-close ui-sref="menu.profiles"> Search profiles</li>-->

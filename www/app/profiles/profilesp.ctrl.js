@@ -30,6 +30,38 @@
     var setProfilesP = setProfilesP;
     var initAgeArr = initAgeArr;
     var initHeightArr = initHeightArr;
+    ppc.updateProfilePreference = updateProfilePreference;
+
+    // Functions definations
+    function updateProfilePreference() {
+      try {
+        logger.debug("updateProfilePreference function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            profilePreference: ppc.ppf
+          }
+        };
+
+        var promise = profileService.updateProfilePreference(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
 
     function setProfilesP() {
       try {

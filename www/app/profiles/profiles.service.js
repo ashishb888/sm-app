@@ -24,6 +24,18 @@
     ps.getRequestsOut = getRequestsOut;
     ps.getRequestsIn = getRequestsIn;
     ps.getImgsById = getImgsById;
+    ps.filterProfiles = filterProfiles;
+    ps.updateProfilePreference = updateProfilePreference;
+
+    function updateProfilePreference(req) {
+      logger.debug("updateProfilePreference() service");
+      return $http.post(sc.ws + '/profilepreference', req, sc.httpReq.config);
+    }
+
+    function filterProfiles(req) {
+      logger.debug("filterProfiles() service");
+      return $http.post(sc.ws + '/filterprofiles/', req, sc.httpReq.config);
+    }
 
     function getImgsById(id) {
       logger.debug("getImgsById() service");
