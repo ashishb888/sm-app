@@ -34,7 +34,7 @@
 
     function filterProfiles(req) {
       logger.debug("filterProfiles() service");
-      return $http.post(sc.ws + '/filterprofiles/', req, sc.httpReq.config);
+      return $http.post(sc.ws + '/filterprofiles', req, sc.httpReq.config);
     }
 
     function getImgsById(id) {

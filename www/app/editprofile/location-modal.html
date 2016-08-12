@@ -25,14 +25,23 @@
           <option ng-repeat="t in epc.taluqaArr">{{t}}</option>
         </select>
       </label>
-      <label class="item item-input item-select">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Town</span>
+        <input type="text" name="town" placeholder="Town" ng-model="epc.lif.town" ng-required="true" ng-minlength="5" ng-maxlength="15">
+        <div class="app-error" ng-messages="locationInfoForm.town.$error" ng-if="locationInfoForm.town.$dirty">
+          <div ng-message="required">Town is required.</div>
+          <div ng-message="minlength">Town must be at least 5 characters long.</div>
+          <div ng-message="maxlength">Town can be at most 15 characters long.</div>
+        </div>
+      </label>
+      <!--<label class="item item-input item-select">
         <div class="input-label">
           Town
         </div>
         <select ng-required="true" ng-model="epc.lif.town">
           <option ng-repeat="t in epc.townArr">{{t}}</option>
         </select>
-      </label>
+      </label>-->
       <div class="padding">
         <button class="button button-full button-assertive" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
           Update address

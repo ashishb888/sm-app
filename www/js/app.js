@@ -309,43 +309,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
           }
         }
       })
-      .state('menu.profilesv1', {
-        url: '/profilesv1',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profiles/profiles-v1.html',
-            controller: 'ProfilesCtrlv1 as pc'
-          }
-        }
-      })
       .state('menu.settings', {
         url: '/settings',
         views: {
           'menuContent': {
             templateUrl: 'app/settings/settings.html',
             controller: 'SettingsCtrl as sc'
-          }
-        }
-      })
-      .state('menu.profile', {
-        url: '/profile',
-        params: {
-          'functionNm': 'viewProfile',
-          'userId': null
-        },
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profiles/profile.html',
-            controller: 'ProfileCtrl as pc'
-          }
-        }
-      })
-      .state('menu.profile1', {
-        url: '/profile1',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profile/profile.html',
-            controller: 'ProfileCtrl as pc'
           }
         }
       })
@@ -361,39 +330,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
           }
         }
       })
-      .state('menu.pprofiles', {
-        url: '/pprofiles',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profiles/pprofiles.html',
-            controller: 'ProfilesCtrl as pc'
-          }
-        }
-      })
-      .state('menu.eprofile', {
-        params: {
-          'functionNm': 'setEProfile'
-        },
-        url: '/eprofile',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profiles/eprofile.html',
-            controller: 'ProfilesCtrl as pc'
-          }
-        }
-      })
-      .state('menu.emyprofile', {
-        params: {
-          'functionNm': 'getDP'
-        },
-        url: '/emyprofile',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/emyprofile/emyprofile.html',
-            controller: 'ImagesCtrl as ic'
-          }
-        }
-      })
       .state('menu.profilesp', {
         params: {
           'functionNm': 'setProfilesP'
@@ -403,42 +339,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
           'menuContent': {
             templateUrl: 'app/profiles/profilesp.html',
             controller: 'ProfilesPCtrl as ppc'
-          }
-        }
-      })
-      .state('menu.family', {
-        url: '/family',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/family/family.html',
-            controller: 'FamilyCtrl as fc'
-          }
-        }
-      })
-      .state('menu.location', {
-        url: '/location',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/location/location.html',
-            controller: 'LocationCtrl as lc'
-          }
-        }
-      })
-      .state('menu.pinfo', {
-        url: '/pinfo',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/pinfo/pinfo.html',
-            controller: 'PInfoCtrl as pic'
-          }
-        }
-      })
-      .state('menu.profession', {
-        url: '/profession',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/profession/profession.html',
-            controller: 'ProfessionCtrl as pfc'
           }
         }
       })
@@ -509,28 +409,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
       .state('otp', {
         url: '/otp',
         templateUrl: 'app/otp/otp.html'
-      })
-      /*.state('menu.basicdetails', {
-        params: {'functionNm': 'getBasicDetails'},
-        url: '/basicdetails',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/editprofile/basicdetails.html',
-            controller: 'EditProfileCtrl as epc'
-          }
-        }
-      })*/
-      /*.state('menu.religiousinfo', {
-        params: {'functionNm': 'getReligiousInfo'},
-        url: '/religiousinfo',
-        views: {
-          'menuContent': {
-            templateUrl: 'app/editprofile/religious.html',
-            controller: 'EditProfileCtrl as epc'
-          }
-        }
-      })*/
-    ;
+      });
 
     $urlRouterProvider.otherwise('/signin');
     console.debug("config() end");
@@ -554,14 +433,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5', 's
         }
       };*/
     })
-.directive("user", function() {
-  return {
-    restrict: 'EACM',
-    link: function(scope, element, attrs) {
-      scope.username = moment().diff(scope.age, 'years');
-      scope.avatar = attrs.avatar;
-      scope.reputation = attrs.reputation;
-    },
-    template: '<div>Username: {{username}}, Avatar: {{avatar}}, Reputation: {{reputation}}</div>'
-  }
-});
+  .directive("user", function() {
+    return {
+      restrict: 'EACM',
+      link: function(scope, element, attrs) {
+        scope.username = moment().diff(scope.age, 'years');
+        scope.avatar = attrs.avatar;
+        scope.reputation = attrs.reputation;
+      },
+      template: '<div>Username: {{username}}, Avatar: {{avatar}}, Reputation: {{reputation}}</div>'
+    }
+  });

@@ -1,9 +1,9 @@
 (function() {
   angular.module('starter').controller('MenuCtrl', MenuCtrl);
 
-  MenuCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', 'imagesService', '$stateParams', '$rootScope'];
+  MenuCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', 'imagesService', '$stateParams', '$rootScope', '$ionicActionSheet'];
 
-  function MenuCtrl(sConfig, utilService, $state, $ionicPopup, lsService, imagesService, $stateParams, $rootScope) {
+  function MenuCtrl(sConfig, utilService, $state, $ionicPopup, lsService, imagesService, $stateParams, $rootScope, $ionicActionSheet) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("MenuCtrl start");
@@ -21,6 +21,41 @@
     mc.signout = signout;
     mc.getDP = getDP;
     mc.setDP = setDP;
+    mc.signoutActionSheet = signoutActionSheet;
+
+    // Functions definations
+    function signoutActionSheet() {
+      logger.debug("signoutActionSheet function");
+
+      var hideSignoutActionSheet = $ionicActionSheet.show({
+        titleText: "Sign out",
+        buttons: [{
+          text: "<i class='txt-color icon ion-log-out'></i> Sign out"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
+        }],
+        /*cancelText: 'Cancel',*/
+        cancel: function() {
+          logger.debug("Cancelled");
+        },
+        buttonClicked: function(index) {
+          logger.debug("Button clicked", index);
+
+          switch (index) {
+            case 0:
+              localStorage.clear();
+              lsService.set("isSignedIn", false);
+
+              $state.go(sConfig.appStates.signin);
+              break;
+            case 1:
+              hideSignoutActionSheet();
+              break;
+          }
+          return true;
+        }
+      });
+    }
 
     $rootScope.$on('setBanner', function(event, data) {
       try {

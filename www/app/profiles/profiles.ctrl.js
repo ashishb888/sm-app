@@ -102,7 +102,24 @@
       try {
         logger.debug("filterProfiles() function");
 
-        logger.debug("pc.pff: " + JSON.stringify(pc.pff));
+        // logger.debug("pc.pff: " + JSON.stringify(pc.pff));
+        // Write code to exlude own profile later
+        var req = {
+          data: pc.pff
+        };
+        var promise = profileService.filterProfiles(req);
+        
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

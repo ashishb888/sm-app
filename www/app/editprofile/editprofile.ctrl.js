@@ -92,6 +92,7 @@
     epc.imgTitle;
     epc.pp;
     epc.noavatar = "./img/no-avatar.png";
+    epc.modalImgsArr = [];
 
     //DP
     epc.isDP = false;
@@ -164,16 +165,18 @@
     function imgActionSheet() {
       logger.debug("imgActionSheet function");
 
-      $ionicActionSheet.show({
+      var hideImgActionSheet = $ionicActionSheet.show({
         titleText: "Upload images",
         buttons: [{
           text: "<i class='txt-color icon ion-person'></i> Personal"
         }, {
           text: "<i class='txt-color icon ion-home'></i> Home"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
         }],
-        cancelText: 'Cancel',
+        /*cancelText: 'Cancel',*/
         cancel: function() {
-          logger.debug("Canceled");
+          logger.debug("Cancelled");
         },
         buttonClicked: function(index) {
           logger.debug("Button clicked", index);
@@ -184,6 +187,9 @@
               break;
             case 1:
               epc.showHomeImgsModal();
+              break;
+            case 2:
+              hideImgActionSheet();
               break;
             default:
               epc.showOwnImgsModal();
@@ -668,7 +674,7 @@
             break;
           case sConfig.picType.dp:
             epc.modalImgsArr[0] = {
-              base64: epc.dp
+              base64: epc.dp.base64
             };
             break;
           case sConfig.picType.pp:

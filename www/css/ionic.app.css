@@ -10116,3 +10116,6 @@ p.info {
 
 .ml83 {
   margin-left: 83% !important; }
+
+.platform-android .action-sheet-cancel {
+  display: block !important; }
