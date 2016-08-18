@@ -1,9 +1,13 @@
 (function() {
   angular.module('starter').controller('SigninCtrl', SigninCtrl);
 
-  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope', 'signinService', 'lsService', '$stateParams', 'hwBackBtnService', '$rootScope', '$auth'];
+  SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope',
+    'signinService', 'lsService', '$stateParams', 'hwBackBtnService',
+    '$rootScope', '$auth'
+  ];
 
-  function SigninCtrl(sc, utilService, $state, $scope, signinService, lsService, $stateParams, hwBackBtnService, $rootScope, $auth) {
+  function SigninCtrl(sc, utilService, $state, $scope, signinService,
+    lsService, $stateParams, hwBackBtnService, $rootScope, $auth) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SigninCtrl start");
@@ -50,7 +54,7 @@
       var req = {};
       req.data = signinCtrl.sf;
 
-      var promise = signinService.signin(req);
+      /*var promise = signinService.signin(req);
       promise.then(function(sucResp) {
         try {
           var resp = sucResp.data;
@@ -63,8 +67,11 @@
           lsService.set("isSignedIn", true);
           lsService.set("_id", resp.data._id);
           lsService.set("userId", resp.data.userId);
-          // $rootScope.userId = resp.data.userId;
+          lsService.set("location", JSON.stringify(resp.data.locationInfo));
+          lsService.set("dob", resp.data.basicDetails.dob);
+          lsService.set("height", JSON.stringify(resp.data.basicDetails.height));
           lsService.set("fullName", resp.data.basicDetails.fullName);
+          lsService.set("gender", resp.data.basicDetails.gender);
 
           if (resp.data.isDP == true) {
             // $rootScope.rootDP = resp.data.dp;
@@ -79,32 +86,31 @@
         }
       }, function(errResp) {}).finally(function() {
         // $rootScope.$broadcast("setBanner");
-      });
-
-      /*$auth.login(credentials).then(function() {
-        // Return an $http request for the authenticated user
-        $http.get('http://localhost:8000/api/authenticate/user').success(function(response) {
-            // Stringify the retured data
-            var user = JSON.stringify(response.user);
-
-            // Set the stringified user data into local storage
-            localStorage.setItem('user', user);
-
-            // Getting current user data from local storage
-            $rootScope.currentUser = response.user;
-            // $rootScope.currentUser = localStorage.setItem('user');;
-
-            $ionicHistory.nextViewOptions({
-              disableBack: true
-            });
-            $state.go('app.jokes');
-          })
-          .error(function() {
-            $scope.loginError = true;
-            $scope.loginErrorText = error.data.error;
-            console.log($scope.loginErrorText);
-          })
       });*/
+
+      $auth.login(req).then(function(sucResp) {
+        var resp = sucResp.data;
+
+        if (resp.status !== sc.httpStatus.SUCCESS) {
+          utilService.appAlert(resp.messages);
+          return;
+        }
+        localStorage.setItem('jwtToken', JSON.stringify($auth.getPayload()));
+
+        lsService.set("isSignedIn", true);
+        lsService.set("_id", resp.data._id);
+        lsService.set("userId", resp.data.userId);
+        lsService.set("location", JSON.stringify(resp.data.locationInfo));
+        lsService.set("dob", resp.data.basicDetails.dob);
+        lsService.set("height", JSON.stringify(resp.data.basicDetails.height));
+        lsService.set("fullName", resp.data.basicDetails.fullName);
+        lsService.set("gender", resp.data.basicDetails.gender);
+        lsService.set("dp", resp.data.dp);
+
+        $state.go(sc.appStates.menu_profiles);
+      }).catch(function(errResp) {
+
+      });
 
       logger.debug("signin ends");
     }

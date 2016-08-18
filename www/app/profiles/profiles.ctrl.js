@@ -1,9 +1,15 @@
 (function() {
   angular.module('starter').controller('ProfilesCtrl', ProfilesCtrl);
 
-  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'profileService', '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet'];
+  ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state',
+    '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
+    '$ionicModal', 'cameraService', '$stateParams', 'profileService',
+    '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet'
+  ];
 
-  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet) {
+  function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
+    $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams,
+    profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -14,14 +20,24 @@
     pc.heightArr = [];
     pc.pif.height;
     pc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
-    pc.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
-    pc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown", "Dark"];
+    pc.martitalStatusArr = ["Never married", "Widower", "Divorced",
+      "Awaiting divorce"
+    ];
+    pc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown",
+      "Dark"
+    ];
     pc.physicalStatusArr = ["Normal", "Physically challenged"];
     pc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
-    pc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces"];
+    pc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo",
+      "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio",
+      "Pisces"
+    ];
 
     // Occupation form
-    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
+    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom",
+      "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA",
+      "MA", "MSc", "Other"
+    ];
     pc.occupationArr = ["Job", "Farm", "Business"];
 
     // Filter profiles
@@ -34,6 +50,7 @@
     pc.pff.complexion;
     pc.pff.bodyType;
     pc.pff.subCaste;
+    //  pc.isFProfiles = false;
 
     var cIndex;
 
@@ -105,10 +122,12 @@
         // logger.debug("pc.pff: " + JSON.stringify(pc.pff));
         // Write code to exlude own profile later
         var req = {
+          _id: lsService.get("_id"),
+          gender: lsService.get("gender"),
           data: pc.pff
         };
         var promise = profileService.filterProfiles(req);
-        
+
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -116,6 +135,10 @@
               utilService.appAlert(resp.messages);
               return;
             }
+
+            pc.profiles = resp.data.profiles;
+            pc.isFProfiles = true;
+            pc.profileFModal.hide();
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -295,7 +318,8 @@
         }
 
         if (pc.isShortlist == true) {
-          utilService.toastMessage("You can choose either Shortlist or Show interest");
+          utilService.toastMessage(
+            "You can choose either Shortlist or Show interest");
           return;
         }
 
@@ -405,7 +429,8 @@
         }
 
         if (pc.isInterest == true) {
-          utilService.toastMessage("You can choose either Shortlist or Show interest");
+          utilService.toastMessage(
+            "You can choose either Shortlist or Show interest");
           return;
         }
 
@@ -489,7 +514,8 @@
               pc.bdf = bDetails;
               if (bDetails.dob) {
                 var dobArr = bDetails.dob.split("-");
-                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1, dobArr[2]);
+                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1,
+                  dobArr[2]);
               }
             }
 
@@ -603,6 +629,7 @@
                   }
                 }*/
 
+                //  pc.isFProfiles = false;
               } catch (exception) {
                 logger.error("exception: " + exception);
               }
@@ -632,6 +659,7 @@
 
               pc.profiles = resp.data.profiles;
               pc.isProfiles = true;
+              pc.isFProfiles = false;
             } catch (exception) {
               logger.error("exception: " + exception);
             }
@@ -743,6 +771,12 @@
           pc.bodyTypeArr.splice(0, 0, "Any");
           pc.subCasteArr.splice(0, 0, "Any");
         }
+
+        /*lsService.set("heightAny", JSON.stringify(pc.heightArr));
+        lsService.set("ageAny", JSON.stringify(pc.ageArr));
+        lsService.set("bodyTypesAny", JSON.stringify(pc.bodyTypeArr));
+        lsService.set("complexionAny", JSON.stringify(pc.complexionArr));
+        lsService.set("subCasteAny", JSON.stringify(pc.subCasteArr));*/
 
         pc.pff.minAge = pc.ageArr[0];
         pc.pff.maxAge = pc.ageArr[0];;

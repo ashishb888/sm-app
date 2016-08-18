@@ -66,17 +66,18 @@
         mc.userId = lsService.get("userId");
         mc.location = JSON.parse(lsService.get("location"));
         mc.age = moment().diff(lsService.get("dob"), "years");
+        var heightLocal = JSON.parse(lsService.get("height"));
 
-        if (lsService.get("height")) {
-          var heightSplit = lsService.get("height").split(" ");
-
+        if (heightLocal) {
+          mc.height = heightLocal;
+          /*var heightSplit = lsService.get("height").split(" ");
           mc.height = {
             feet: parseInt(heightSplit[0]),
             inches: 0
           };
           if (heightSplit.length > 2) {
             mc.height.inches = parseInt(heightSplit[2]);
-          }
+          }*/
         }
       } catch (exception) {
         logger.error("exception: " + exception);

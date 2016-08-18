@@ -1,9 +1,17 @@
 (function() {
   angular.module('starter').controller('EditProfileCtrl', EditProfileCtrl);
 
-  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope', '$ionicModal', 'cameraService', '$stateParams', 'pinfoService', 'editProfileService', 'profileService', '$rootScope', 'hwBackBtnService', '$ionicPopup', '$ionicActionSheet'];
+  EditProfileCtrl.$inject = ['starterConfig', 'utilService', '$state',
+    '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
+    '$ionicModal', 'cameraService', '$stateParams', 'editProfileService',
+    '$rootScope', 'hwBackBtnService', '$ionicPopup', '$ionicActionSheet',
+    'profileService'
+  ];
 
-  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup, lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams, pinfoService, editProfileService, profileService, $rootScope, hwBackBtnService, $ionicPopup, $ionicActionSheet) {
+  function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup,
+    lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService,
+    $stateParams, editProfileService, $rootScope, hwBackBtnService,
+    $ionicPopup, $ionicActionSheet, profileService) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -24,9 +32,13 @@
     epc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
     // epc.bdf.bodyType = epc.bodyTypeArr[0];
     epc.bdf.bodyType;
-    epc.martitalStatusArr = ["Never married", "Widower", "Divorced", "Awaiting divorce"];
+    epc.martitalStatusArr = ["Never married", "Widower", "Divorced",
+      "Awaiting divorce"
+    ];
     //epc.bdf.martitalStatus = epc.martitalStatusArr[0];
-    epc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown", "Dark"];
+    epc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown",
+      "Dark"
+    ];
     // epc.bdf.complexion = epc.complexionArr[0];
     epc.bdf.complexion;
     epc.physicalStatusArr = ["Normal", "Physically challenged"];
@@ -45,12 +57,18 @@
     epc.rif.tob;
     epc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
     epc.rif.subCaste;
-    epc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo", "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio", "Pisces"];
+    epc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo",
+      "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio",
+      "Pisces"
+    ];
     epc.rif.zodiac;
 
     // Professional info
     epc.pif = {};
-    epc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom", "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA", "MA", "MSc", "Other"];
+    epc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom",
+      "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA",
+      "MA", "MSc", "Other"
+    ];
     epc.pif.hEducation;
     epc.pif.oHEducation;
     epc.occupationArr = ["Job", "Farm", "Business"];
@@ -73,6 +91,16 @@
     epc.fif.familyValues;
     epc.familyStatusArr = ["Middle class", "Upper middle class"];
     epc.fif.familyStatus;
+
+    // Profiles preference
+    epc.ppf = {};
+    epc.ppf.minAge;
+    epc.ppf.maxAge;
+    epc.ppf.minHeight;
+    epc.ppf.maxHeight;
+    epc.ppf.complexion;
+    epc.ppf.bodyType;
+    epc.ppf.subCaste;
 
     // Images upload
     epc.ownImgs = [];
@@ -136,6 +164,10 @@
     epc.showHomeImgsModal = showHomeImgsModal;
     epc.hideUploadImgsModal = hideUploadImgsModal;
 
+    epc.showPPModal = showPPModal;
+    epc.hidePPModal = hidePPModal;
+    epc.updateProfilePreference = updateProfilePreference;
+
     // Images get/post
     var getImages = getImages;
     var ownBase64 = ownBase64;
@@ -160,8 +192,39 @@
     epc.enableHWBackBtn = enableHWBackBtn;
     epc.moveToApp = moveToApp;
     epc.imgActionSheet = imgActionSheet;
+    epc.removeImgActionSheet = removeImgActionSheet;
 
     // Functions definations
+    function updateProfilePreference() {
+      try {
+        logger.debug("updateProfilePreference function");
+
+        var req = {
+          data: {
+            _id: lsService.get("_id"),
+            profilePreference: epc.ppf
+          }
+        };
+
+        var promise = editProfileService.updateProfilePreference(req);
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function imgActionSheet() {
       logger.debug("imgActionSheet function");
 
@@ -317,7 +380,8 @@
       try {
         logger.debug("getDP function");
 
-        var promise = editProfileService.getImgs(sConfig.picType.dp, lsService.get("_id"));
+        var promise = editProfileService.getImgs(sConfig.picType.dp,
+          lsService.get("_id"));
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -345,7 +409,8 @@
       try {
         logger.debug("getHomeImgs function");
 
-        var promise = editProfileService.getImgs(sConfig.picType.home, lsService.get("_id"));
+        var promise = editProfileService.getImgs(sConfig.picType.home,
+          lsService.get("_id"));
 
         promise.then(function(sucResp) {
           try {
@@ -501,7 +566,8 @@
       try {
         logger.debug("getOwnImgs function");
 
-        var promise = editProfileService.getImgs(sConfig.picType.own, lsService.get("_id"));
+        var promise = editProfileService.getImgs(sConfig.picType.own,
+          lsService.get("_id"));
 
         promise.then(function(sucResp) {
           try {
@@ -612,7 +678,8 @@
                   //utilService.toastMessage(resp.messages);
                   return;
                 }
-                utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+                utilService.toastMessage(resp.messages, null, sConfig
+                  .msgs.success);
                 if (type === sConfig.picType.home) {
                   epc.homeImgs.splice(index, 1);
                   return;
@@ -624,9 +691,78 @@
             }, function(errResp) {});
           }
         });
+
+
       } catch (exception) {
         logger.error("exception: " + exception);
       }
+    }
+
+    function removeImgActionSheet(type, id, index) {
+      logger.debug("removeImgActionSheet function");
+
+      var hideRemoveImgActionSheet = $ionicActionSheet.show({
+        titleText: "Image delete",
+        buttons: [{
+          text: "<i class='txt-color icon ion-trash-b'></i> Delete"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
+        }],
+        cancel: function() {
+          logger.debug("Cancelled");
+        },
+        buttonClicked: function(btnIndex) {
+          logger.debug("Button clicked", btnIndex);
+
+          switch (btnIndex) {
+            case 0:
+              var promise;
+
+              switch (type) {
+                case sConfig.picType.own:
+                  if (id === "local") {
+                    epc.ownImgs.splice(index, 1);
+                    return;
+                  }
+                  promise = editProfileService.removeImg(id);
+
+                  break;
+                case sConfig.picType.home:
+                  if (id === "local") {
+                    epc.homeImgs.splice(index, 1);
+                    return;
+                  }
+                  promise = editProfileService.removeImg(id);
+                  break;
+              }
+
+              promise.then(function(sucResp) {
+                try {
+                  var resp = sucResp.data;
+                  if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                    utilService.appAlert(resp.messages);
+                    //utilService.toastMessage(resp.messages);
+                    return;
+                  }
+                  utilService.toastMessage(resp.messages, null,
+                    sConfig.msgs.success);
+                  if (type === sConfig.picType.home) {
+                    epc.homeImgs.splice(index, 1);
+                    return;
+                  }
+                  epc.ownImgs.splice(index, 1);
+                } catch (exception) {
+                  logger.error("exception: " + exception);
+                }
+              }, function(errResp) {});
+              break;
+            case 1:
+              hideRemoveImgActionSheet();
+              break;
+          }
+          return true;
+        }
+      });
     }
 
     function getImages(srcType, nImgs) {
@@ -793,7 +929,7 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            epc.hideFamilyModal();
+            epc.hideFamilyModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -853,7 +989,7 @@
             $rootScope.$broadcast("setBanner");
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            epc.hideLocationModal();
+            epc.hideLocationModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -867,7 +1003,8 @@
       try {
         logger.debug("getProfessionInfo function");
 
-        var promise = editProfileService.getProfessionInfo(lsService.get("_id"));
+        var promise = editProfileService.getProfessionInfo(lsService.get(
+          "_id"));
 
         promise.then(function(sucResp) {
           try {
@@ -911,7 +1048,7 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            epc.hideProfessionModal();
+            epc.hideProfessionModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -959,7 +1096,8 @@
               //delete bDetails.dob;
 
               if (bDetails.height) {
-                epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height.inches + " in";
+                epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height
+                  .inches + " in";
               }
             }
 
@@ -1046,6 +1184,38 @@
       epc.ownImgsModal.hide();
     }
 
+    $ionicModal.fromTemplateUrl('app/editprofile/pp-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up',
+      focusFirstInput: true
+    }).then(function(modal) {
+      epc.ppModal = modal;
+    });
+
+    function showPPModal() {
+      logger.debug("showPPModal function");
+
+      epc.heightArr = JSON.parse(lsService.get("heightAny"));
+      epc.ageArr = JSON.parse(lsService.get("ageAny"));
+      epc.complexionArr = JSON.parse(lsService.get("complexionAny"));
+      epc.bodyTypeArr = JSON.parse(lsService.get("bodyTypesAny"));
+      epc.subCasteArr = JSON.parse(lsService.get("subCasteAny"));
+
+      lsService.set("ppf", JSON.stringify(epc.ppf));
+      epc.ppModal.show();
+    }
+
+    function hidePPModal(isUpdate) {
+      logger.debug("hidePPModal function");
+
+      /*if (!isUpdate) {
+        epc.ppf = JSON.parse(lsService.get("ppf"));
+      }*/
+
+      lsService.remove("ppf");
+      epc.ppModal.hide();
+    }
+
     $ionicModal.fromTemplateUrl('app/editprofile/family-modal.html', {
       scope: $scope,
       animation: 'slide-in-up',
@@ -1056,11 +1226,19 @@
 
     function showFamilyModal() {
       logger.debug("showFamilyModal function");
+
+      lsService.set("fif", JSON.stringify(epc.fif));
       epc.familyModal.show();
     }
 
-    function hideFamilyModal() {
+    function hideFamilyModal(isUpdate) {
       logger.debug("hideFamilyModal function");
+
+      if (!isUpdate) {
+        epc.fif = JSON.parse(lsService.get("fif"));
+      }
+
+      lsService.remove("fif");
       epc.familyModal.hide();
     }
 
@@ -1074,11 +1252,19 @@
 
     function showLocationModal() {
       logger.debug("showLocationModal function");
+
+      lsService.set("lif", JSON.stringify(epc.lif));
       epc.locationModal.show();
     }
 
-    function hideLocationModal() {
+    function hideLocationModal(isUpdate) {
       logger.debug("hideLocationModal function");
+
+      if (!isUpdate) {
+        epc.lif = JSON.parse(lsService.get("lif"));
+      }
+
+      lsService.remove("lif");
       epc.locationModal.hide();
     }
 
@@ -1092,11 +1278,25 @@
 
     function showReligiousModal() {
       logger.debug("showReligiousModal function");
+      lsService.set("rif", JSON.stringify(epc.rif));
       epc.religiousModal.show();
     }
 
-    function hideReligiousModal() {
+    function hideReligiousModal(isUpdate) {
       logger.debug("hideReligiousModal function");
+
+      if (!isUpdate) {
+        var rif = JSON.parse(lsService.get("rif"));
+        var tobArr = rif.tob.split(":");
+        var tobLocal = new Date();
+        tobLocal.setHours(tobArr[0] - 1);
+        tobLocal.setMinutes(tobArr[1] - 1);
+        delete rif.tobLocal;
+        epc.rif = rif;
+        epc.rif.tobLocal = tobLocal;
+      }
+
+      lsService.remove("rif");
       epc.religiousModal.hide();
     }
 
@@ -1110,11 +1310,22 @@
 
     function showBasicDetailsModal() {
       logger.debug("showBasicDetailsModal function");
+      lsService.set("basicDetails", JSON.stringify(epc.bdf));
       epc.basicDetailsModal.show();
     }
 
-    function hideBasicDetailsModal() {
+    function hideBasicDetailsModal(isUpdate) {
       logger.debug("hideBasicDetailsModal function");
+
+      if (!isUpdate) {
+        var basicDetails = JSON.parse(lsService.get("basicDetails"));
+        var dobLocal = moment(basicDetails.dob.toString())._d;
+        delete basicDetails.dobLocal;
+        epc.bdf = basicDetails;
+        epc.bdf.dobLocal = dobLocal;
+      }
+
+      lsService.remove("basicDetails");
       epc.basicDetailsModal.hide();
     }
 
@@ -1128,11 +1339,19 @@
 
     function showProfessionModal() {
       logger.debug("showProfessionModal function");
+
+      lsService.set("pif", JSON.stringify(epc.pif));
       epc.professionModal.show();
     }
 
-    function hideProfessionModal() {
+    function hideProfessionModal(isUpdate) {
       logger.debug("hideProfessionModal function");
+
+      if (!isUpdate) {
+        epc.pif = JSON.parse(lsService.get("pif"));
+      }
+
+      lsService.remove("pif");
       epc.professionModal.hide();
     }
 
@@ -1149,7 +1368,8 @@
           }
         };
 
-        var tobText = (epc.rif.tobLocal.getHours() + 1) + ":" + (epc.rif.tobLocal.getMinutes() + 1);
+        var tobText = (epc.rif.tobLocal.getHours() + 1) + ":" + (epc.rif.tobLocal
+          .getMinutes() + 1);
         epc.rif.tob = tobText
 
         // epc.rif.tob = new Date(epc.rif.tob);
@@ -1166,7 +1386,7 @@
             }
             epc.isShowTOB = true;
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
-            epc.hideReligiousModal();
+            epc.hideReligiousModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -1224,7 +1444,8 @@
               epc.bdf = resp.data.basicDetails;
               epc.bdf.dob = new Date(dob);
               epc.bdf.tob = new Date(tob);
-              epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height.inches + " in";
+              epc.bdf.height = epc.bdf.height.feet + " ft " + epc.bdf.height
+                .inches + " in";
             }
             //utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
@@ -1274,16 +1495,18 @@
               utilService.toastMessage(resp.messages);
               return;
             }
-            epc.bdf.height = lHeight;
+
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
 
             lsService.set("fullName", epc.bdf.fullName);
             lsService.set("dob", epc.bdf.dob);
-            lsService.set("height", epc.bdf.height);
+            lsService.set("height", JSON.stringify(epc.bdf.height));
+            lsService.set("gender", epc.bdf.gender);
             $rootScope.$broadcast("setBanner");
             epc.isShowDOB = true;
 
-            epc.hideBasicDetailsModal();
+            epc.bdf.height = lHeight;
+            epc.hideBasicDetailsModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -1307,6 +1530,7 @@
           }
         }
         //epc.bdf.height = epc.heightArr[0];
+        lsService.set("heightArr", JSON.stringify(epc.heightArr));
       } catch (exception) {
         logger.error("exception: " + exception);
       }

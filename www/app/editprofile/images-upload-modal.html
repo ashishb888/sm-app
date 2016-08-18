@@ -27,8 +27,8 @@
       <div class="card" ng-repeat="img in epc.homeImgs">
         <div class="item item-text-wrap txt-ctr-align">
           <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('home', $index)">
-          <!--<i class="icon ion-trash-b float-right xlarge" ng-click="epc.removeImg('home', $index)"></i>-->
-          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImg('home', img._id, $index)">
+          <!--<i class="icon ion-trash-b float-right xlarge" ng-click="epc.removeImgActionSheet('home', $index)"></i>-->
+          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImgActionSheet('home', img._id, $index)">
             <i class="icon ion-trash-b xlarge"></i>
           </button>
         </div>
@@ -56,7 +56,7 @@
         <div class="item item-text-wrap txt-ctr-align">
           <img class="w50" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('own', $index)">
 
-          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImg('own', img._id, $index)">
+          <button class="button button-assertive button-clear float-right" ng-click="epc.removeImgActionSheet('own', img._id, $index)">
             <i class="icon ion-trash-b xlarge"></i>
           </button>
         </div>

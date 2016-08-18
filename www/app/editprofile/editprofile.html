@@ -29,19 +29,30 @@
       </div>-->
       <div class="row" ng-show="epc.ownImgs.length == 0">
         <div class="col col-33 col-offset-33">
-          <img class="w100" ng-src="{{epc.noavatar}}">
+          <img class="grid-imgs" ng-src="{{epc.noavatar}}">
         </div>
       </div>
 
       <div class="row">
-        <div class="col" ng-repeat="img in epc.ownImgs">
-          <img class="w100" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index)" />
+        <div class="col col-20" ng-repeat="img in epc.ownImgs">
+          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index)" />
         </div>
       </div>
 
       <div class="row">
+        <div class="col col-20" ng-repeat="img in epc.homeImgs">
+          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index+5)" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <button ng-click="epc.imgActionSheet()" class="button icon-right button-small button-dark button-full icon ion-edit">Add/edit images</button>
+        </div>
+      </div>
+      <!--<div class="row">
         <button ng-click="epc.imgActionSheet()" class="button icon-right button-dark button-full icon ion-edit">Add/edit images&nbsp;</button>
-      </div>
+      </div>-->
 
       <!--<div class="item item-body">
         <div class="txt-ctr-align" ng-if="epc.ownImgs.length == 0">
@@ -185,6 +196,34 @@
         <div class="row">
           <div class="col col-40">Aunt(s)</div>
           <div class="col col-60">{{epc.fif.nAunts}}</div>
+        </div>
+      </div>
+
+      <!-- Profiles preference -->
+      <div class="card">
+        <div class="item item-divider">
+          Profiles preference
+          <i ng-click="epc.showPPModal()" class="icon ion-edit float-right xlarge txt-color"></i>
+        </div>
+        <div class="row">
+          <div class="col col-40">Age</div>
+          <div class="col col-60">{{epc.ppf.minAge}} - {{epc.ppf.maxAge}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Height</div>
+          <div class="col col-60">{{epc.ppf.minHeight}} - {{epc.ppf.maxHeight}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Complexion</div>
+          <div class="col col-60">{{epc.ppf.complexion}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Body type</div>
+          <div class="col col-60">{{epc.ppf.bodyType}}</div>
+        </div>
+        <div class="row">
+          <div class="col col-40">Sub caste</div>
+          <div class="col col-60">{{epc.ppf.subCaste}}</div>
         </div>
       </div>
     </div>

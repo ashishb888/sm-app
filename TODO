@@ -1,20 +1,9 @@
+Server side validations
+Replace all list with popovers
+Add all changable data to db
+
 Bug:
   Interested-->View-->delete: Shows incorrect list.
-  
-
-Add Toast messages:
-  Shortlist
-  Show interest
-  Back button to exit
-  Successfull updation of:
-    Personal info
-    Family info
-    Images
-    Profession info
-    Phone
-    Password
-    DP
-    ...
 
 Push all bellow info in localstorage:
   Age
@@ -30,18 +19,12 @@ Add location data
 Caste data
 Help
 TC
-Age calculation
 
-Radio button for gender
 Trim all fields before posting.
 Occupation checkboxs
 Check for shortlisted-->interested.
-Add comfirm box for delete.
-Add textbox for town name.
-Network connection
 
 
 Disable back button on welcome page.
 View profile images fix
 Set dp to rootScope at first upload
-Change images on shortlist and interested screen

@@ -6,14 +6,15 @@
   </ion-nav-buttons>
   <ion-content class="has-footer">
     <ion-refresher
-         on-refresh = "pc.pullRefresher()"
-         pulling-icon = "ion-android-refresh"
-         spinner = "ios"
+      pulling-text="Fetch all profiles..."
+      on-refresh = "pc.pullRefresher()"
+      pulling-icon = "ion-android-refresh"
+      spinner = "ios"
        >
     </ion-refresher>
     <div class="card" ng-show="pc.profiles.length === 0">
       <div class="item item-text-wrap">
-        No matches
+        No profiles.
       </div>
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0">
@@ -25,21 +26,12 @@
         <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
       </div>
     </div>
-
-    <!--<div class="list">
-      <div class="item item-thumbnail-left" ui-sref="menu.profile" ng-repeat="p in pc.profiles">
-        <img src="img/sm-2.png">
-        <h2>{{p.fullName}}</h2>
-        <p>24 Yrs, 5'6", Sangli.</p>
-        <p>24 Yrs, 5'6", Sangli.</p>
-        <p>24 Yrs, 5'6", Sangli.</p>
-      </div>
-    </div>-->
   </ion-content>
-  <div class="bar bar-footer item-input-inset">
-    <!--<button class="button ">Left</button>
-        <div class="title">Title</div>
-        <button class="button ">Right</button>-->
+  <div class="bar bar-footer" ng-show="pc.isFProfiles">
+    <button class="button button-assertive button-full mtop0" ng-click="pc.getProfiles()">Vie all profiles</button>
+  </div>
+
+  <div class="bar bar-footer item-input-inset" ng-hide="pc.isFProfiles">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
       <input type="search" ng-model="pc.searchId" placeholder="Search by ID">

@@ -44,22 +44,22 @@
 
     function getRequestsIn(id) {
       logger.debug("getRequestsIn() service");
-      return $http.get(sc.ws + '/requestsin/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/requestsin', sc.httpReq.config);
     }
 
     function getRequestsOut(id) {
       logger.debug("getRequestsOut() service");
-      return $http.get(sc.ws + '/requestsout/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/requestsout', sc.httpReq.config);
     }
 
     function getShortlist(id) {
       logger.debug("getShortlist() service");
-      return $http.get(sc.ws + '/shortlist/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/shortlist', sc.httpReq.config);
     }
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/images/' + type, sc.httpReq.config);
     }
 
     function disinterest(req) {
@@ -99,7 +99,7 @@
     // Need to change
     function getProfiles(id) {
       logger.debug("getProfiles() service");
-      return $http.get(sc.ws + '/userstoken/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/users', sc.httpReq.config);
     }
 
     function updatePInfo(req) {

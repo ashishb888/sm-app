@@ -1,0 +1,26 @@
+<ion-view view-title="Matching profiles">
+  <ion-nav-buttons side="left">
+    <div class="button button-clear" ng-click="pc.showProfileFModal()">
+      <i class="xlarge ion-search"></i>
+    </div>
+  </ion-nav-buttons>
+  <ion-content class="has-footer">
+    <div class="card" ng-show="pc.filteredProfiles.length === 0">
+      <div class="item item-text-wrap">
+        No profiles.
+      </div>
+    </div>
+    <div class="card" ng-show="pc.profiles.length !== 0">
+      <div class="item item-thumbnail-left" ng-repeat="p in pc.filteredProfiles" ng-click="pc.viewProfile(p._id, $index)">
+        <img ng-src="data:image/jpg;base64,{{p.dp}}" >
+        <h2>{{p.basicDetails.fullName}}</h2>
+        <p>{{p.userId}}</p>
+        <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
+        <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
+      </div>
+    </div>
+  </ion-content>
+  <div class="bar bar-footer">
+    <button class="button button-assertive button-full mtop0" ui-sref="menu.profiles">Vie all profiles</button>
+  </div>
+</ion-view>

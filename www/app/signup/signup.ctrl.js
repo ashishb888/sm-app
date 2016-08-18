@@ -1,8 +1,11 @@
 (function() {
   angular.module('starter').controller('SignupCtrl', SignupCtrl);
 
-  SignupCtrl.$inject = ['$state', 'starterConfig', 'utilService', 'signupService'];
-  function SignupCtrl($state, sConfig, utilService, signupService) {
+  SignupCtrl.$inject = ['$state', 'starterConfig', 'utilService',
+    'signupService', '$auth'
+  ];
+
+  function SignupCtrl($state, sConfig, utilService, signupService, $auth) {
     // Variables section
     var logger = utilService.getLogger();
 
@@ -23,8 +26,8 @@
         logger.debug("signup function");
 
         if (!utilService.isAppOnlineService()) {
-            utilService.appAlert(sc.msgs.noConnMsg);
-            return;
+          utilService.appAlert(sc.msgs.noConnMsg);
+          return;
         }
 
         if (sc.sf.password !== sc.sf.rePassword) {
@@ -34,7 +37,7 @@
         var req = {};
         req.data = sc.sf;
 
-        var promise = signupService.signup(req);
+        /*var promise = signupService.signup(req);
         promise.then(function(sucResp){
             try {
                 var resp = sucResp.data;
@@ -50,7 +53,15 @@
                 logger.error("exception: " + exception);
             }
         }, function(errResp){
-        });
+        });*/
+
+        $auth.signup(req).then(function(response) {
+          localStorage.setItem('account', JSON.stringify($auth.getPayload()));
+
+          //$rootScope.authenticated = true;
+
+          $state.go(sConfig.appStates.signin);
+        }).catch(function(response) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }

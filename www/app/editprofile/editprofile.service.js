@@ -22,7 +22,19 @@
     eps.getImgs = getImgs;
     eps.removeImg = removeImg;
     eps.updateDP = updateDP;
-    
+    eps.updateProfilePreference = updateProfilePreference;
+    eps.getProfilePreference = getProfilePreference;
+
+    function getProfilePreference(id) {
+      logger.debug("getProfilePreference() service");
+      return $http.get(sc.ws + '/profilepreference', sc.httpReq.config);
+    }
+
+    function updateProfilePreference(req) {
+      logger.debug("updateProfilePreference() service");
+      return $http.post(sc.ws + '/profilepreference', req, sc.httpReq.config);
+    }
+
     function updateDP(req) {
       logger.debug("updateDP() service");
       return $http.post(sc.ws + '/images/dp', req, sc.httpReq.config);
@@ -40,12 +52,12 @@
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/images/' + type, sc.httpReq.config);
     }
 
     function getFamilyInfo(id) {
       logger.debug("getFamilyInfo() service");
-      return $http.get(sc.ws + '/family/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/family', sc.httpReq.config);
     }
 
     function updateFamilyInfo(req) {
@@ -55,7 +67,7 @@
 
     function getLocationInfo(id) {
       logger.debug("getLocationInfo() service");
-      return $http.get(sc.ws + '/location/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/location', sc.httpReq.config);
     }
 
     function updateLocationInfo(req) {
@@ -65,7 +77,7 @@
 
     function getProfessionInfo(id) {
       logger.debug("getProfessionInfo() service");
-      return $http.get(sc.ws + '/profession/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/profession', sc.httpReq.config);
     }
 
     function updateProfessionInfo(req) {
@@ -75,7 +87,7 @@
 
     function getReligiousInfo(id) {
       logger.debug("getReligiousInfo() service");
-      return $http.get(sc.ws + '/religious/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/religious', sc.httpReq.config);
     }
 
     function updateReligiousInfo(req) {
@@ -85,7 +97,7 @@
 
     function getBasicDetails(id) {
       logger.debug("getBasicDetails() service");
-      return $http.get(sc.ws + '/basicdetails/' + id, sc.httpReq.config);
+      return $http.get(sc.ws + '/basicdetails', sc.httpReq.config);
     }
 
     function updateBasicDetails(req) {

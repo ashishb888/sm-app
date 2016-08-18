@@ -1,0 +1,120 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title txt-ctr-align">Profiles preference
+    <button class="button button-clear float-left m-top1" ng-click="epc.hidePPModal()">
+      <i class="icon ion-android-arrow-back"></i>
+    </button>
+    </h1>
+  </ion-header-bar>
+  <ion-content>
+    <form name="ppForm" novalidate>
+      <label class="item item-input item-select">
+        <div class="input-label ">
+          Min age
+        </div>
+        <select ng-model="epc.ppf.minAge" class="" ng-required="true">
+          <option ng-repeat="a in epc.ageArr">{{a}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label ">
+          Max age
+        </div>
+        <select ng-model="epc.ppf.maxAge" class="" ng-required="true">
+          <option ng-repeat="a in epc.ageArr">{{a}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label ">
+          Min height
+        </div>
+        <select ng-model="epc.ppf.minHeight" class="" ng-required="true">
+          <option ng-repeat="h in epc.heightArr">{{h}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label ">
+          Max height
+        </div>
+        <select ng-model="epc.ppf.maxHeight" class="" ng-required="true">
+          <option ng-repeat="h in epc.heightArr">{{h}}</option>
+        </select>
+      </label>
+      <!--<div class="item row no-padding">
+        <div class="col no-padding">
+          <label class="item item-input item-select">
+            <div class="input-label xxsmall">
+              Min age
+            </div>
+            <select ng-model="epc.ppf.minAge" class="xxsmall" ng-required="true">
+              <option ng-repeat="a in epc.ageArr">{{a}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="col no-padding">
+          <label class="item item-input item-select">
+            <div class="input-label xxsmall">
+              Max age
+            </div>
+            <select ng-model="epc.ppf.maxAge" class="xxsmall" ng-required="true">
+              <option ng-repeat="a in epc.ageArr">{{a}}</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="item row no-padding">
+        <div class="col no-padding">
+          <label class="item item-input item-select">
+            <div class="input-label xxsmall">
+              Min height
+            </div>
+            <select ng-model="epc.ppf.minHeight" class="xxsmall" ng-required="true">
+              <option ng-repeat="h in epc.heightArr">{{h}}</option>
+            </select>
+          </label>
+        </div>
+        <div class="col no-padding">
+          <label class="item item-input item-select">
+            <div class="input-label xxsmall">
+              Max height
+            </div>
+            <select ng-model="epc.ppf.maxHeight" class="xxsmall" ng-required="true">
+              <option ng-repeat="h in epc.heightArr">{{h}}</option>
+            </select>
+          </label>
+        </div>
+      </div>-->
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Complexion
+        </div>
+        <select ng-model="epc.ppf.complexion" ng-required="true">
+          <option ng-repeat="c in epc.complexionArr">{{c}}</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Body type
+        </div>
+        <select ng-model="epc.ppf.bodyType" ng-required="true">
+          <option ng-repeat="bt in epc.bodyTypeArr">{{bt}}</option>
+        </select>
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Sub-caste
+        </div>
+        <select ng-model="epc.ppf.subCaste" ng-required="true">
+          <option ng-repeat="sc in epc.subCasteArr">{{sc}}</option>
+        </select>
+      </label>
+      <div class="padding">
+        <button class="button button-full button-assertive" ng-disabled="ppForm.$invalid" ng-click="epc.filterProfiles()">
+          Search
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
