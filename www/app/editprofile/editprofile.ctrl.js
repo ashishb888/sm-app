@@ -5,13 +5,13 @@
     '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
     '$ionicModal', 'cameraService', '$stateParams', 'editProfileService',
     '$rootScope', 'hwBackBtnService', '$ionicPopup', '$ionicActionSheet',
-    'profileService'
+    'profileService', '$ionicHistory'
   ];
 
   function EditProfileCtrl(sConfig, utilService, $state, $ionicPopup,
     lsService, $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService,
     $stateParams, editProfileService, $rootScope, hwBackBtnService,
-    $ionicPopup, $ionicActionSheet, profileService) {
+    $ionicPopup, $ionicActionSheet, profileService, $ionicHistory) {
     var logger = utilService.getLogger();
     logger.debug("EditProfileCtrl start");
 
@@ -190,7 +190,7 @@
     epc.getDP = getDP;
     epc.updateDP = updateDP;
     epc.enableHWBackBtn = enableHWBackBtn;
-    epc.moveToApp = moveToApp;
+    epc.goToProfiles = goToProfiles;
     epc.imgActionSheet = imgActionSheet;
     epc.removeImgActionSheet = removeImgActionSheet;
 
@@ -201,7 +201,6 @@
 
         var req = {
           data: {
-            _id: lsService.get("_id"),
             profilePreference: epc.ppf
           }
         };
@@ -216,6 +215,8 @@
             }
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+
+            epc.hidePPModal(true);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -284,11 +285,15 @@
       });*/
     }
 
-    function moveToApp() {
+    function goToProfiles() {
       try {
-        logger.debug("moveToApp function");
+        logger.debug("goToProfiles function");
         /*$rootScope.$broadcast("setBanner");*/
-        epc.enableHWBackBtn();
+        /*epc.enableHWBackBtn();*/
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+        $state.go(sConfig.appStates.menu_profiles);
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -1127,6 +1132,8 @@
 
             if (resp.data.profile.familyInfo)
               epc.fif = resp.data.profile.familyInfo;
+            if (resp.data.profile.profilePreference)
+              epc.ppf = resp.data.profile.profilePreference;
 
             if (epc.heightArr == 0) {
               initHeightArr();
@@ -1202,15 +1209,16 @@
       epc.subCasteArr = JSON.parse(lsService.get("subCasteAny"));
 
       lsService.set("ppf", JSON.stringify(epc.ppf));
+
       epc.ppModal.show();
     }
 
     function hidePPModal(isUpdate) {
       logger.debug("hidePPModal function");
 
-      /*if (!isUpdate) {
+      if (!isUpdate && lsService.get("ppf")) {
         epc.ppf = JSON.parse(lsService.get("ppf"));
-      }*/
+      }
 
       lsService.remove("ppf");
       epc.ppModal.hide();
@@ -1234,7 +1242,7 @@
     function hideFamilyModal(isUpdate) {
       logger.debug("hideFamilyModal function");
 
-      if (!isUpdate) {
+      if (!isUpdate && lsService.get("fif")) {
         epc.fif = JSON.parse(lsService.get("fif"));
       }
 
@@ -1260,7 +1268,7 @@
     function hideLocationModal(isUpdate) {
       logger.debug("hideLocationModal function");
 
-      if (!isUpdate) {
+      if (!isUpdate && lsService.get("lif")) {
         epc.lif = JSON.parse(lsService.get("lif"));
       }
 
@@ -1285,7 +1293,7 @@
     function hideReligiousModal(isUpdate) {
       logger.debug("hideReligiousModal function");
 
-      if (!isUpdate) {
+      if (!isUpdate && lsService.get("rif")) {
         var rif = JSON.parse(lsService.get("rif"));
         var tobArr = rif.tob.split(":");
         var tobLocal = new Date();
@@ -1311,18 +1319,25 @@
     function showBasicDetailsModal() {
       logger.debug("showBasicDetailsModal function");
       lsService.set("basicDetails", JSON.stringify(epc.bdf));
+
+      //initHeightArr();
+
       epc.basicDetailsModal.show();
     }
 
     function hideBasicDetailsModal(isUpdate) {
       logger.debug("hideBasicDetailsModal function");
 
-      if (!isUpdate) {
+      if (!isUpdate && lsService.get("basicDetails")) {
         var basicDetails = JSON.parse(lsService.get("basicDetails"));
-        var dobLocal = moment(basicDetails.dob.toString())._d;
+
         delete basicDetails.dobLocal;
         epc.bdf = basicDetails;
-        epc.bdf.dobLocal = dobLocal;
+
+        if (basicDetails.dob) {
+          var dobLocal = moment(basicDetails.dob.toString())._d;
+          epc.bdf.dobLocal = dobLocal;
+        }
       }
 
       lsService.remove("basicDetails");
@@ -1347,7 +1362,7 @@
     function hideProfessionModal(isUpdate) {
       logger.debug("hideProfessionModal function");
 
-      if (!isUpdate) {
+      if (!isUpdate && lsService.get("pif")) {
         epc.pif = JSON.parse(lsService.get("pif"));
       }
 

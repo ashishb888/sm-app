@@ -1,9 +1,12 @@
 <ion-view view-title="Settings">
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear float-left" ng-click="sc.settingsActionSheet()">
+      <i class="icon ion-android-more-vertical"></i>
+    </button>
+  </ion-nav-buttons>
+
   <ion-content class="">
-    <!--<div class="button-bar">
-      <button class="button" ng-click="sc.showUpdatePasswordForm()">Update password</button>
-      <button class="button" ng-click="sc.showUpdatePhoneForm()">Update mobile no</button>
-    </div>-->
     <div class="list">
       <form name="updatePasswordForm" novalidate ng-show="sc.isUpdatePassword">
         <label class="item item-input item-floating-label">
@@ -64,18 +67,18 @@
         </label>
         <div class="padding">
           <button class="button button-full button-assertive" ng-disabled="updateMobileForm.$invalid" ng-click="sc.updatePhone()">
-            Update mobile no
+            Update phone
           </button>
         </div>
       </form>
     </div>
   </ion-content>
-  <div class="bar bar-footer">
+  <!--<div class="bar bar-footer">
     <div class="button-bar txt-ctr-align">
       <ion-scroll direction="x" class="w100">
         <button class="button" ng-click="sc.showUpdatePasswordForm()">Update password</button>
         <button class="button" ng-click="sc.showUpdatePhoneForm()">Update mobile no</button>
       </ion-scroll>
     </div>
-  </div>
+  </div>-->
 </ion-view>

@@ -1,9 +1,14 @@
 (function() {
   angular.module('starter').controller('MenuCtrl', MenuCtrl);
 
-  MenuCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', 'imagesService', '$stateParams', '$rootScope', '$ionicActionSheet'];
+  MenuCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup',
+    'lsService', 'imagesService', '$stateParams', '$rootScope',
+    '$ionicActionSheet', '$auth', '$ionicSideMenuDelegate'
+  ];
 
-  function MenuCtrl(sConfig, utilService, $state, $ionicPopup, lsService, imagesService, $stateParams, $rootScope, $ionicActionSheet) {
+  function MenuCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
+    imagesService, $stateParams, $rootScope, $ionicActionSheet, $auth,
+    $ionicSideMenuDelegate) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("MenuCtrl start");
@@ -22,8 +27,20 @@
     mc.getDP = getDP;
     mc.setDP = setDP;
     mc.signoutActionSheet = signoutActionSheet;
+    mc.goToThisState = goToThisState;
 
     // Functions definations
+    function goToThisState(state) {
+      try {
+        logger.debug("goToThisState function");
+
+        $ionicSideMenuDelegate.toggleLeft();
+        $state.go(state);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function signoutActionSheet() {
       logger.debug("signoutActionSheet function");
 
@@ -43,8 +60,9 @@
 
           switch (index) {
             case 0:
-              localStorage.clear();
+              // localStorage.clear();
               lsService.set("isSignedIn", false);
+              $auth.logout()
 
               $state.go(sConfig.appStates.signin);
               break;
@@ -65,20 +83,15 @@
         mc.dp = lsService.get("dp");
         mc.userId = lsService.get("userId");
         mc.location = JSON.parse(lsService.get("location"));
-        mc.age = moment().diff(lsService.get("dob"), "years");
-        var heightLocal = JSON.parse(lsService.get("height"));
 
-        if (heightLocal) {
-          mc.height = heightLocal;
-          /*var heightSplit = lsService.get("height").split(" ");
-          mc.height = {
-            feet: parseInt(heightSplit[0]),
-            inches: 0
-          };
-          if (heightSplit.length > 2) {
-            mc.height.inches = parseInt(heightSplit[2]);
-          }*/
-        }
+        if (lsService.get("dob"))
+          mc.age = moment().diff(lsService.get("dob"), "years");
+
+        // var heightLocal = JSON.parse(lsService.get("height"));
+
+        if (lsService.get("height"))
+          mc.height = JSON.parse(lsService.get("height"));
+
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -100,7 +113,8 @@
       try {
         logger.debug("getDP function");
 
-        var promise = imagesService.getImgs(sConfig.picType.dp, lsService.get("_id"));
+        var promise = imagesService.getImgs(sConfig.picType.dp, lsService.get(
+          "_id"));
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;

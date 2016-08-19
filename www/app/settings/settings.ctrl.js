@@ -1,14 +1,17 @@
 (function() {
   angular.module('starter').controller('SettingsCtrl', SettingsCtrl);
 
-  SettingsCtrl.$inject = ['starterConfig', 'utilService', '$state', '$ionicPopup', 'lsService', 'settingsService'];
+  SettingsCtrl.$inject = ['starterConfig', 'utilService', '$state',
+    '$ionicPopup', 'lsService', 'settingsService', '$ionicActionSheet'
+  ];
 
-  function SettingsCtrl(sConfig, utilService, $state, $ionicPopup, lsService, settingsService) {
+  function SettingsCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
+    settingsService, $ionicActionSheet) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SettingsCtrl start");
 
-    var sc= this;
+    var sc = this;
 
     // Variables section
     //Password form
@@ -27,8 +30,44 @@
     sc.showUpdatePhoneForm = showUpdatePhoneForm;
     sc.updatePassword = updatePassword;
     sc.updatePhone = updatePhone;
+    sc.settingsActionSheet = settingsActionSheet;
 
     // Functions definations
+    function settingsActionSheet() {
+      logger.debug("settingsActionSheet function");
+
+      var hideSettingsActionSheet = $ionicActionSheet.show({
+        titleText: "Settings",
+        buttons: [{
+          text: "<i class='txt-color icon ion-locked'></i> Password update"
+        }, {
+          text: "<i class='txt-color icon ion-android-phone-portrait'></i> Phone update"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
+        }],
+        /*cancelText: 'Cancel',*/
+        cancel: function() {
+          logger.debug("Cancelled");
+        },
+        buttonClicked: function(index) {
+          logger.debug("Button clicked", index);
+
+          switch (index) {
+            case 0:
+              sc.isUpdatePassword = true;
+              break;
+            case 1:
+              sc.isUpdatePassword = false;
+              break;
+            case 2:
+              hideSettingsActionSheet();
+              break;
+          }
+          return true;
+        }
+      });
+    }
+
     function updatePhone() {
       try {
         logger.debug("updatePhone function");

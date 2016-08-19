@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  local: "/api",
-  /*local: "http://10.1.1.86:3000",*/
+  /*local: "/api",*/
+  local: "http://10.1.1.86:3000",
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -148,17 +148,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
   /* Depending upon env it sets backend URLs */
   switch (env) {
     case envLs.prod:
-      $authProvider.loginUrl = urls.prod + "/login";
+      $authProvider.loginUrl = urls.prod + "/signin";
       $authProvider.signupUrl = urls.prod + "/users";
       urlWhiteList.push(urls.prod + urlWhiteListSuffix);
       break;
     case envLs.uat:
-      $authProvider.loginUrl = urls.uat + "/login";
+      $authProvider.loginUrl = urls.uat + "/signin";
       $authProvider.signupUrl = urls.uat + "/users";
       urlWhiteList.push(urls.uat + urlWhiteListSuffix);
       break;
     case envLs.dev:
-      $authProvider.loginUrl = urls.dev + "/login";
+      $authProvider.loginUrl = urls.dev + "/signin";
       $authProvider.signupUrl = urls.dev + "/users";
       urlWhiteList.push(urls.dev + urlWhiteListSuffix);
       break;
@@ -168,7 +168,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       urlWhiteList.push(urls.local + urlWhiteListSuffix);
       break;
     default:
-      $authProvider.loginUrl = urls.prod + "/login";
+      $authProvider.loginUrl = urls.prod + "/signin";
       $authProvider.signupUrl = urls.prod + "/users";
       urlWhiteList.push(urls.prod + urlWhiteListSuffix);
   }
@@ -411,12 +411,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       },
       url: '/welcome',
       templateUrl: 'app/welcome/welcome.html',
-      controller: 'EditProfileCtrl as epc'
+      controller: 'WelcomeCtrl as wc'
     })
     .state('dp', {
-      params: {
+      /*params: {
         'functionNm': 'dpFunction'
-      },
+      },*/
       url: '/dp',
       templateUrl: 'app/editprofile/dp.html',
       controller: 'EditProfileCtrl as epc'

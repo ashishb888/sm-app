@@ -4,12 +4,12 @@
   ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state',
     '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
     '$ionicModal', 'cameraService', '$stateParams', 'profileService',
-    '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet'
+    '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet', '$ionicSideMenuDelegate'
   ];
 
   function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
     $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams,
-    profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet) {
+    profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet, $ionicSideMenuDelegate) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -72,6 +72,7 @@
     pc.isRequestsOut = false;
     pc.isRequestsIn = false;
     pc.isProfiles = false;
+    pc.requestsTitle = "Requests sent";
 
     // Shortlist a profiles
     pc.isShortlist = false;
@@ -83,8 +84,7 @@
     // Search by userId
     pc.isSearchByUserId = false;
 
-    // Edit profile
-    //pc.isEditProfile = false;
+    pc.isCompleted = false;
 
     // Function section
     var bootstrap = bootstrap;
@@ -113,8 +113,45 @@
     pc.editProfile = editProfile;
     pc.pullRefresher = pullRefresher;
     pc.filterProfiles = filterProfiles;
+    pc.requestsActionSheet = requestsActionSheet;
 
     // Functions definations
+    function requestsActionSheet() {
+      logger.debug("requestsActionSheet function");
+
+      var hideRequestsActionSheet = $ionicActionSheet.show({
+        titleText: "Requests",
+        buttons: [{
+          text: "<i class='txt-color icon ion-forward'></i> Requests sent"
+        }, {
+          text: "<i class='txt-color icon ion-reply'></i> Requests received"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
+        }],
+        /*cancelText: 'Cancel',*/
+        cancel: function() {
+          logger.debug("Cancelled");
+        },
+        buttonClicked: function(index) {
+          logger.debug("Button clicked", index);
+
+          switch (index) {
+            case 0:
+              pc.getRequestsOut();
+              break;
+            case 1:
+            pc.requestsTitle = "Requests received"
+              pc.getRequestsIn();
+              break;
+            case 2:
+              hideRequestsActionSheet();
+              break;
+          }
+          return true;
+        }
+      });
+    }
+
     function filterProfiles() {
       try {
         logger.debug("filterProfiles() function");
@@ -653,10 +690,12 @@
             try {
               var resp = sucResp.data;
               if (resp.status !== sConfig.httpStatus.SUCCESS) {
-                utilService.appAlert(resp.messages);
+                utilService.toastMessage(resp.messages);
+                pc.isCompleted = false;
                 return;
               }
 
+              pc.isCompleted = true;
               pc.profiles = resp.data.profiles;
               pc.isProfiles = true;
               pc.isFProfiles = false;
@@ -772,11 +811,11 @@
           pc.subCasteArr.splice(0, 0, "Any");
         }
 
-        /*lsService.set("heightAny", JSON.stringify(pc.heightArr));
+        lsService.set("heightAny", JSON.stringify(pc.heightArr));
         lsService.set("ageAny", JSON.stringify(pc.ageArr));
         lsService.set("bodyTypesAny", JSON.stringify(pc.bodyTypeArr));
         lsService.set("complexionAny", JSON.stringify(pc.complexionArr));
-        lsService.set("subCasteAny", JSON.stringify(pc.subCasteArr));*/
+        lsService.set("subCasteAny", JSON.stringify(pc.subCasteArr));
 
         pc.pff.minAge = pc.ageArr[0];
         pc.pff.maxAge = pc.ageArr[0];;

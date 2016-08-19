@@ -3,11 +3,11 @@
 
   SigninCtrl.$inject = ['starterConfig', 'utilService', '$state', '$scope',
     'signinService', 'lsService', '$stateParams', 'hwBackBtnService',
-    '$rootScope', '$auth'
+    '$rootScope', '$auth', '$ionicHistory'
   ];
 
-  function SigninCtrl(sc, utilService, $state, $scope, signinService,
-    lsService, $stateParams, hwBackBtnService, $rootScope, $auth) {
+  function SigninCtrl(sConfig, utilService, $state, $scope, signinService,
+    lsService, $stateParams, hwBackBtnService, $rootScope, $auth, $ionicHistory) {
     // Variables section
     var logger = utilService.getLogger();
     logger.debug("SigninCtrl start");
@@ -47,7 +47,7 @@
       logger.debug("signin starts");
 
       if (!utilService.isAppOnlineService()) {
-        utilService.appAlert(sc.msgs.noConnMsg);
+        utilService.appAlert(sConfig.msgs.noConnMsg);
         return;
       }
 
@@ -59,7 +59,7 @@
         try {
           var resp = sucResp.data;
 
-          if (resp.status !== sc.httpStatus.SUCCESS) {
+          if (resp.status !== sConfig.httpStatus.SUCCESS) {
             utilService.appAlert(resp.messages);
             return;
           }
@@ -76,11 +76,11 @@
           if (resp.data.isDP == true) {
             // $rootScope.rootDP = resp.data.dp;
             lsService.set("dp", resp.data.dp);
-            $state.go(sc.appStates.menu_profiles);
+            $state.go(sConfig.appStates.menu_profiles);
             return;
           }
 
-          $state.go(sc.appStates.welcome);
+          $state.go(sConfig.appStates.welcome);
         } catch (exception) {
           logger.error("exception: " + exception);
         }
@@ -91,13 +91,13 @@
       $auth.login(req).then(function(sucResp) {
         var resp = sucResp.data;
 
-        if (resp.status !== sc.httpStatus.SUCCESS) {
-          utilService.appAlert(resp.messages);
+        if (resp.status !== sConfig.httpStatus.SUCCESS) {
+          utilService.toastMessage(resp.messages);
           return;
         }
-        localStorage.setItem('jwtToken', JSON.stringify($auth.getPayload()));
 
-        lsService.set("isSignedIn", true);
+        lsService.set('jwtToken', JSON.stringify($auth.getPayload()));
+        // lsService.set("isSignedIn", true);
         lsService.set("_id", resp.data._id);
         lsService.set("userId", resp.data.userId);
         lsService.set("location", JSON.stringify(resp.data.locationInfo));
@@ -105,9 +105,19 @@
         lsService.set("height", JSON.stringify(resp.data.basicDetails.height));
         lsService.set("fullName", resp.data.basicDetails.fullName);
         lsService.set("gender", resp.data.basicDetails.gender);
-        lsService.set("dp", resp.data.dp);
 
-        $state.go(sc.appStates.menu_profiles);
+        if (resp.data.isDP !== true) {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+
+          $state.go(sConfig.appStates.dp);
+          return;
+        }
+
+        lsService.set("dp", resp.data.dp);
+        $state.go(sConfig.appStates.menu_profiles);
+
       }).catch(function(errResp) {
 
       });
@@ -118,15 +128,33 @@
     /**/
     function setView() {
       $rootScope.$broadcast("setBanner");
-      if (lsService.get("isSignedIn") != "true")
+      if (!lsService.get("satellizer_token"))
         return;
 
-      /*if (lsService.get("isDP") != "true") {
-        $state.go(sc.appStates.welcome);
-        return;
-      }*/
+        var promise = signinService.getFlags();
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
 
-      $state.go(sc.appStates.menu_profiles);
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.appAlert(resp.messages);
+              return;
+            }
+
+            if (resp.data.isDP !== true) {
+              $ionicHistory.nextViewOptions({
+                disableBack: true
+              });
+
+              $state.go(sConfig.appStates.dp);
+              return;
+            }
+
+            $state.go(sConfig.appStates.menu_profiles);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
     }
 
     /* Executes function according function name */

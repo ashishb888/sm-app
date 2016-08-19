@@ -1,5 +1,12 @@
-<ion-view view-title="Requests">
-  <ion-content class="has-footer">
+<ion-view view-title="{{pc.requestsTitle}}">
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear float-left" ng-click="pc.requestsActionSheet()">
+      <i class="icon ion-android-more-vertical"></i>
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
     <div class="card" ng-show="pc.profiles.length === 0">
       <div class="item item-text-wrap">
         No requests.
@@ -27,8 +34,8 @@
       </div>
     </div>
   </ion-content>
-  <div class="bar bar-footer">
+  <!--<div class="bar bar-footer">
     <button ng-click="pc.getRequestsOut()" class="button button-assertive">Requests out</button>
     <button ng-click="pc.getRequestsIn()" class="button button-assertive">Requests in</button>
-  </div>
+  </div>-->
 </ion-view>

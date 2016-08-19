@@ -6,6 +6,12 @@
     var ss = this;
 
     ss.signin = signin;
+    ss.getFlags = getFlags;
+
+    function getFlags() {
+      logger.debug("getFlags() service");
+      return $http.get(sc.ws + '/flags', sc.httpReq.config);
+    }
 
     function signin(req) {
       logger.debug("signin() service");

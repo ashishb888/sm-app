@@ -12,12 +12,17 @@
       spinner = "ios"
        >
     </ion-refresher>
-    <div class="card" ng-show="pc.profiles.length === 0">
+    <div class="card" ng-hide="pc.isCompleted">
+      <div class="item item-text-wrap">
+        Please complete your profile <a ui-sref="menu.editprofile">here</a> to see other profiles.
+      </div>
+    </div>
+    <div class="card" ng-show="pc.profiles.length === 0 && pc.isCompleted">
       <div class="item item-text-wrap">
         No profiles.
       </div>
     </div>
-    <div class="card" ng-show="pc.profiles.length !== 0">
+    <div class="card" ng-show="pc.profiles.length !== 0 && pc.isCompleted">
       <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)">
         <img ng-src="data:image/jpg;base64,{{p.dp}}" >
         <h2>{{p.basicDetails.fullName}}</h2>

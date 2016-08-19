@@ -2,10 +2,10 @@
   angular.module('starter').controller('SignupCtrl', SignupCtrl);
 
   SignupCtrl.$inject = ['$state', 'starterConfig', 'utilService',
-    'signupService', '$auth'
+    'signupService', '$auth', '$ionicHistory', 'lsService'
   ];
 
-  function SignupCtrl($state, sConfig, utilService, signupService, $auth) {
+  function SignupCtrl($state, sConfig, utilService, signupService, $auth, $ionicHistory, lsService) {
     // Variables section
     var logger = utilService.getLogger();
 
@@ -55,13 +55,29 @@
         }, function(errResp){
         });*/
 
-        $auth.signup(req).then(function(response) {
-          localStorage.setItem('account', JSON.stringify($auth.getPayload()));
+        $auth.signup(req).then(function(sucResp) {
+          var resp = sucResp.data;
+          if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+          }
 
-          //$rootScope.authenticated = true;
+          $auth.setToken(resp.token);
 
-          $state.go(sConfig.appStates.signin);
-        }).catch(function(response) {});
+          lsService.set('jwtToken', JSON.stringify($auth.getPayload()));
+          lsService.set("_id", resp.data._id);
+          lsService.set("userId", resp.data.userId);
+          lsService.set("fullName", resp.data.basicDetails.fullName);
+          lsService.set("gender", resp.data.basicDetails.gender);
+
+          utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
+
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+
+          $state.go(sConfig.appStates.welcome);
+        }).catch(function(errResp) {});
       } catch (exception) {
         logger.error("exception: " + exception);
       }
