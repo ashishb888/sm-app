@@ -155,8 +155,8 @@
     <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
   </div>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isRequestsIn">
-    <button ng-click="" class="button icon-right button-assertive icon ion-checkmark-circled">Accept&nbsp;</button>
-    <button ng-click="" class="button icon-right button-assertive ion-close-circled">Reject&nbsp;</button>
+    <button ng-click="pc.accept(pc.profile._id)" class="button icon-right button-assertive icon ion-checkmark-circled">Accept&nbsp;</button>
+    <button ng-click="pc.reject(pc.profile._id)" class="button icon-right button-assertive ion-close-circled">Reject&nbsp;</button>
   </div>
   <div class="bar bar-footer" ng-show="pc.isSlProfiles">
     <!--<button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>-->

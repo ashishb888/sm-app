@@ -36,7 +36,7 @@
     <button class="button button-assertive button-full mtop0" ng-click="pc.getProfiles()">Vie all profiles</button>
   </div>
 
-  <div class="bar bar-footer item-input-inset" ng-hide="pc.isFProfiles">
+  <div class="bar bar-footer item-input-inset" ng-hide="pc.isFProfiles || !pc.isCompleted">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
       <input type="search" ng-model="pc.searchId" placeholder="Search by ID">

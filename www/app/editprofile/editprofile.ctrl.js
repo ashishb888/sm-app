@@ -20,8 +20,6 @@
 
     // Entire profile
     epc.profile;
-    $scope.date = '1990-08-17';
-    epc.data1 = '1990-08-17';
     // Personal info form
     epc.bdf = {};
     epc.genderArr = ["Male", "Female"];
@@ -341,8 +339,7 @@
 
         var req = {
           data: {
-            _id: lsService.get("_id"),
-            isDP: true
+            _id: lsService.get("_id")
           }
         };
 
@@ -385,13 +382,12 @@
       try {
         logger.debug("getDP function");
 
-        var promise = editProfileService.getImgs(sConfig.picType.dp,
-          lsService.get("_id"));
+        var promise = editProfileService.getDP();
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             if (resp.data.dp) {
@@ -1295,13 +1291,16 @@
 
       if (!isUpdate && lsService.get("rif")) {
         var rif = JSON.parse(lsService.get("rif"));
-        var tobArr = rif.tob.split(":");
-        var tobLocal = new Date();
-        tobLocal.setHours(tobArr[0] - 1);
-        tobLocal.setMinutes(tobArr[1] - 1);
-        delete rif.tobLocal;
-        epc.rif = rif;
-        epc.rif.tobLocal = tobLocal;
+
+        if (rif.tob) {
+          var tobArr = rif.tob.split(":");
+          var tobLocal = new Date();
+          tobLocal.setHours(tobArr[0] - 1);
+          tobLocal.setMinutes(tobArr[1] - 1);
+          delete rif.tobLocal;
+          epc.rif = rif;
+          epc.rif.tobLocal = tobLocal;
+        }
       }
 
       lsService.remove("rif");
@@ -1615,7 +1614,7 @@
             epc.wcFunction();
             break;
           default:
-            epc.viewProfile();
+            // epc.viewProfile();
         }
       } catch (exception) {
         logger.error("exception: " + exception);

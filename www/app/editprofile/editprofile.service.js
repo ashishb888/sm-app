@@ -22,6 +22,7 @@
     eps.getImgs = getImgs;
     eps.removeImg = removeImg;
     eps.updateDP = updateDP;
+    eps.getDP = getDP;
     eps.updateProfilePreference = updateProfilePreference;
     eps.getProfilePreference = getProfilePreference;
 
@@ -40,6 +41,11 @@
       return $http.post(sc.ws + '/images/dp', req, sc.httpReq.config);
     }
 
+    function getDP() {
+      logger.debug("getDP() service");
+      return $http.get(sc.ws + '/images/dp', sc.httpReq.config);
+    }
+
     function removeImg(id) {
       logger.debug("removeImg() service");
       return $http.delete(sc.ws + '/images/' + id, sc.httpReq.config);
@@ -52,7 +58,7 @@
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + type, sc.httpReq.config);
+      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
     }
 
     function getFamilyInfo(id) {

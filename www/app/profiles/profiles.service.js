@@ -59,7 +59,7 @@
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + type, sc.httpReq.config);
+      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
     }
 
     function disinterest(req) {

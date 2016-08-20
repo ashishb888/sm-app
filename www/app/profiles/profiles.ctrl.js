@@ -115,6 +115,9 @@
     pc.filterProfiles = filterProfiles;
     pc.requestsActionSheet = requestsActionSheet;
 
+    pc.accept = accept;
+    pc.reject = reject;
+
     // Functions definations
     function requestsActionSheet() {
       logger.debug("requestsActionSheet function");
@@ -550,15 +553,20 @@
             if (bDetails) {
               pc.bdf = bDetails;
               if (bDetails.dob) {
-                var dobArr = bDetails.dob.split("-");
-                pc.bdf.dobLocal = new Date(dobArr[0], dobArr[1] - 1,
-                  dobArr[2]);
+                pc.bdf.dobLocal = moment(bDetails.dob.toString())._d;
               }
             }
 
             var rInfo = pc.profile.religiousInfo;
-            if (rInfo)
-              pc.rif = rInfo;
+            /*if (rInfo)
+              pc.rif = rInfo;*/
+              if (rInfo) {
+                pc.rif = rInfo;
+                var timeSplit = pc.rif.tob.split(":");
+                pc.rif.tob = new Date();
+                pc.rif.tob.setHours(timeSplit[0])
+                pc.rif.tob.setMinutes(timeSplit[1])
+              }
 
             if (pc.profile.professionInfo)
               pc.pif = pc.profile.professionInfo;
@@ -606,7 +614,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -652,7 +660,7 @@
               try {
                 var resp = sucResp.data;
                 if (resp.status !== sConfig.httpStatus.SUCCESS) {
-                  utilService.appAlert(resp.messages);
+                  utilService.toastMessage(resp.messages);
                   return;
                 }
 
@@ -661,7 +669,7 @@
                   base64: pc.pp
                 });
                 /*if (!pc.pp){
-                  if (pc.ppImgs && pc.ppImgs.length > 0) {
+                  // if (pc.ppImgs && pc.ppImgs.length > 0) {
                     pc.pp = pc.ppImgs[0].base64;
                   }
                 }*/
@@ -707,7 +715,7 @@
             $scope.$broadcast("scroll.refreshComplete");
           });
 
-        hwBackBtnService.enableHWBackBtn();
+        // hwBackBtnService.enableHWBackBtn();
       } catch (exception) {
         logger.error("exception: " + exception);
       }
