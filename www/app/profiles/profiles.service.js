@@ -26,6 +26,30 @@
     ps.getImgsById = getImgsById;
     ps.filterProfiles = filterProfiles;
     ps.updateProfilePreference = updateProfilePreference;
+    ps.accept = accept;
+    ps.reject = reject;
+    ps.getAcceptedBy = getAcceptedBy;
+    ps.getRejectedBy = getRejectedBy;
+
+    function getRejectedBy(req) {
+      logger.debug("getRejectedBy() service");
+      return $http.get(sc.ws + '/reject', sc.httpReq.config);
+    }
+
+    function getAcceptedBy(req) {
+      logger.debug("getAcceptedBy() service");
+      return $http.get(sc.ws + '/accept', sc.httpReq.config);
+    }
+
+    function reject(req) {
+      logger.debug("reject() service");
+      return $http.post(sc.ws + '/reject', req, sc.httpReq.config);
+    }
+
+    function accept(req) {
+      logger.debug("accept() service");
+      return $http.post(sc.ws + '/accept', req, sc.httpReq.config);
+    }
 
     function updateProfilePreference(req) {
       logger.debug("updateProfilePreference() service");

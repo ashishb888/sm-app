@@ -4,12 +4,14 @@
   ProfilesCtrl.$inject = ['starterConfig', 'utilService', '$state',
     '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
     '$ionicModal', 'cameraService', '$stateParams', 'profileService',
-    '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet', '$ionicSideMenuDelegate'
+    '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet',
+    '$ionicSideMenuDelegate'
   ];
 
   function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
     $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams,
-    profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet, $ionicSideMenuDelegate) {
+    profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet,
+    $ionicSideMenuDelegate) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -117,17 +119,137 @@
 
     pc.accept = accept;
     pc.reject = reject;
+    pc.getAcceptedBy = getAcceptedBy;
+    pc.getRejectedBy = getRejectedBy;
 
     // Functions definations
+    function getRejectedBy() {
+      try {
+        logger.debug("getRejectedBy() function");
+
+        var promise = profileService.getRejectedBy();
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            pc.isRequestsIn = false;
+            pc.isRequestsOut = false;
+            pc.profiles = resp.data.profiles;
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getAcceptedBy() {
+      try {
+        logger.debug("getAcceptedBy() function");
+
+        var promise = profileService.getAcceptedBy();
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            pc.isRequestsIn = false;
+            pc.isRequestsOut = false;
+            pc.profiles = resp.data.profiles;
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function reject(id) {
+      try {
+        logger.debug("reject() function");
+
+        var req = {
+          data: {
+            id: id
+          }
+        };
+        var promise = profileService.reject(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            pc.profiles.splice(cIndex, 1);
+            pc.profileModal.hide();
+            utilService.toastMessage(resp.messages);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function accept(id) {
+      try {
+        logger.debug("accept() function");
+
+        var req = {
+          data: {
+            id: id
+          }
+        };
+        var promise = profileService.accept(req);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            pc.profiles.splice(cIndex, 1);
+            pc.profileModal.hide();
+            utilService.toastMessage(resp.messages);
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function requestsActionSheet() {
       logger.debug("requestsActionSheet function");
 
       var hideRequestsActionSheet = $ionicActionSheet.show({
         titleText: "Requests",
         buttons: [{
-          text: "<i class='txt-color icon ion-forward'></i> Requests sent"
+          text: "<i class='txt-color icon ion-forward'></i> Sent"
         }, {
-          text: "<i class='txt-color icon ion-reply'></i> Requests received"
+          text: "<i class='txt-color icon ion-reply'></i> Received"
+        }, {
+          text: "<i class='txt-color icon ion-checkmark-circled'></i> Accepted"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Rejected"
         }, {
           text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
         }],
@@ -141,12 +263,21 @@
           switch (index) {
             case 0:
               pc.getRequestsOut();
+              pc.requestsTitle = "Requests sent";
               break;
             case 1:
-            pc.requestsTitle = "Requests received"
+              pc.requestsTitle = "Requests received";
               pc.getRequestsIn();
               break;
             case 2:
+              pc.requestsTitle = "Requests accepted";
+              pc.getAcceptedBy();
+              break;
+            case 3:
+              pc.requestsTitle = "Requests rejected";
+              pc.getRejectedBy();
+              break;
+            case 4:
               hideRequestsActionSheet();
               break;
           }
@@ -272,6 +403,7 @@
         logger.debug("getRequestsIn function");
         //logger.debug("state: " + $ionicHistory.currentStateName());
         pc.isRequestsIn = true;
+        pc.isRequestsOut = false;
         var promise = profileService.getRequestsIn(lsService.get("_id"));
         promise.then(function(sucResp) {
           try {
@@ -560,13 +692,13 @@
             var rInfo = pc.profile.religiousInfo;
             /*if (rInfo)
               pc.rif = rInfo;*/
-              if (rInfo) {
-                pc.rif = rInfo;
-                var timeSplit = pc.rif.tob.split(":");
-                pc.rif.tob = new Date();
-                pc.rif.tob.setHours(timeSplit[0])
-                pc.rif.tob.setMinutes(timeSplit[1])
-              }
+            if (rInfo) {
+              pc.rif = rInfo;
+              var timeSplit = pc.rif.tob.split(":");
+              pc.rif.tob = new Date();
+              pc.rif.tob.setHours(timeSplit[0])
+              pc.rif.tob.setMinutes(timeSplit[1])
+            }
 
             if (pc.profile.professionInfo)
               pc.pif = pc.profile.professionInfo;

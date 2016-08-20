@@ -723,14 +723,15 @@
                 case sConfig.picType.own:
                   if (id === "local") {
                     epc.ownImgs.splice(index, 1);
+                    hideRemoveImgActionSheet();
                     return;
                   }
                   promise = editProfileService.removeImg(id);
-
                   break;
                 case sConfig.picType.home:
                   if (id === "local") {
                     epc.homeImgs.splice(index, 1);
+                    hideRemoveImgActionSheet();
                     return;
                   }
                   promise = editProfileService.removeImg(id);
