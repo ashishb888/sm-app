@@ -10128,3 +10128,9 @@ p.info {
   max-height: 80px;
   width: 100%;
   height: 100%; }
+
+.retry-card {
+  margin-top: 65% !important; }
+
+.xxx-large {
+  font-size: -webkit-xxx-large; }

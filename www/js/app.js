@@ -13,8 +13,8 @@ var urls = {
   uat: "",
   dev: "",
   /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
-  /*local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",*/
+  /*local: "http://10.1.1.86:3000",*/
+  local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",
   tcUrl: "",
   prodStaticResUrl: "",
   devStaticResUrl: "",
@@ -34,6 +34,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
 .run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService,
   $state, dbService) {
   $ionicPlatform.ready(function() {
+    utilService.getLogger().debug("run starts");
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -48,6 +49,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
 
     // Init database
     dbService.initDB()
+
+    /*window.addEventListener("online", function(e) {
+      console.log("Online");
+    }, false);
+
+    window.addEventListener("offline", function(e) {
+      console.log("Offline");
+    }, false);*/
+  });
+
+  // Check whether app is online or not.
+  $rootScope.$on('checkNetwork', function() {
+    utilService.checkNetwork();
   });
 
   /* Logs every request. */
@@ -55,12 +69,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
     utilService.logReqResp(data, key);
   });
 
+  // Handle HTTP erros
   $rootScope.$on('errorHandler', function(event, respErr) {
     utilService.errorHandler(respErr);
   });
 
   /* Shows ionicLoading */
   $rootScope.$on('loadingShow', function() {
+    utilService.getLogger().debug("loadingShow");
     $ionicLoading.show({
       template: '<ion-spinner icon="lines"></ion-spinner>'
         /*template: 'Loading...'*/
@@ -69,6 +85,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
 
   /* Hides ionicLoading */
   $rootScope.$on('loadingHide', function() {
+    utilService.getLogger().debug("loadingHide");
     $ionicLoading.hide();
   });
 
@@ -92,15 +109,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
   /*$rootScope.$on('$stateChangeStart', function(event, toState) {
     utilService.getLogger().debug("stateChangeStart function");
 
-    var isSignedIn = JSON.parse(lsService.get("isSignedIn"));
-
-    if (isSignedIn) {
-      if (toState.name == "signin") {
+    if (!utilService.isAppOnlineService()) {
         event.preventDefault();
-        $state.go("menu.placeorder");
-      }
+        utilService.noNetwork();
     }
   });*/
+  utilService.getLogger().debug("run ends");
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider,
@@ -182,12 +196,28 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
   /* Whitelists URLs */
   $sceDelegateProvider.resourceUrlWhitelist(urlWhiteList);
 
+  // Common headers
+  // $httpProvider.defaults.headers.common.'Content-Type' = 'application/json;charset=UTF-8';
+
   /* Interceptors pool */
   $httpProvider.interceptors.push(
     loadingInterceptor,
     loggerInterceptor,
     errorHandlerInterceptor
   );
+
+  function checkNetwork($rootScope, $q) {
+    return {
+      request(req) {
+        if (req !== undefined || req !== null) {
+          if (urlCheck(req.url)) {
+            $rootScope.$broadcast("checkNetwork");
+          }
+        }
+        return req;
+      }
+    };
+  }
 
   function errorHandlerInterceptor($rootScope, $q) {
     return {
@@ -199,9 +229,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       },
       responseError(respErr) {
         if (respErr.config !== undefined || respErr.config !== null) {
-          if (respErr.config.url.endsWith("/login")) {
+          /*if (respErr.config.url.endsWith("/login")) {
             return $q.reject(respErr);
-          }
+          }*/
 
           if (urlCheck(respErr.config.url)) {
             $rootScope.$broadcast('errorHandler', respErr);
@@ -394,6 +424,18 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
         }
       }
     })
+    .state('menu.visitors', {
+      params: {
+        'functionNm': 'getVisitors'
+      },
+      url: '/visitors',
+      views: {
+        'menuContent': {
+          templateUrl: 'app/visitors/visitors.html',
+          controller: 'ProfilesCtrl as pc'
+        }
+      }
+    })
     .state('menu.editprofile', {
       params: {
         'functionNm': 'viewProfile'
@@ -442,6 +484,14 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       url: '/filteredprofiles',
       templateUrl: 'app/profiles/filtered-profiles.html',
       controller: 'ProfilesCtrl as pc'
+    })
+    .state('retry', {
+      params: {
+        'state': "menu.profiles"
+      },
+      url: '/retry',
+      templateUrl: 'app/retry/retry.html',
+      controller: 'RetryCtrl as rc'
     });
 
   $urlRouterProvider.otherwise('/signin');

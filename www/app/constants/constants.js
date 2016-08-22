@@ -13,6 +13,7 @@ angular.module('starter').constant('starterConfig', (function() {
   var msgs = {
     globalCommonError: "Oops. Something went wrong. Please try again later.",
     noConnMsg: "Unable to reach server. Please check your internet connection and try again.",
+    connMsg: "Connected to internet",
     error: "Error",
     success: "Success"
   };
@@ -39,7 +40,8 @@ angular.module('starter').constant('starterConfig', (function() {
     menu_slprofiles: "menu.slprofiles",
     menu_pinfo: "menu.pinfo",
     welcome: "welcome",
-    dp: "dp"
+    dp: "dp",
+    retry: "retry"
   };
   var screenTitles = {
     signin: "Sign in",
@@ -54,9 +56,7 @@ angular.module('starter').constant('starterConfig', (function() {
   var modal = {
     animation: "slide-in-up"
   };
-  var pullRefresher = {
-    text: "Pull to refresh..."
-  };
+  var offlineStates = [appStates.signin, appStates.signup, appStates.forgotpassword];
 
   var dbConfig = {
     dbName: "appdb",
@@ -152,14 +152,14 @@ angular.module('starter').constant('starterConfig', (function() {
     screenTitles: screenTitles,
     httpReq: httpReq,
     modal: modal,
-    pullRefresher: pullRefresher,
     dbConfig: dbConfig,
     picSrc: picSrc,
     picType: picType,
     picProps: picProps,
     dataOf: dataOf,
     toastMsgs: toastMsgs,
-    imgsURIs: imgsURIs
+    imgsURIs: imgsURIs,
+    offlineStates: offlineStates
   };
 
 })());

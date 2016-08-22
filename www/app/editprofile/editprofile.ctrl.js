@@ -437,7 +437,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/images-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       epc.imagesModal = modal;
     });
@@ -1151,7 +1151,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/images-upload-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       epc.uploadImgsModal = modal;
     });
@@ -1170,7 +1170,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/own-images-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       epc.ownImgsModal = modal;
     });
@@ -1190,7 +1190,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/pp-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.ppModal = modal;
@@ -1223,7 +1223,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/family-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.familyModal = modal;
@@ -1249,7 +1249,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/location-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.locationModal = modal;
@@ -1275,7 +1275,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/religious-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.religiousModal = modal;
@@ -1310,7 +1310,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/basicdetails-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.basicDetailsModal = modal;
@@ -1346,7 +1346,7 @@
 
     $ionicModal.fromTemplateUrl('app/editprofile/profession-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up',
+      animation: sConfig.modal.animation,
       focusFirstInput: true
     }).then(function(modal) {
       epc.professionModal = modal;

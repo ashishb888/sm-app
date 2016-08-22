@@ -1,15 +1,9 @@
-<ion-view view-title="{{pc.requestsTitle}}">
-
-  <ion-nav-buttons side="right">
-    <button class="button button-clear float-left" ng-click="pc.requestsActionSheet()">
-      <i class="icon ion-android-more-vertical"></i>
-    </button>
-  </ion-nav-buttons>
+<ion-view view-title="Visitors">
 
   <ion-content>
     <div class="card" ng-show="pc.profiles.length === 0">
       <div class="item item-text-wrap">
-        No requests.
+        No visitors.
       </div>
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0">
@@ -29,4 +23,5 @@
       </div>
     </div>
   </ion-content>
+
 </ion-view>

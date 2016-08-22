@@ -26,7 +26,7 @@
         logger.debug("signup function");
 
         if (!utilService.isAppOnlineService()) {
-          utilService.appAlert(sc.msgs.noConnMsg);
+          utilService.toastMessage(sConfig.msgs.noConnMsg);
           return;
         }
 

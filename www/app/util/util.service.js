@@ -1,8 +1,12 @@
 (function() {
   angular.module('starter').factory('utilService', utilService);
-  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state', '$log', '$q', '$cordovaNetwork', '$cordovaFile', '$cordovaToast'];
+  utilService.$inject = ['$ionicPopup', 'starterConfig', '$http', '$state',
+    '$log', '$q', '$cordovaNetwork', '$cordovaFile', '$cordovaToast',
+    '$rootScope', '$ionicHistory'
+  ];
 
-  function utilService($ionicPopup, sc, $http, $state, $log, $q, $cordovaNetwork, $cordovaFile, $cordovaToast) {
+  function utilService($ionicPopup, sConfig, $http, $state, $log, $q,
+    $cordovaNetwork, $cordovaFile, $cordovaToast, $rootScope, $ionicHistory) {
     // Variables section
     var us = this;
     var logger = $log;
@@ -22,6 +26,54 @@
     us.insertQuery = insertQuery;
     us.base64 = base64;
     us.toastMessage = toastMessage;
+    us.noNetwork = noNetwork;
+
+    // Functions definations
+    function noNetwork() {
+      try {
+        logger.debug("noNetwork service");
+
+        $state.go(sConfig.appStates.retry);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
+      try {
+        logger.debug("$cordovaNetwork:offline service");
+        logger.debug("currentStateName: " + $ionicHistory.currentStateName());
+
+        if (!sConfig.offlineStates.includes($ionicHistory.currentStateName())) {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go(sConfig.appStates.retry, {
+            "state": sConfig.appStates.menu_profiles
+          });
+        }
+
+        us.toastMessage(sConfig.msgs.noConnMsg);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    });
+
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
+      try {
+        logger.debug("$cordovaNetwork:online service");
+
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+
+        $state.go(sConfig.appStates.menu_profiles);
+
+        us.toastMessage(sConfig.msgs.connMsg);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    });
 
     //Toast messages
     function toastMessage(msg, state, title) {
@@ -42,14 +94,14 @@
     /* Logs every request's data */
     function logReqResp(data, key) {
       switch (key) {
-        case sc.httpKeys.req:
-          logger.debug(sc.httpKeys.req + ": " + JSON.stringify(data));
+        case sConfig.httpKeys.req:
+          logger.debug(sConfig.httpKeys.req + ": " + JSON.stringify(data));
           break;
-        case sc.httpKeys.resp:
-          logger.debug(sc.httpKeys.resp + ": " + JSON.stringify(data));
+        case sConfig.httpKeys.resp:
+          logger.debug(sConfig.httpKeys.resp + ": " + JSON.stringify(data));
           break;
-        case sc.httpKeys.respErr:
-          logger.debug(sc.httpKeys.respErr + ": " + JSON.stringify(data));
+        case sConfig.httpKeys.respErr:
+          logger.debug(sConfig.httpKeys.respErr + ": " + JSON.stringify(data));
           break;
         default:
           logger.debug("loggerInterceptor: " + JSON.stringify(data));
@@ -61,16 +113,16 @@
       logger.debug("errorHandler() service")
       switch (respErr.status) {
         case 400:
-          appAlert(sc.msgs.globalCommonError);
+          appAlert(sConfig.msgs.globalCommonError);
           break;
         case 401:
-          appAlert(sc.msgs.globalCommonError);
+          appAlert(sConfig.msgs.globalCommonError);
           break;
         case 500:
-          appAlert(sc.msgs.globalCommonError);
+          appAlert(sConfig.msgs.globalCommonError);
           break;
         default:
-          appAlert(sc.msgs.globalCommonError);
+          appAlert(sConfig.msgs.globalCommonError);
       }
     }
 
@@ -186,7 +238,8 @@
       }
 
       db.transaction(function(transaction) {
-        transaction.executeSql(query, params, function(transaction, results) {
+        transaction.executeSql(query, params, function(transaction,
+          results) {
           logger.debug("results: " + JSON.stringify(results.rows));
         }, null);
       });
@@ -204,11 +257,15 @@
         query11(query);*/
 
         db.transaction(function(tx) {
-          tx.executeSql('CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
-          tx.executeSql('INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
-          tx.executeSql('INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
+          tx.executeSql(
+            'CREATE TABLE IF NOT EXISTS LOGS (id unique, log)');
+          tx.executeSql(
+            'INSERT INTO LOGS (id, log) VALUES (1, "foobar")');
+          tx.executeSql(
+            'INSERT INTO LOGS (id, log) VALUES (2, "logmsg")');
 
-          tx.executeSql('SELECT * FROM LOGS', [], function(tx, results) {
+          tx.executeSql('SELECT * FROM LOGS', [], function(tx,
+            results) {
             logger.log("Hi");
             var len = results.rows.length,
               i;
@@ -221,7 +278,8 @@
         });
 
         db.transaction(function(tx) {
-          tx.executeSql('SELECT * FROM LOGS', [], function(tx, results) {
+          tx.executeSql('SELECT * FROM LOGS', [], function(tx,
+            results) {
             var len = results.rows.length,
               i;
             logger.debug("results: " + JSON.stringify(results));
@@ -234,7 +292,10 @@
 
         var a = "abc"
         db.transaction(function(t) {
-          t.executeSql("INSERT INTO documents1 (id, title) VALUES (?, ?)", [a, a]);
+          t.executeSql(
+            "INSERT INTO documents1 (id, title) VALUES (?, ?)", [a,
+              a
+            ]);
         });
 
         /*  db.transaction(function(transaction) {

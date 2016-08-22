@@ -74,7 +74,7 @@
     pc.isRequestsOut = false;
     pc.isRequestsIn = false;
     pc.isProfiles = false;
-    pc.requestsTitle = "Requests sent";
+    pc.requestsTitle = "Sent";
 
     // Shortlist a profiles
     pc.isShortlist = false;
@@ -86,7 +86,7 @@
     // Search by userId
     pc.isSearchByUserId = false;
 
-    pc.isCompleted = false;
+    pc.isCompleted = true;
 
     // Function section
     var bootstrap = bootstrap;
@@ -119,15 +119,40 @@
 
     pc.accept = accept;
     pc.reject = reject;
-    pc.getAcceptedBy = getAcceptedBy;
-    pc.getRejectedBy = getRejectedBy;
+    pc.getAccepted = getAccepted;
+    pc.getRejected = getRejected;
+    pc.getVisitors = getVisitors;
 
     // Functions definations
-    function getRejectedBy() {
+    function getVisitors(type) {
       try {
-        logger.debug("getRejectedBy() function");
+        logger.debug("getVisitors() function");
 
-        var promise = profileService.getRejectedBy();
+        var promise = profileService.getVisitors(type);
+
+        promise.then(function(sucResp) {
+          try {
+            var resp = sucResp.data;
+            if (resp.status !== sConfig.httpStatus.SUCCESS) {
+              utilService.toastMessage(resp.messages);
+              return;
+            }
+
+            pc.profiles = resp.data.profiles;
+          } catch (exception) {
+            logger.error("exception: " + exception);
+          }
+        }, function(errResp) {});
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getRejected(type) {
+      try {
+        logger.debug("getRejected() function");
+
+        var promise = profileService.getRejected(type);
 
         promise.then(function(sucResp) {
           try {
@@ -149,11 +174,11 @@
       }
     }
 
-    function getAcceptedBy() {
+    function getAccepted(type) {
       try {
-        logger.debug("getAcceptedBy() function");
+        logger.debug("getAccepted() function");
 
-        var promise = profileService.getAcceptedBy();
+        var promise = profileService.getAccepted(type);
 
         promise.then(function(sucResp) {
           try {
@@ -247,6 +272,10 @@
         }, {
           text: "<i class='txt-color icon ion-reply'></i> Received"
         }, {
+          text: "<i class='txt-color icon ion-checkmark-circled'></i> Accepted by"
+        }, {
+          text: "<i class='txt-color icon ion-close-circled'></i> Rejected by"
+        }, {
           text: "<i class='txt-color icon ion-checkmark-circled'></i> Accepted"
         }, {
           text: "<i class='txt-color icon ion-close-circled'></i> Rejected"
@@ -263,21 +292,29 @@
           switch (index) {
             case 0:
               pc.getRequestsOut();
-              pc.requestsTitle = "Requests sent";
+              pc.requestsTitle = "Sent";
               break;
             case 1:
-              pc.requestsTitle = "Requests received";
+              pc.requestsTitle = "Received";
               pc.getRequestsIn();
               break;
             case 2:
-              pc.requestsTitle = "Requests accepted";
-              pc.getAcceptedBy();
+              pc.requestsTitle = "Accepted by";
+              pc.getAccepted("acceptedBy");
               break;
             case 3:
-              pc.requestsTitle = "Requests rejected";
-              pc.getRejectedBy();
+              pc.requestsTitle = "Rejected by";
+              pc.getRejected("rejectedBy");
               break;
             case 4:
+              pc.requestsTitle = "Accepted";
+              pc.getAccepted("acceptedOf");
+              break;
+            case 5:
+              pc.requestsTitle = "Rejected";
+              pc.getRejected("rejectedOf");
+              break;
+            case 6:
               hideRequestsActionSheet();
               break;
           }
@@ -835,7 +872,6 @@
                 return;
               }
 
-              pc.isCompleted = true;
               pc.profiles = resp.data.profiles;
               pc.isProfiles = true;
               pc.isFProfiles = false;
@@ -855,7 +891,7 @@
 
     $ionicModal.fromTemplateUrl('app/profiles/images-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       pc.imagesModal = modal;
     });
@@ -873,7 +909,7 @@
 
     $ionicModal.fromTemplateUrl('app/profiles/profile-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       pc.profileModal = modal;
     });
@@ -907,7 +943,7 @@
 
     $ionicModal.fromTemplateUrl('app/profiles/profile-filter-modal.html', {
       scope: $scope,
-      animation: 'slide-in-up'
+      animation: sConfig.modal.animation
     }).then(function(modal) {
       pc.profileFModal = modal;
     });
@@ -1048,6 +1084,9 @@
             break;
           case "editProfile":
             pc.editProfile();
+            break;
+          case "getVisitors":
+            pc.getVisitors();
             break;
           default:
             pc.getProfiles();

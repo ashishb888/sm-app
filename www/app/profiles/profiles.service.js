@@ -28,17 +28,24 @@
     ps.updateProfilePreference = updateProfilePreference;
     ps.accept = accept;
     ps.reject = reject;
-    ps.getAcceptedBy = getAcceptedBy;
-    ps.getRejectedBy = getRejectedBy;
+    ps.getAccepted = getAccepted;
+    ps.getRejected = getRejected;
+    ps.getVisitors = getVisitors;
 
-    function getRejectedBy(req) {
-      logger.debug("getRejectedBy() service");
-      return $http.get(sc.ws + '/reject', sc.httpReq.config);
+    // Functions definations
+    function getVisitors() {
+      logger.debug("getVisitors() service");
+      return $http.get(sc.ws + '/visitors', sc.httpReq.config);
     }
 
-    function getAcceptedBy(req) {
-      logger.debug("getAcceptedBy() service");
-      return $http.get(sc.ws + '/accept', sc.httpReq.config);
+    function getRejected(type) {
+      logger.debug("getRejected() service");
+      return $http.get(sc.ws + '/reject/' + type, sc.httpReq.config);
+    }
+
+    function getAccepted(type) {
+      logger.debug("getAccepted() service");
+      return $http.get(sc.ws + '/accept/' + type, sc.httpReq.config);
     }
 
     function reject(req) {
