@@ -14,7 +14,7 @@
           Higher education
         </div>
         <select ng-required="true" ng-model="epc.pif.hEducation">
-          <option ng-repeat="e in epc.hEducationArr">{{e}}</option>
+          <option ng-repeat="e in epc.education">{{e}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label" ng-show="epc.pif.hEducation == 'Other'">
@@ -31,7 +31,7 @@
           Occupation
         </div>
         <select ng-required="true" ng-model="epc.pif.occupation">
-          <option ng-repeat="o in epc.occupationArr">{{o}}</option>
+          <option ng-repeat="o in epc.occupation">{{o}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
@@ -54,7 +54,7 @@
       </label>
 
       <div class="padding">
-        <button class="button button-full button-royal" ng-disabled="professionInfoForm.$invalid" ng-click="epc.updateProfessionInfo()">
+        <button class="button button-small button-full button-royal" ng-disabled="professionInfoForm.$invalid" ng-click="epc.updateProfessionInfo()">
           Update
         </button>
       </div>

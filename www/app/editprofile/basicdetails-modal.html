@@ -30,7 +30,7 @@
           Gender
         </div>
         <select ng-model="epc.bdf.gender" ng-required="true">
-          <option ng-repeat="g in epc.genderArr">{{g}}</option>
+          <option ng-repeat="g in epc.gender">{{g}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
@@ -47,7 +47,7 @@
           Height
         </div>
         <select ng-model="epc.bdf.height" ng-required="true">
-          <option ng-repeat="h in epc.heightArr">{{h}}</option>
+          <option ng-repeat="h in epc.height">{{h}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
@@ -55,7 +55,7 @@
           Complexion
         </div>
         <select ng-model="epc.bdf.complexion" ng-required="true">
-          <option ng-repeat="c in epc.complexionArr">{{c}}</option>
+          <option ng-repeat="c in epc.complexion">{{c}}</option>
         </select>
       </label>
 
@@ -64,7 +64,7 @@
           Body type
         </div>
         <select ng-model="epc.bdf.bodyType" ng-required="true">
-          <option ng-repeat="bt in epc.bodyTypeArr">{{bt}}</option>
+          <option ng-repeat="bt in epc.bodyType">{{bt}}</option>
         </select>
       </label>
       <!--<label class="item item-input item-select">
@@ -108,7 +108,7 @@
             </select>
           </label>-->
       <div class="padding">
-        <button class="button button-full button-royal" ng-disabled="basicDetailsForm.$invalid" ng-click="epc.updateBasicDetails()">
+        <button class="button button-small button-full button-royal" ng-disabled="basicDetailsForm.$invalid" ng-click="epc.updateBasicDetails()">
           Update profile
         </button>
       </div>

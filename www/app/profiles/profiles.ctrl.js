@@ -21,26 +21,13 @@
     pc.pif = {};
     pc.heightArr = [];
     pc.pif.height;
-    pc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
-    pc.martitalStatusArr = ["Never married", "Widower", "Divorced",
-      "Awaiting divorce"
-    ];
-    pc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown",
-      "Dark"
-    ];
-    pc.physicalStatusArr = ["Normal", "Physically challenged"];
-    pc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
-    pc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo",
-      "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio",
-      "Pisces"
-    ];
 
-    // Occupation form
-    pc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom",
-      "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA",
-      "MA", "MSc", "Other"
-    ];
-    pc.occupationArr = ["Job", "Farm", "Business"];
+    pc.bodyType = JSON.parse(lsService.get("bodyTypes"));
+    pc.bodyTypeAny = JSON.parse(lsService.get("bodyTypesAny"));
+    pc.complexionAny = JSON.parse(lsService.get("complexionAny"));
+    pc.subCasteAny = JSON.parse(lsService.get("subCasteAny"));
+    pc.ageAny = JSON.parse(lsService.get("ageAny"));
+    pc.heightAny = JSON.parse(lsService.get("heightAny"));
 
     // Filter profiles
     pc.ageArr = [];
@@ -52,7 +39,6 @@
     pc.pff.complexion;
     pc.pff.bodyType;
     pc.pff.subCaste;
-    //  pc.isFProfiles = false;
 
     var cIndex;
 
@@ -95,7 +81,6 @@
 
     // Function section
     var bootstrap = bootstrap;
-    var initHeightArr = initHeightArr;
     var setFProfiles = setFProfiles;
     pc.showProfileFModal = showProfileFModal;
     pc.hideProfileFModal = hideProfileFModal;
@@ -1092,6 +1077,9 @@
             if (pc.profile.familyInfo)
               pc.fif = pc.profile.familyInfo;
 
+            if (pc.profile.profilePreference)
+              pc.ppf = pc.profile.profilePreference;
+
             var imgsPromise = profileService.getImgsById(id);
             imgsPromise.then(function(sucResp) {
               try {
@@ -1245,66 +1233,13 @@
       try {
         logger.debug("setFProfiles function");
 
-        if (pc.ageArr.length == 0)
-          initAgeArr();
-        if (pc.heightArr.length == 0)
-          initHeightArr();
-
-        if (pc.heightArr.indexOf("Any") == -1) {
-          pc.heightArr.splice(0, 0, "Any");
-          pc.complexionArr.splice(0, 0, "Any");
-          pc.bodyTypeArr.splice(0, 0, "Any");
-          pc.subCasteArr.splice(0, 0, "Any");
-        }
-
-        lsService.set("heightAny", JSON.stringify(pc.heightArr));
-        lsService.set("ageAny", JSON.stringify(pc.ageArr));
-        lsService.set("bodyTypesAny", JSON.stringify(pc.bodyTypeArr));
-        lsService.set("complexionAny", JSON.stringify(pc.complexionArr));
-        lsService.set("subCasteAny", JSON.stringify(pc.subCasteArr));
-
-        pc.pff.minAge = pc.ageArr[0];
-        pc.pff.maxAge = pc.ageArr[0];;
-        pc.pff.minHeight = pc.heightArr[0];
-        pc.pff.maxHeight = pc.heightArr[0];
-        pc.pff.complexion = pc.complexionArr[0];
-        pc.pff.bodyType = pc.bodyTypeArr[0];
-        pc.pff.subCaste = pc.subCasteArr[0];
-      } catch (exception) {
-        logger.error("exception: " + exception);
-      }
-    }
-
-    function initAgeArr() {
-      try {
-        logger.debug("initAgeArr function");
-
-        pc.ageArr.push("Any");
-        for (var i = 18; i <= 40; i++) {
-          pc.ageArr.push(i);
-        }
-
-        pc.pff.minAge = pc.ageArr[0];
-        pc.pff.maxAge = pc.ageArr[0];
-      } catch (exception) {
-        logger.error("exception: " + exception);
-      }
-    }
-
-    function initHeightArr() {
-      try {
-        logger.debug("initHeightArr function");
-
-        for (var i = 4; i < 7; i++) {
-          for (var j = 0; j < 12; j++) {
-            if (j === 0) {
-              pc.heightArr.push(i + " ft");
-              continue;
-            }
-            pc.heightArr.push(i + " ft " + j + " in");
-          }
-        }
-        pc.pif.height = pc.heightArr[0];
+        pc.pff.minAge = pc.ageAny[0];
+        pc.pff.maxAge = pc.ageAny[0];;
+        pc.pff.minHeight = pc.heightAny[0];
+        pc.pff.maxHeight = pc.heightAny[0];
+        pc.pff.complexion = pc.complexionAny[0];
+        pc.pff.bodyType = pc.bodyTypeAny[0];
+        pc.pff.subCaste = pc.subCasteAny[0];
       } catch (exception) {
         logger.error("exception: " + exception);
       }

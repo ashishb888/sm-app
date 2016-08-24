@@ -22,30 +22,16 @@
     epc.profile;
     // Personal info form
     epc.bdf = {};
-    epc.genderArr = ["Male", "Female"];
-    // epc.bdf.gender = epc.genderArr[0];
     epc.bdf.gender;
     epc.heightArr = [];
     epc.bdf.height;
-    epc.bodyTypeArr = ["Slim", "Average", "Athletic", "Heavy"];
-    // epc.bdf.bodyType = epc.bodyTypeArr[0];
     epc.bdf.bodyType;
-    epc.martitalStatusArr = ["Never married", "Widower", "Divorced",
-      "Awaiting divorce"
-    ];
     //epc.bdf.martitalStatus = epc.martitalStatusArr[0];
-    epc.complexionArr = ["Very fair", "Fair", "Wheatish", "Wheatish brown",
-      "Dark"
-    ];
     // epc.bdf.complexion = epc.complexionArr[0];
     epc.bdf.complexion;
-    epc.physicalStatusArr = ["Normal", "Physically challenged"];
     //epc.bdf.physicalStatus = epc.physicalStatusArr[0];
-    epc.eatingHabitArr = ["Vegetarian", "Non-vegetarian", "Eggetarian"];
     //epc.bdf.eatingHabit = epc.eatingHabitArr[0];
-    epc.drinkingHabitArr = ["No", "Yes", "Occasionally"];
     //epc.bdf.drinkingHabit = epc.drinkingHabitArr[0];
-    epc.smokingHabitArr = ["No", "Yes", "Occasionally"];
     //epc.bdf.smokingHabit = epc.smokingHabitArr[0];
     epc.bdf.dob;
     epc.bdf.dobLocal;
@@ -53,23 +39,13 @@
     //Religious info
     epc.rif = {};
     epc.rif.tob;
-    epc.subCasteArr = ["Swetamber", "Digamber", "Pancham"];
     epc.rif.subCaste;
-    epc.zodiacArr = ["Aries", "Leo", "Sagittarius", "Taurus", "Virgo",
-      "Capricorn", "Gemini", "Libra", "Aquarius", "Cancer", "Scorpio",
-      "Pisces"
-    ];
     epc.rif.zodiac;
 
     // Professional info
     epc.pif = {};
-    epc.hEducationArr = ["Bellow 10th", "10th", "12th", "BA", "BSc", "BCom",
-      "Diploma", "BE", "BTech", "ME", "MTech", "Ded", "Bed", "MCA", "BCA",
-      "MA", "MSc", "Other"
-    ];
     epc.pif.hEducation;
     epc.pif.oHEducation;
-    epc.occupationArr = ["Job", "Farm", "Business"];
     epc.pif.occupation;
 
     // Location form
@@ -83,11 +59,8 @@
 
     // Family form
     epc.fif = {};
-    epc.familyTypeArr = ["Joint family", "Nuclear family"];
     epc.fif.familyType;
-    epc.familyValuesArr = ["Traditional", "Moderate"];
     epc.fif.familyValues;
-    epc.familyStatusArr = ["Middle class", "Upper middle class"];
     epc.fif.familyStatus;
 
     // Profiles preference
@@ -1134,11 +1107,6 @@
             if (resp.data.profile.profilePreference)
               epc.ppf = resp.data.profile.profilePreference;
 
-            if (epc.heightArr == 0) {
-              initHeightArr();
-              // epc.bdf.height = epc.heightArr[0];
-            }
-
             // Get images
             epc.getOwnImgs();
             epc.getHomeImgs();
@@ -1321,8 +1289,6 @@
     function showBasicDetailsModal() {
       logger.debug("showBasicDetailsModal function");
       lsService.set("basicDetails", JSON.stringify(epc.bdf));
-
-      //initHeightArr();
 
       epc.basicDetailsModal.show();
     }
@@ -1590,6 +1556,29 @@
       }
     }
 
+    function getLocalData() {
+      try {
+        logger.debug("getLocalData function")
+
+        epc.bodyType = JSON.parse(lsService.get("bodyTypes"));
+        epc.complexion = JSON.parse(lsService.get("complexion"));
+        epc.subCaste = JSON.parse(lsService.get("subCaste"));
+        epc.age = JSON.parse(lsService.get("age"));
+        epc.height = JSON.parse(lsService.get("height"));
+        epc.zodiac = JSON.parse(lsService.get("zodiac"));
+        epc.education = JSON.parse(lsService.get("education"));
+        epc.familyType = JSON.parse(lsService.get("familyType"));
+        epc.familyValues = JSON.parse(lsService.get("familyValues"));
+        epc.familyStatus = JSON.parse(lsService.get("familyStatus"));
+        epc.occupation = JSON.parse(lsService.get("occupation"));
+        epc.gender = JSON.parse(lsService.get("gender"));
+        epc.district = JSON.parse(lsService.get("district"));
+        epc.taluka = JSON.parse(lsService.get("taluka"));
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function bootstrap() {
       try {
         logger.debug("bootstrap function")
@@ -1617,8 +1606,10 @@
             epc.wcFunction();
             break;
           default:
-            // epc.viewProfile();
+            // getLocalData();
         }
+
+        getLocalData();
       } catch (exception) {
         logger.error("exception: " + exception);
       }

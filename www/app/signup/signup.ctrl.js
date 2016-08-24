@@ -2,10 +2,11 @@
   angular.module('starter').controller('SignupCtrl', SignupCtrl);
 
   SignupCtrl.$inject = ['$state', 'starterConfig', 'utilService',
-    'signupService', '$auth', '$ionicHistory', 'lsService'
+    'signupService', '$auth', '$ionicHistory', 'lsService', '$rootScope'
   ];
 
-  function SignupCtrl($state, sConfig, utilService, signupService, $auth, $ionicHistory, lsService) {
+  function SignupCtrl($state, sConfig, utilService, signupService, $auth,
+    $ionicHistory, lsService, $rootScope) {
     // Variables section
     var logger = utilService.getLogger();
 
@@ -58,8 +59,8 @@
         $auth.signup(req).then(function(sucResp) {
           var resp = sucResp.data;
           if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.toastMessage(resp.messages);
-              return;
+            utilService.toastMessage(resp.messages);
+            return;
           }
 
           $auth.setToken(resp.token);
@@ -71,7 +72,7 @@
           lsService.set("gender", resp.data.basicDetails.gender);
 
           $rootScope.$broadcast("initApp");
-          
+
           utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
 
           $ionicHistory.nextViewOptions({

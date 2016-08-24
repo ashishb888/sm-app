@@ -14,7 +14,7 @@
           Family type
         </div>
         <select ng-required="true" ng-model="epc.fif.familyType">
-          <option ng-repeat="ft in epc.familyTypeArr">{{ft}}</option>
+          <option ng-repeat="ft in epc.familyType">{{ft}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
@@ -22,7 +22,7 @@
           Family values
         </div>
         <select ng-required="true" ng-model="epc.fif.familyValues">
-          <option ng-repeat="fv in epc.familyValuesArr">{{fv}}</option>
+          <option ng-repeat="fv in epc.familyValues">{{fv}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
@@ -30,7 +30,7 @@
           Family status
         </div>
         <select ng-required="true" ng-model="epc.fif.familyStatus">
-          <option ng-repeat="fs in epc.familyStatusArr">{{fs}}</option>
+          <option ng-repeat="fs in epc.familyStatus">{{fs}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
@@ -71,7 +71,7 @@
       </label>
 
       <div class="padding">
-        <button class="button button-full button-royal" ng-disabled="familyInfoForm.$invalid" ng-click="epc.updateFamilyInfo()">
+        <button class="button button-small button-full button-royal" ng-disabled="familyInfoForm.$invalid" ng-click="epc.updateFamilyInfo()">
           Update
         </button>
       </div>

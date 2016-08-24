@@ -14,7 +14,7 @@
           District
         </div>
         <select ng-required="true" ng-model="epc.lif.district">
-          <option ng-repeat="d in epc.districtArr">{{d}}</option>
+          <option ng-repeat="d in epc.district">{{d}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
@@ -22,7 +22,7 @@
           Taluqa
         </div>
         <select ng-required="true" ng-model="epc.lif.taluqa">
-          <option ng-repeat="t in epc.taluqaArr">{{t}}</option>
+          <option ng-repeat="t in epc.taluka[epc.lif.district]">{{t}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
@@ -43,7 +43,7 @@
         </select>
       </label>-->
       <div class="padding">
-        <button class="button button-full button-royal" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
+        <button class="button button-small button-full button-royal" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
           Update address
         </button>
       </div>

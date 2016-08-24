@@ -14,7 +14,7 @@
           Sub-caste
         </div>
         <select ng-required="true" ng-model="epc.rif.subCaste">
-          <option ng-repeat="sc in epc.subCasteArr">{{sc}}</option>
+          <option ng-repeat="sc in epc.subCaste">{{sc}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
@@ -29,11 +29,11 @@
           Zodiac
         </div>
         <select ng-required="true" ng-model="epc.rif.zodiac">
-          <option ng-repeat="z in epc.zodiacArr">{{z}}</option>
+          <option ng-repeat="z in epc.zodiac">{{z}}</option>
         </select>
       </label>
       <div class="padding">
-        <button class="button button-full button-royal" ng-disabled="religiousInfoForm.$invalid" ng-click="epc.updateReligiousInfo()">
+        <button class="button button-small button-full button-royal" ng-disabled="religiousInfoForm.$invalid" ng-click="epc.updateReligiousInfo()">
           Update profile
         </button>
       </div>

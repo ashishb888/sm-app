@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  local: "/api",
-  /*local: "http://10.1.1.86:3000",*/
+  /*local: "/api",*/
+  local: "http://10.1.1.86:3000",
   /*local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",*/
   tcUrl: "",
   prodStaticResUrl: "",
@@ -58,33 +58,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       console.log("Offline");
     }, false);*/
   });
+
   $rootScope.$on('initApp', function(event) {
     try {
       utilService.getLogger().debug("initApp function");
 
       var promise = initAppService.initApp();
-
-      promise.then(function(sucResp) {
-        var resp = sucResp.data;
-
-        if (resp.status !== sConfig.httpStatus.SUCCESS) {
-          utilService.toastMessage(resp.messages);
-          return;
-        }
-
-        lsService.set("_id", resp.data._id);
-        lsService.set("userId", resp.data.userId);
-        lsService.set("location", JSON.stringify(resp.data.locationInfo));
-        lsService.set("dob", resp.data.basicDetails.dob);
-        lsService.set("height", JSON.stringify(resp.data.basicDetails.height));
-        lsService.set("fullName", resp.data.basicDetails.fullName);
-        lsService.set("gender", resp.data.basicDetails.gender);
-      }).catch(function(errResp) {
-      });
     } catch (exception) {
       utilService.getLogger().error("exception: " + exception);
     }
   });
+
   // Check whether app is online or not.
   $rootScope.$on('checkNetwork', function() {
     utilService.checkNetwork();

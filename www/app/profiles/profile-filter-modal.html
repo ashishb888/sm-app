@@ -16,7 +16,7 @@
               Min age
             </div>
             <select ng-model="pc.pff.minAge" class="xxsmall">
-              <option ng-repeat="a in pc.ageArr">{{a}}</option>
+              <option ng-repeat="a in pc.ageAny">{{a}}</option>
             </select>
           </label>
         </div>
@@ -26,7 +26,7 @@
               Max age
             </div>
             <select ng-model="pc.pff.maxAge" class="xxsmall">
-              <option ng-repeat="a in pc.ageArr">{{a}}</option>
+              <option ng-repeat="a in pc.ageAny">{{a}}</option>
             </select>
           </label>
         </div>
@@ -38,7 +38,7 @@
               Min height
             </div>
             <select ng-model="pc.pff.minHeight" class="xxsmall">
-              <option ng-repeat="h in pc.heightArr">{{h}}</option>
+              <option ng-repeat="h in pc.heightAny">{{h}}</option>
             </select>
           </label>
         </div>
@@ -48,7 +48,7 @@
               Max height
             </div>
             <select ng-model="pc.pff.maxHeight" class="xxsmall">
-              <option ng-repeat="h in pc.heightArr">{{h}}</option>
+              <option ng-repeat="h in pc.heightAny">{{h}}</option>
             </select>
           </label>
         </div>
@@ -59,7 +59,7 @@
           Complexion
         </div>
         <select ng-model="pc.pff.complexion">
-          <option ng-repeat="c in pc.complexionArr">{{c}}</option>
+          <option ng-repeat="c in pc.complexionAny">{{c}}</option>
         </select>
       </label>
 
@@ -68,7 +68,7 @@
           Body type
         </div>
         <select ng-model="pc.pff.bodyType">
-          <option ng-repeat="bt in pc.bodyTypeArr">{{bt}}</option>
+          <option ng-repeat="bt in pc.bodyTypeAny">{{bt}}</option>
         </select>
       </label>
       <label class="item item-input item-select">
@@ -76,7 +76,7 @@
           Sub-caste
         </div>
         <select ng-model="pc.pff.subCaste">
-          <option ng-repeat="sc in pc.subCasteArr">{{sc}}</option>
+          <option ng-repeat="sc in pc.subCasteAny">{{sc}}</option>
         </select>
       </label>
       <div class="padding">

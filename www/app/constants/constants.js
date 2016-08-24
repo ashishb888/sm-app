@@ -108,7 +108,7 @@ angular.module('starter').constant('starterConfig', (function() {
     pp: "pp"
   };
   var picProps = {
-    quality: 10,
+    quality: 100,
     width: 400,
     height: 400
   };
@@ -121,7 +121,7 @@ angular.module('starter').constant('starterConfig', (function() {
     occupation: "occupation"
   };
   var toastMsgs = {
-    appExit: "Press back again to exit."
+    appExit: "Press BACK again to exit."
   };
   var imgsURIs = {
     noImg: "img/no-avatar.png"

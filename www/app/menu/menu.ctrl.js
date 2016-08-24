@@ -60,8 +60,8 @@
 
           switch (index) {
             case 0:
-              // localStorage.clear();
-              lsService.set("isSignedIn", false);
+              localStorage.clear();
+              //lsService.set("isSignedIn", false);
               $auth.logout()
 
               $state.go(sConfig.appStates.signin);
