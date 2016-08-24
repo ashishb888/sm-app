@@ -70,6 +70,8 @@
           lsService.set("fullName", resp.data.basicDetails.fullName);
           lsService.set("gender", resp.data.basicDetails.gender);
 
+          $rootScope.$broadcast("initApp");
+          
           utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
 
           $ionicHistory.nextViewOptions({

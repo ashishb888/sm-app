@@ -9953,7 +9953,7 @@ a.button, a.icons, a.r-icons, a.l-icons {
 
 /* Overriding positive */
 .button.button-positive, .button-positive.icons, .button-positive.r-icons, .button-positive.l-icons {
-  background-color: #ef473a !important; }
+  background-color: #886aea !important; }
 
 .topper {
   margin-top: 10%; }
@@ -10005,10 +10005,10 @@ a.button, a.icons, a.r-icons, a.l-icons {
   text-decoration: underline; }
 
 .txt-color {
-  color: #ef473a !important; }
+  color: #886aea !important; }
 
 .signin-links, .signin-su, .signin-fp {
-  color: #ef473a; }
+  color: #886aea; }
 
 .margin-auto {
   margin: auto !important; }

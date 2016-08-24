@@ -31,21 +31,27 @@
     ps.getAccepted = getAccepted;
     ps.getRejected = getRejected;
     ps.getVisitors = getVisitors;
+    ps.getPaginateProfiles = getPaginateProfiles;
 
     // Functions definations
-    function getVisitors() {
+    function getPaginateProfiles(page) {
+      logger.debug("getPaginateProfiles() service");
+      return $http.get(sc.ws + '/users/paginate/' + page, sc.httpReq.config);
+    }
+
+    function getVisitors(page) {
       logger.debug("getVisitors() service");
-      return $http.get(sc.ws + '/visitors', sc.httpReq.config);
+      return $http.get(sc.ws + '/visitors/' + page, sc.httpReq.config);
     }
 
-    function getRejected(type) {
+    function getRejected(type, page) {
       logger.debug("getRejected() service");
-      return $http.get(sc.ws + '/reject/' + type, sc.httpReq.config);
+      return $http.get(sc.ws + '/reject/' + type + "/" + page, sc.httpReq.config);
     }
 
-    function getAccepted(type) {
+    function getAccepted(type, page) {
       logger.debug("getAccepted() service");
-      return $http.get(sc.ws + '/accept/' + type, sc.httpReq.config);
+      return $http.get(sc.ws + '/accept/' + type + "/" + page, sc.httpReq.config);
     }
 
     function reject(req) {
@@ -73,19 +79,19 @@
       return $http.get(sc.ws + '/images/' + id, sc.httpReq.config);
     }
 
-    function getRequestsIn(id) {
+    function getRequestsIn(page) {
       logger.debug("getRequestsIn() service");
-      return $http.get(sc.ws + '/requestsin', sc.httpReq.config);
+      return $http.get(sc.ws + '/requestsin/' + page, sc.httpReq.config);
     }
 
-    function getRequestsOut(id) {
+    function getRequestsOut(page) {
       logger.debug("getRequestsOut() service");
-      return $http.get(sc.ws + '/requestsout', sc.httpReq.config);
+      return $http.get(sc.ws + '/requestsout/' + page, sc.httpReq.config);
     }
 
-    function getShortlist(id) {
+    function getShortlist(page) {
       logger.debug("getShortlist() service");
-      return $http.get(sc.ws + '/shortlist', sc.httpReq.config);
+      return $http.get(sc.ws + '/shortlist/' + page, sc.httpReq.config);
     }
 
     function getImgs(type, id) {

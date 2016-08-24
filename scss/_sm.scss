@@ -49,7 +49,7 @@
 
 /* Overriding positive */
 .button.button-positive {
-  background-color: #ef473a !important;
+  background-color: $royal !important;
 }
 
 .topper {
@@ -113,11 +113,11 @@
 }
 
 .txt-color {
-  color: $assertive !important;
+  color: $royal !important;
 }
 
 .signin-links {
-  color: $assertive;
+  color: $royal;
   @extend .txt-underline;
   @extend .col;
   @extend .col-50;

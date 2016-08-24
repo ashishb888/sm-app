@@ -5,13 +5,13 @@
     '$ionicPopup', 'lsService', '$ionicSlideBoxDelegate', '$scope',
     '$ionicModal', 'cameraService', '$stateParams', 'profileService',
     '$ionicHistory', 'hwBackBtnService', '$ionicActionSheet',
-    '$ionicSideMenuDelegate'
+    '$ionicSideMenuDelegate', '$ionicTabsDelegate'
   ];
 
   function ProfilesCtrl(sConfig, utilService, $state, $ionicPopup, lsService,
     $ionicSlideBoxDelegate, $scope, $ionicModal, cameraService, $stateParams,
     profileService, $ionicHistory, hwBackBtnService, $ionicActionSheet,
-    $ionicSideMenuDelegate) {
+    $ionicSideMenuDelegate, $ionicTabsDelegate) {
     var logger = utilService.getLogger();
     logger.debug("ProfilesCtrl start");
 
@@ -88,6 +88,11 @@
 
     pc.isCompleted = true;
 
+    // Pagination
+    pc.page = 0;
+    pc.hasMore = true;
+    pc.tabsIndex = 0;
+
     // Function section
     var bootstrap = bootstrap;
     var initHeightArr = initHeightArr;
@@ -123,26 +128,233 @@
     pc.getRejected = getRejected;
     pc.getVisitors = getVisitors;
 
+    // Pagination
+    pc.getPaginateProfiles = getPaginateProfiles;
+    pc.selectTab = selectTab;
+    pc.triggerFunction = triggerFunction;
+    var setFlags = setFlags;
+    pc.inbox = inbox;
+    pc.outbox = outbox;
+
     // Functions definations
-    function getVisitors(type) {
+    function setFlags() {
+      pc.isFProfiles = false;
+      pc.isSlProfiles = false;
+      pc.isRequestsIn = false;
+      pc.isRequestsOut = false;
+      pc.isProfiles = false;
+      pc.isVisitors = false;
+    }
+
+    function outbox(index, isTabAgain, isScroll) {
+      try {
+        logger.debug("outbox function");
+
+        if (isTabAgain && pc.tabsIndex == index) {
+          return;
+        }
+
+        if (!index && index != 0)
+          index = pc.tabsIndex;
+
+        if (!isScroll) {
+          pc.page = 0;
+          pc.profiles = [];
+        }
+
+        $ionicTabsDelegate.select(index);
+        setFlags();
+
+        switch (index) {
+          case 0:
+            pc.getRequestsOut();
+            break;
+          case 1:
+            pc.getAccepted("acceptedOf");
+            break;
+          case 2:
+            pc.getRejected("rejectedOf");
+            break;
+        }
+
+        pc.tabsIndex = index;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function inbox(index, isTabAgain, isScroll) {
+      try {
+        logger.debug("inbox function");
+
+        if (isTabAgain && pc.tabsIndex == index) {
+          return;
+        }
+
+        if (!index && index != 0)
+          index = pc.tabsIndex;
+
+        if (!isScroll) {
+          pc.page = 0;
+          pc.profiles = [];
+        }
+
+        $ionicTabsDelegate.select(index);
+        setFlags();
+
+        switch (index) {
+          case 0:
+            pc.getRequestsIn();
+            break;
+          case 1:
+            pc.getAccepted("acceptedBy");
+            break;
+          case 2:
+            pc.getRejected("rejectedBy");
+            break;
+        }
+
+        pc.tabsIndex = index;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function triggerFunction(index, isTabAgain, isScroll) {
+      try {
+        logger.debug("triggerFunction function");
+
+        if (isTabAgain && pc.tabsIndex == index) {
+          return;
+        }
+
+        if (!index && index != 0)
+          index = pc.tabsIndex;
+
+        if (!isScroll) {
+          pc.page = 0;
+          pc.profiles = [];
+        } else {
+          if (pc.isFProfiles) {
+            pc.filterProfiles(true);
+            return;
+          }
+        }
+
+        $ionicTabsDelegate.select(index);
+        setFlags();
+
+        switch (index) {
+          case 0:
+            pc.getPaginateProfiles();
+            break;
+          case 1:
+            pc.getShortlist();
+            break;
+          case 2:
+            pc.getVisitors();
+            break;
+
+            /*case 1:
+              pc.getRequestsOut();
+              break;
+            case 2:
+              pc.getRequestsIn();
+              break;
+            case 3:
+              pc.getAccepted("acceptedBy");
+              break;
+            case 4:
+              pc.getRejected("rejectedBy");
+              break;
+            case 5:
+              pc.getAccepted("acceptedOf");
+              break;
+            case 6:
+              pc.getRejected("rejectedOf");
+              break;*/
+        }
+
+        pc.tabsIndex = index;
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function selectTab(index) {
+      pc.page = 0;
+      $ionicTabsDelegate.select(index);
+    }
+
+    function getPaginateProfiles() {
+      try {
+        logger.debug("getPaginateProfiles function")
+
+        var promise = profileService.getPaginateProfiles(++pc.page);
+        promise.then(function(sucResp) {
+            try {
+              var resp = sucResp.data;
+              if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                utilService.toastMessage(resp.messages);
+                pc.isCompleted = false;
+                return;
+              }
+
+              pc.hasMore = true;
+
+              if (!resp.data.hasMore) {
+                pc.hasMore = false;
+                utilService.toastMessage(resp.messages);
+              }
+
+              logger.debug("pc.hasMore: " + pc.hasMore);
+              pc.profiles = pc.profiles.concat(resp.data.profiles);
+              pc.isProfiles = true;
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+            } catch (exception) {
+              logger.error("exception: " + exception);
+            }
+          }, function(errResp) {})
+          .finally(function() {
+            // $scope.$broadcast('scroll.infiniteScrollComplete');
+          });
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
+    function getVisitors() {
       try {
         logger.debug("getVisitors() function");
 
-        var promise = profileService.getVisitors(type);
+        var promise = profileService.getVisitors(++pc.page);
 
         promise.then(function(sucResp) {
-          try {
-            var resp = sucResp.data;
-            if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.toastMessage(resp.messages);
-              return;
-            }
+            try {
+              var resp = sucResp.data;
+              if (resp.status !== sConfig.httpStatus.SUCCESS) {
+                utilService.toastMessage(resp.messages);
+                return;
+              }
 
-            pc.profiles = resp.data.profiles;
-          } catch (exception) {
-            logger.error("exception: " + exception);
-          }
-        }, function(errResp) {});
+              pc.hasMore = true;
+
+              if (!resp.data.hasMore) {
+                pc.hasMore = false;
+                utilService.toastMessage(resp.messages);
+              }
+
+              //pc.profiles = resp.data.profiles;
+              pc.isVisitors = true;
+              pc.profiles = pc.profiles.concat(resp.data.profiles);
+              $scope.$broadcast('scroll.infiniteScrollComplete');
+            } catch (exception) {
+              logger.error("exception: " + exception);
+            }
+          }, function(errResp) {})
+          .finally(function() {
+            // $scope.$broadcast('scroll.infiniteScrollComplete');
+          });
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -152,7 +364,7 @@
       try {
         logger.debug("getRejected() function");
 
-        var promise = profileService.getRejected(type);
+        var promise = profileService.getRejected(type, ++pc.page);
 
         promise.then(function(sucResp) {
           try {
@@ -162,9 +374,16 @@
               return;
             }
 
-            pc.isRequestsIn = false;
+            /*pc.isRequestsIn = false;
             pc.isRequestsOut = false;
-            pc.profiles = resp.data.profiles;
+            pc.profiles = resp.data.profiles;*/
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -178,7 +397,7 @@
       try {
         logger.debug("getAccepted() function");
 
-        var promise = profileService.getAccepted(type);
+        var promise = profileService.getAccepted(type, ++pc.page);
 
         promise.then(function(sucResp) {
           try {
@@ -188,9 +407,18 @@
               return;
             }
 
-            pc.isRequestsIn = false;
+            /*pc.isRequestsIn = false;
             pc.isRequestsOut = false;
-            pc.profiles = resp.data.profiles;
+            pc.profiles = resp.data.profiles;*/
+            pc.hasMore = true;
+
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -323,16 +551,21 @@
       });
     }
 
-    function filterProfiles() {
+    function filterProfiles(isScroll) {
       try {
         logger.debug("filterProfiles() function");
 
-        // logger.debug("pc.pff: " + JSON.stringify(pc.pff));
-        // Write code to exlude own profile later
+        if (!isScroll) {
+          pc.profiles = [];
+          pc.page = 0;
+        }
+
+        setFlags();
+        $ionicTabsDelegate.select(0);
+
         var req = {
-          _id: lsService.get("_id"),
-          gender: lsService.get("gender"),
-          data: pc.pff
+          data: pc.pff,
+          page: ++pc.page
         };
         var promise = profileService.filterProfiles(req);
 
@@ -340,13 +573,21 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
-            pc.profiles = resp.data.profiles;
+            pc.hasMore = true;
+
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
             pc.isFProfiles = true;
             pc.profileFModal.hide();
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -360,7 +601,10 @@
     function pullRefresher() {
       try {
         logger.debug("pullRefresher() function");
-        pc.getProfiles();
+        // pc.getProfiles();
+        /*pc.page = 0;
+        pc.profiles = [];
+        pc.getPaginateProfiles(false);*/
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -415,7 +659,7 @@
         logger.debug("getRequestsOut function");
         //logger.debug("state: " + $ionicHistory.currentStateName());
         pc.isRequestsOut = true;
-        var promise = profileService.getRequestsOut(lsService.get("_id"));
+        var promise = profileService.getRequestsOut(++pc.page);
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -424,8 +668,16 @@
               return;
             }
 
-            pc.profiles = resp.data.profiles;
+            pc.hasMore = true;
+
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
             pc.isRequests = true;
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -441,7 +693,7 @@
         //logger.debug("state: " + $ionicHistory.currentStateName());
         pc.isRequestsIn = true;
         pc.isRequestsOut = false;
-        var promise = profileService.getRequestsIn(lsService.get("_id"));
+        var promise = profileService.getRequestsIn(++pc.page);
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -450,8 +702,16 @@
               return;
             }
 
-            pc.profiles = resp.data.profiles;
+            pc.hasMore = true;
+
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
             pc.isRequests = true;
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -466,7 +726,7 @@
         logger.debug("getShortlist function")
           //logger.debug("state: " + $ionicHistory.currentStateName());
         pc.isSlProfiles = true;
-        var promise = profileService.getShortlist(lsService.get("_id"));
+        var promise = profileService.getShortlist(++pc.page);
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -475,8 +735,16 @@
               return;
             }
 
-            pc.profiles = resp.data.profiles;
-            //utilService.appAlert(resp.messages, sConfig.appStates.signin, sConfig.msgs.success);
+            pc.hasMore = true;
+
+            if (!resp.data.hasMore) {
+              pc.hasMore = false;
+              utilService.toastMessage(resp.messages);
+            }
+
+            pc.isSlProfiles = true;
+            pc.profiles = pc.profiles.concat(resp.data.profiles);
+            $scope.$broadcast('scroll.infiniteScrollComplete');
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -925,13 +1193,15 @@
       if (pc.isShortlist === true) {
         pc.profiles.splice(cIndex, 1);
         if (pc.isSearchByUserId === true)
-          pc.getProfiles();
+        // pc.getProfiles();
+          pc.getPaginateProfiles();
       }
 
       if (pc.isInterest === true) {
         pc.profiles.splice(cIndex, 1);
         if (pc.isSearchByUserId === true)
-          pc.getProfiles();
+        // pc.getProfiles();
+          pc.getPaginateProfiles();
       }
 
 
@@ -1088,8 +1358,20 @@
           case "getVisitors":
             pc.getVisitors();
             break;
+          case "inbox":
+            // pc.inbox();
+            pc.getRequestsIn();
+            break;
+          case "outbox":
+            // pc.outbox();
+            pc.getRequestsOut();
+            break;
+          case "getPaginateProfiles":
+            pc.getPaginateProfiles();
+            break;
           default:
-            pc.getProfiles();
+            //pc.getProfiles();
+            //pc.getPaginateProfiles();
         }
       } catch (exception) {
         logger.error("exception: " + exception);

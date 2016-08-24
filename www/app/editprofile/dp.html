@@ -1,4 +1,5 @@
 <ion-view view-title="Display picture">
+  
   <ion-content class="">
     <div class="card">
       <div class="item item-text-wrap txt-ctr-align">
@@ -7,36 +8,23 @@
       </div>
     </div>
     <div class="padding">
-      <button ng-click="epc.goToProfiles()" ng-show="epc.isDPUpload" class="button button-full button-assertive">Next</button>
+      <button ng-click="epc.goToProfiles()" ng-show="epc.isDPUpload" class="button button-full button-small button-royal">Next</button>
     </div>
-
-    <!--<div class="card">
-      <div class="item item-text-wrap">
-        <button class="button button-assertive button-clear" ng-click="epc.addImgs('dp', 'camera')">
-          <i class="icon icon ion-camera xlarge"></i>
-        </button>
-        <button class="button button-assertive button-clear float-right" ng-click="epc.addImgs('dp', 'galary')">
-          <i class="icon ion-images  xlarge"></i>
-        </button>
-        <button class="button button-full button-assertive" ng-disabled="!epc.dp" ng-click="epc.updateDP()">
-          Update
-        </button>
-      </div>
-    </div>-->
   </ion-content>
+
   <!-- Footer -->
   <div class="bar bar-footer">
     <div class="row">
       <div class="col col-20 m-top-2">
-        <button class="button button-assertive button-clear" ng-click="epc.addImgs('dp', 'camera')">
+        <button class="button button-royal button-clear" ng-click="epc.addImgs('dp', 'camera')">
           <i class="icon icon ion-camera"></i>
         </button>
       </div>
       <div class="col col-60 m-top-2">
-        <button ng-click="epc.updateDP()" ng-disabled="!epc.isDP" class="button button-full button-assertive mtop0">Upload</button>
+        <button ng-click="epc.updateDP()" ng-disabled="!epc.isDP" class="button button-full button-royal mtop0">Upload</button>
       </div>
       <div class="col col-20 m-top-2 txt-right-align">
-        <button class="button button-assertive button-clear" ng-disabled="!epc.isDP" ng-click="epc.addImgs('dp', 'galary')">
+        <button class="button button-royal button-clear" ng-disabled="!epc.isDP" ng-click="epc.addImgs('dp', 'galary')">
           <i class="icon icon ion-images"></i>
         </button>
       </div>

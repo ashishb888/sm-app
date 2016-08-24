@@ -1,20 +1,40 @@
-<ion-view view-title="Matching profiles">
+<ion-view view-title="Profiles">
   <ion-nav-buttons side="right">
     <div class="button button-clear" ng-click="pc.showProfileFModal()">
       <i class="xlarge ion-search"></i>
     </div>
   </ion-nav-buttons>
-  <ion-content class="has-footer">
-    <ion-refresher
-      pulling-text="Fetch all profiles..."
-      on-refresh = "pc.pullRefresher()"
-      pulling-icon = "ion-android-refresh"
-      spinner = "ios"
-       >
-    </ion-refresher>
+  <!--<ion-tabs class="tabs-striped tabs-color-royal">-->
+  <ion-tabs class="tabs-striped tabs-icon-top tabs-background-royal tabs-color-light">
+    <ion-tab title="Profiles" ng-click="pc.triggerFunction(0, true);" icon-on="ion-person-stalker" icon-off="ion-person-stalker">
+    </ion-tab>
+    <!--<ion-tab title="Sent" ng-click="pc.triggerFunction(1, true);" icon-on="ion-forward" icon-off="ion-forward">
+    </ion-tab>
+    <ion-tab title="Received" ng-click="pc.triggerFunction(2, true);" icon-on="ion-reply" icon-off="ion-reply">
+    </ion-tab>
+    <ion-tab title="Accepted by" ng-click="pc.triggerFunction(3, true);" icon-on="ion-checkmark-circled" icon-off="ion-checkmark-circled">
+    </ion-tab>
+    <ion-tab title="Rejected by" ng-click="pc.triggerFunction(4, true);" icon-on="ion-close-circled" icon-off="ion-close-circled">
+    </ion-tab>
+    <ion-tab title="Accepted" ng-click="pc.triggerFunction(5, true);" icon-on="ion-checkmark-circled" icon-off="ion-checkmark-circled">
+    </ion-tab>
+    <ion-tab title="Rejected" ng-click="pc.triggerFunction(6, true);" icon-on="ion-close-circled" icon-off="ion-close-circled">
+    </ion-tab>-->
+    <ion-tab title="Shortlisted" ng-click="pc.triggerFunction(1, true);" icon-on="ion-ios-star" icon-off="ion-ios-star">
+    </ion-tab>
+    <ion-tab title="Viewed by" ng-click="pc.triggerFunction(2, true);" icon-on="ion-person-stalker" icon-off="ion-person-stalker">
+    </ion-tab>
+  </ion-tabs>
+
+  <ion-content class="has-footer has-tabs has-subheader">
+    <!--<ion-refresher pulling-text="Fetch all profiles..." on-refresh="pc.pullRefresher()"
+        pulling-icon="ion-android-refresh" spinner="ios">
+    </ion-refresher>-->
+
     <div class="card" ng-hide="pc.isCompleted">
       <div class="item item-text-wrap">
-        Please complete your profile <a ui-sref="menu.editprofile">here</a> to see other profiles.
+        Please complete your profile <a ui-sref="menu.editprofile">here</a> to see
+        other profiles.
       </div>
     </div>
     <div class="card" ng-show="pc.profiles.length === 0 && pc.isCompleted">
@@ -24,16 +44,20 @@
     </div>
     <div class="card" ng-show="pc.profiles.length !== 0 && pc.isCompleted">
       <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)">
-        <img ng-src="data:image/jpg;base64,{{p.dp}}" >
+        <img ng-src="data:image/jpg;base64,{{p.dp}}">
         <h2>{{p.basicDetails.fullName}}</h2>
         <p>{{p.userId}}</p>
         <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
         <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
       </div>
     </div>
+
+    <ion-infinite-scroll ng-if="pc.hasMore" on-infinite="pc.triggerFunction(null, null, true)" distance="1%">
+    </ion-infinite-scroll>
+
   </ion-content>
   <div class="bar bar-footer" ng-show="pc.isFProfiles">
-    <button class="button button-assertive button-full mtop0" ng-click="pc.getProfiles()">Vie all profiles</button>
+    <button class="button button-royal button-full mtop0" ng-click="pc.triggerFunction()">View all profiles</button>
   </div>
 
   <div class="bar bar-footer item-input-inset" ng-hide="pc.isFProfiles || !pc.isCompleted">

@@ -1,0 +1,34 @@
+<ion-view view-title="Outbox">
+  <ion-nav-buttons side="right">
+  </ion-nav-buttons>
+  <!--<ion-tabs class="tabs-striped tabs-color-royal">-->
+  <ion-tabs class="tabs-striped tabs-icon-top tabs-background-royal tabs-color-light">
+    <ion-tab title="Sent" ng-click="pc.outbox(0, true);" icon-on="ion-forward" icon-off="ion-forward">
+    </ion-tab>
+    <ion-tab title="Accepted" ng-click="pc.outbox(1, true);" icon-on="ion-checkmark-circled" icon-off="ion-checkmark-circled">
+    </ion-tab>
+    <ion-tab title="Rejected" ng-click="pc.outbox(2, true);" icon-on="ion-close-circled" icon-off="ion-close-circled">
+    </ion-tab>
+  </ion-tabs>
+
+  <ion-content class="has-tabs has-subheader">
+    <div class="card" ng-show="pc.profiles.length === 0 && pc.isCompleted">
+      <div class="item item-text-wrap">
+        No profiles.
+      </div>
+    </div>
+    <div class="card" ng-show="pc.profiles.length !== 0 && pc.isCompleted">
+      <div class="item item-thumbnail-left" ng-repeat="p in pc.profiles" ng-click="pc.viewProfile(p._id, $index)">
+        <img ng-src="data:image/jpg;base64,{{p.dp}}">
+        <h2>{{p.basicDetails.fullName}}</h2>
+        <p>{{p.userId}}</p>
+        <p>{{p.basicDetails.age}} Yrs, {{p.basicDetails.height.feet}}' {{p.basicDetails.height.inches}}"</p>
+        <p>{{p.locationInfo.town}}, {{p.locationInfo.district}}.</p>
+      </div>
+    </div>
+
+    <ion-infinite-scroll ng-if="pc.hasMore" on-infinite="pc.outbox(null, null, true)" distance="1%">
+    </ion-infinite-scroll>
+
+  </ion-content>
+</ion-view>

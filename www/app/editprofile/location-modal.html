@@ -1,5 +1,5 @@
 <ion-modal-view view-title="Location information">
-  <ion-header-bar class="bar-assertive">
+  <ion-header-bar class="bar-royal">
     <h1 class="title txt-ctr-align">Location information
     <button class="button button-clear float-left m-top1" ng-click="epc.hideLocationModal()">
       <i class="icon ion-android-arrow-back"></i>
@@ -27,10 +27,10 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Town</span>
-        <input type="text" name="town" placeholder="Town" ng-model="epc.lif.town" ng-required="true" ng-minlength="5" ng-maxlength="15">
+        <input type="text" name="town" placeholder="Town" ng-model="epc.lif.town" ng-required="true" ng-minlength="3" ng-maxlength="15">
         <div class="app-error" ng-messages="locationInfoForm.town.$error" ng-if="locationInfoForm.town.$dirty">
           <div ng-message="required">Town is required.</div>
-          <div ng-message="minlength">Town must be at least 5 characters long.</div>
+          <div ng-message="minlength">Town must be at least 3 characters long.</div>
           <div ng-message="maxlength">Town can be at most 15 characters long.</div>
         </div>
       </label>
@@ -43,7 +43,7 @@
         </select>
       </label>-->
       <div class="padding">
-        <button class="button button-full button-assertive" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
+        <button class="button button-full button-royal" ng-disabled="locationInfoForm.$invalid" ng-click="epc.updateLocationInfo()">
           Update address
         </button>
       </div>

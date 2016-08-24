@@ -382,7 +382,7 @@
       try {
         logger.debug("getDP function");
 
-        var promise = editProfileService.getDP();
+        /*var promise = editProfileService.getDP();
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -400,7 +400,9 @@
           } catch (exception) {
             logger.error("exception: " + exception);
           }
-        }, function(errResp) {});
+        }, function(errResp) {});*/
+        epc.dp = {};
+        epc.dp.base64 = lsService.get("dp");
       } catch (exception) {
         logger.error("exception: " + exception);
       }

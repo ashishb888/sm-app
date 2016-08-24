@@ -1,5 +1,5 @@
 <ion-modal-view>
-  <ion-header-bar class="bar-assertive">
+  <ion-header-bar class="bar-royal">
     <h1 class="title txt-ctr-align">Profile
     <button class="button button-clear float-left m-top1" ng-click="pc.hideProfileModal()">
       <i class="icon ion-android-arrow-back"></i>
@@ -150,16 +150,16 @@
       </div>
     </div>
   </ion-content>
-  <div class="bar bar-footer item-input-inset" ng-show="pc.isProfiles">
-    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}&nbsp;</button>
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
+  <div class="bar bar-footer item-input-inset" ng-show="pc.isProfiles || pc.isVisitors">
+    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}&nbsp;</button>
+    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
   </div>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isRequestsIn">
-    <button ng-click="pc.accept(pc.profile._id)" class="button icon-right button-assertive icon ion-checkmark-circled">Accept&nbsp;</button>
-    <button ng-click="pc.reject(pc.profile._id)" class="button icon-right button-assertive ion-close-circled">Reject&nbsp;</button>
+    <button ng-click="pc.accept(pc.profile._id)" class="button icon-right button-royal icon ion-checkmark-circled">Accept&nbsp;</button>
+    <button ng-click="pc.reject(pc.profile._id)" class="button icon-right button-royal ion-close-circled">Reject&nbsp;</button>
   </div>
   <div class="bar bar-footer" ng-show="pc.isSlProfiles">
-    <!--<button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>-->
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-assertive" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
+    <!--<button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>-->
+    <button ng-click="pc.interest(pc.profile._id)" class="button button-full icon-right button-royal" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
   </div>
 </ion-modal-view>

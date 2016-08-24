@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content class="bar-assertive">
-    <ion-nav-bar class="bar-assertive">
+  <ion-side-menu-content class="bar-royal">
+    <ion-nav-bar class="bar-royal">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -13,12 +13,12 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-assertive">
+    <ion-header-bar class="bar-royal">
       <h1 class="title">Marry me
       <i class="icon ion-log-out float-right xlarge" ng-click="mc.signoutActionSheet()"></i>
     </h1>
     </ion-header-bar>
-    <ion-content class="bar-assertive">
+    <ion-content class="bar-royal">
       <ion-list>
         <!--<div class="card">
           <div class="item item-text-wrap txt-ctr-align">
@@ -49,14 +49,14 @@
             <p ng-show="mc.location.town">
               {{mc.location.town}}, {{mc.location.district}}.
             </p>
-            <!--<button menu-close class="button button-assertive button-clear float-right" ui-sref="menu.innerdp">
+            <!--<button menu-close class="button button-royal button-clear float-right" ui-sref="menu.innerdp">
               <i class="icon ion-edit"></i>
             </button>-->
           </div>
         </div>
         <!--<li class="item ion-android-search" menu-close ui-sref="menu.profiles"> Search profiles</li>-->
 
-        <ion-item class="item-icon-left" menu-close ui-sref="menu.profiles">
+        <!--<ion-item class="item-icon-left" menu-close ui-sref="menu.profiles">
           <i class="icon ion-android-search txt-color"></i> Browse profiles
         </ion-item>
         <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.visitors')">
@@ -67,13 +67,22 @@
         </ion-item>
         <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.slprofiles')">
           <i class="icon ion-ios-star txt-color"></i> Shortlisted
-        </ion-item>
+        </ion-item>-->
         <!--<ion-item class="item-icon-left" menu-close ui-sref="menu.profilesp">
           <i class="icon ion-university txt-color"></i> Profiles preference
         </ion-item>-->
         <!--<ion-item class="item-icon-left" menu-close ui-sref="menu.editprofile">
           <i class="icon ion-person txt-color"></i> Edit profile
         </ion-item>-->
+        <ion-item class="item-icon-left" menu-close ui-sref="menu.profiles">
+          <i class="icon ion-android-search txt-color"></i> Browse profiles
+        </ion-item>
+        <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.inbox')">
+          <i class="icon ion-reply txt-color"></i> Inbox
+        </ion-item>
+        <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.outbox')">
+          <i class="icon ion-forward txt-color"></i> Outbox
+        </ion-item>
         <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.editprofile')">
           <i class="icon ion-person txt-color"></i> Edit profile
         </ion-item>

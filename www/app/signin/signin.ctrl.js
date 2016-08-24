@@ -46,7 +46,7 @@
 
     function signin() {
       try {
-        logger.debug("signin starts");
+        logger.debug("signin function");
 
         if (!utilService.isAppOnlineService()) {
           utilService.toastMessage(sConfig.msgs.noConnMsg);
@@ -117,14 +117,12 @@
             return;
           }
 
+          $rootScope.$broadcast("initApp");
+
           lsService.set("dp", resp.data.dp);
           $state.go(sConfig.appStates.menu_profiles);
-
         }).catch(function(errResp) {
-
         });
-
-        logger.debug("signin ends");
       } catch (exception) {
         logger.error("exception: " + exception);
       }

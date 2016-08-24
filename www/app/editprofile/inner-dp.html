@@ -2,8 +2,8 @@
   <ion-content class="">
     <div class="card">
       <div class="item item-text-wrap txt-ctr-align">
-        <img class="w50" ng-src="{{epc.noavatar}}" ng-hide="epc.dp._id">
-        <img class="w50" ng-src="data:image/jpg;base64,{{epc.dp.base64}}" ng-show="epc.dp._id" ng-click="epc.largeImg('dp')">
+        <img class="w50" ng-src="{{epc.noavatar}}" ng-hide="epc.dp.base64">
+        <img class="w50" ng-src="data:image/jpg;base64,{{epc.dp.base64}}" ng-show="epc.dp.base64" ng-click="epc.largeImg('dp')">
       </div>
     </div>
   </ion-content>
@@ -11,15 +11,15 @@
   <div class="bar bar-footer">
     <div class="row">
       <div class="col col-20 m-top-2">
-        <button class="button button-assertive button-clear" ng-click="epc.addImgs('dp', 'camera')">
+        <button class="button button-royal button-clear" ng-click="epc.addImgs('dp', 'camera')">
           <i class="icon icon ion-camera"></i>
         </button>
       </div>
       <div class="col col-60 m-top-2">
-        <button ng-click="epc.updateDP()" ng-disabled="!epc.isDP" class="button button-full button-assertive mtop0">Upload</button>
+        <button ng-click="epc.updateDP()" ng-disabled="!epc.isDP" class="button button-full button-royal mtop0">Upload</button>
       </div>
       <div class="col col-20 m-top-2 txt-right-align">
-        <button class="button button-assertive button-clear" ng-click="epc.addImgs('dp', 'galary')">
+        <button class="button button-royal button-clear" ng-click="epc.addImgs('dp', 'galary')">
           <i class="icon icon ion-images"></i>
         </button>
       </div>

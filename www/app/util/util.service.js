@@ -113,10 +113,15 @@
       logger.debug("errorHandler() service")
       switch (respErr.status) {
         case 400:
-          appAlert(sConfig.msgs.globalCommonError);
+          // appAlert(sConfig.msgs.globalCommonError);
           break;
         case 401:
-          appAlert(sConfig.msgs.globalCommonError);
+          appAlert(respErr.data.message);
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+
+          $state.go(sConfig.appStates.signin);
           break;
         case 500:
           appAlert(sConfig.msgs.globalCommonError);
