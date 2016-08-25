@@ -62,7 +62,7 @@
             var resp = sucResp.data;
 
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -149,7 +149,7 @@
             var resp = sucResp.data;
 
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 

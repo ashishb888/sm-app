@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
+  local: "/api",
+  /*local: "http://10.1.1.86:3000",*/
   /*local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",*/
   tcUrl: "",
   prodStaticResUrl: "",
@@ -45,6 +45,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
+      //StatusBar.backgroundColorByName("purple");
+      StatusBar.backgroundColorByHexString("#886aea");
     }
 
     // Init database

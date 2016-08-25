@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false">
+<ion-side-menus enable-menu-with-back-views="true">
   <ion-side-menu-content class="bar-royal">
     <ion-nav-bar class="bar-royal">
       <ion-nav-back-button>
@@ -15,10 +15,10 @@
   <ion-side-menu side="left">
     <ion-header-bar class="bar-royal">
       <h1 class="title">Marry me
-      <i class="icon ion-log-out float-right xlarge" ng-click="mc.signoutActionSheet()"></i>
+      <!--<i class="icon ion-log-out float-right xlarge" ng-click="mc.signoutActionSheet()"></i>-->
     </h1>
     </ion-header-bar>
-    <ion-content class="bar-royal">
+    <ion-content>
       <ion-list>
         <div class="card">
           <div class="item item-thumbnail-left">
@@ -83,9 +83,9 @@
         <ion-item class="item-icon-left" ng-click="mc.goToThisState('menu.help')">
           <i class="large icon ion-help txt-color"></i> Help
         </ion-item>
-        <!--<ion-item menu-close ng-click="mc.signout();">
-          Sign out
-        </ion-item>-->
+        <ion-item class="item-icon-left" ng-click="mc.signoutActionSheet()">
+          <i class="large icon ion-log-out txt-color"></i> Sign out
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>

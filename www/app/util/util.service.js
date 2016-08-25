@@ -116,7 +116,7 @@
           // appAlert(sConfig.msgs.globalCommonError);
           break;
         case 401:
-          appAlert(respErr.data.message);
+          toastMessage(respErr.data.message);
           $ionicHistory.nextViewOptions({
             disableBack: true
           });
@@ -124,10 +124,10 @@
           $state.go(sConfig.appStates.signin);
           break;
         case 500:
-          appAlert(sConfig.msgs.globalCommonError);
+          toastMessage(sConfig.msgs.globalCommonError);
           break;
         default:
-          appAlert(sConfig.msgs.globalCommonError);
+          toastMessage(sConfig.msgs.globalCommonError);
       }
     }
 

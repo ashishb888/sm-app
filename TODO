@@ -1,3 +1,6 @@
+Galary plugin permissions
+Photo: When user add new images, but does not update, and press back it shows latest clicked images instead old one
+
 Remove profile from viewedBy when user accept, reject, shortlisted, interested
 
 Init app WS

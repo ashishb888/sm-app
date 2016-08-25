@@ -93,10 +93,10 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
-            
+
             $rootScope.rootDP = ic.dp.base64;
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
@@ -118,7 +118,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             if (resp.data.images && resp.data.images.length > 0) {
@@ -147,11 +147,11 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             ic.homeImgs = resp.data.images;
-            // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            // utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -220,7 +220,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -263,7 +263,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -287,14 +287,14 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             /*for (var i = 0; i < resp.data.base64.length; i++) {
               ic.ownImages.base64[i] = resp.data.base64[i];
             }*/
             ic.ownImgs = resp.data.images;
-            // utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            // utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -448,7 +448,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               //utilService.toastMessage(resp.messages);
               return;
             }

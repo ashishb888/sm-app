@@ -21,7 +21,7 @@
         logger.debug("forgotPassword function");
 
         if (!utilService.isAppOnlineService()) {
-          utilService.appAlert(sc.msgs.noConnMsg);
+          utilService.toastMessage(sc.msgs.noConnMsg);
           return;
         }
 
@@ -49,7 +49,7 @@
         logger.debug("resetPassword function");
 
         if (!utilService.isAppOnlineService()) {
-          utilService.appAlert(sc.msgs.noConnMsg);
+          utilService.toastMessage(sc.msgs.noConnMsg);
           return;
         }
 

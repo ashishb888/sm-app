@@ -22,13 +22,6 @@
     pc.heightArr = [];
     pc.pif.height;
 
-    pc.bodyType = JSON.parse(lsService.get("bodyTypes"));
-    pc.bodyTypeAny = JSON.parse(lsService.get("bodyTypesAny"));
-    pc.complexionAny = JSON.parse(lsService.get("complexionAny"));
-    pc.subCasteAny = JSON.parse(lsService.get("subCasteAny"));
-    pc.ageAny = JSON.parse(lsService.get("ageAny"));
-    pc.heightAny = JSON.parse(lsService.get("heightAny"));
-
     // Filter profiles
     pc.ageArr = [];
     pc.pff = {};
@@ -87,7 +80,6 @@
     pc.showProfileModal = showProfileModal;
     pc.hideProfileModal = hideProfileModal;
     pc.getProfiles = getProfiles;
-    /*pc.viewProfile = viewProfile;*/
     pc.viewProfile = viewProfile;
     pc.showImagesModal = showImagesModal;
     pc.hideImagesModal = hideImagesModal;
@@ -120,6 +112,7 @@
     var setFlags = setFlags;
     pc.inbox = inbox;
     pc.outbox = outbox;
+    var getLocalData = getLocalData;
 
     // Functions definations
     function setFlags() {
@@ -231,6 +224,7 @@
 
         switch (index) {
           case 0:
+
             pc.getPaginateProfiles();
             break;
           case 1:
@@ -622,7 +616,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
@@ -649,7 +643,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -683,7 +677,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -716,7 +710,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -748,7 +742,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             pc.isInterest = false;
@@ -794,7 +788,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -824,7 +818,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
@@ -859,7 +853,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             pc.isShortlist = false;
@@ -928,7 +922,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -946,7 +940,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -1004,7 +998,7 @@
               try {
                 var resp = sucResp.data;
                 if (resp.status !== sConfig.httpStatus.SUCCESS) {
-                  utilService.appAlert(resp.messages);
+                  utilService.toastMessage(resp.messages);
                   return;
                 }
 
@@ -1031,7 +1025,12 @@
       try {
         logger.debug("viewProfile function");
 
-        var promise = profileService.getProfile(id);
+        var isView = false;
+
+        if (pc.isProfiles === true || pc.isVisitors === true)
+          isView = true;
+
+        var promise = profileService.getProfile(id, isView);
         promise.then(function(sucResp) {
           try {
             var resp = sucResp.data;
@@ -1273,6 +1272,21 @@
       }
     }
 
+    function getLocalData() {
+      try {
+        logger.debug("getLocalData function")
+
+        pc.bodyType = JSON.parse(lsService.get("bodyTypes"));
+        pc.bodyTypeAny = JSON.parse(lsService.get("bodyTypesAny"));
+        pc.complexionAny = JSON.parse(lsService.get("complexionAny"));
+        pc.subCasteAny = JSON.parse(lsService.get("subCasteAny"));
+        pc.ageAny = JSON.parse(lsService.get("ageAny"));
+        pc.heightAny = JSON.parse(lsService.get("heightAny"));
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    }
+
     function bootstrap() {
       try {
         logger.debug("bootstrap function")
@@ -1308,6 +1322,8 @@
             //pc.getProfiles();
             //pc.getPaginateProfiles();
         }
+
+        getLocalData();
       } catch (exception) {
         logger.error("exception: " + exception);
       }

@@ -82,7 +82,7 @@
         mc.fullName = lsService.get("fullName");
         mc.dp = lsService.get("dp");
         mc.userId = lsService.get("userId");
-        mc.location = JSON.parse(lsService.get("location"));
+        mc.location = JSON.parse(lsService.get("userLocation"));
 
         if (lsService.get("dob"))
           mc.age = moment().diff(lsService.get("dob"), "years");
@@ -90,7 +90,7 @@
         // var heightLocal = JSON.parse(lsService.get("height"));
 
         if (lsService.get("height"))
-          mc.height = JSON.parse(lsService.get("height"));
+          mc.height = JSON.parse(lsService.get("userHeight"));
 
       } catch (exception) {
         logger.error("exception: " + exception);
@@ -119,7 +119,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 

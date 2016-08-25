@@ -32,9 +32,6 @@
           disableBack: true
         });
 
-        /*$state.go(sConfig.appStates.menu_profiles, {}, {
-          reload: true
-        });*/
         $state.go(sConfig.appStates.menu_profiles);
       } catch (exception) {
         logger.error("exception: " + exception);

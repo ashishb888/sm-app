@@ -164,6 +164,7 @@
     epc.goToProfiles = goToProfiles;
     epc.imgActionSheet = imgActionSheet;
     epc.removeImgActionSheet = removeImgActionSheet;
+    var getLocalData = getLocalData;
 
     // Functions definations
     function updateProfilePreference() {
@@ -331,7 +332,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -392,7 +393,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             epc.homeImgs = resp.data.images;
@@ -475,7 +476,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -521,7 +522,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
 
@@ -549,7 +550,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             epc.ownImgs = resp.data.images;
@@ -650,7 +651,7 @@
               try {
                 var resp = sucResp.data;
                 if (resp.status !== sConfig.httpStatus.SUCCESS) {
-                  utilService.appAlert(resp.messages);
+                  utilService.toastMessage(resp.messages);
                   //utilService.toastMessage(resp.messages);
                   return;
                 }
@@ -717,7 +718,7 @@
                 try {
                   var resp = sucResp.data;
                   if (resp.status !== sConfig.httpStatus.SUCCESS) {
-                    utilService.appAlert(resp.messages);
+                    utilService.toastMessage(resp.messages);
                     //utilService.toastMessage(resp.messages);
                     return;
                   }
@@ -868,13 +869,13 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             if (resp.data.familyInfo) {
               epc.fif = resp.data.familyInfo;
             }
-            //utilService.appAlert(resp.messages, null, sConfig.msgs.success);
+            //utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
           } catch (exception) {
             logger.error("exception: " + exception);
           }
@@ -962,7 +963,7 @@
               return;
             }
 
-            lsService.set("location", JSON.stringify(epc.lif));
+            lsService.set("userLocation", JSON.stringify(epc.lif));
             $rootScope.$broadcast("setBanner");
 
             utilService.toastMessage(resp.messages, null, sConfig.msgs.success);
@@ -1043,7 +1044,7 @@
           try {
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
-              utilService.appAlert(resp.messages);
+              utilService.toastMessage(resp.messages);
               return;
             }
             var bDetails = resp.data.profile.basicDetails;
@@ -1065,7 +1066,14 @@
                 bDetails.dobLocal = moment(bDetails.dob.toString())._d;
                 epc.isShowDOB = true;
               } else {
-                bDetails.dobLocal = new Date();
+                var gender = bDetails.gender.toLowerCase();
+
+                if (gender == "male") {
+                  bDetails.dobLocal = moment().subtract(21, 'years')._d;
+                }else {
+                  bDetails.dobLocal = moment().subtract(18, 'years')._d;
+                }
+
                 epc.isShowDOB = false;
               }
 
@@ -1483,8 +1491,8 @@
 
             lsService.set("fullName", epc.bdf.fullName);
             lsService.set("dob", epc.bdf.dob);
-            lsService.set("height", JSON.stringify(epc.bdf.height));
-            lsService.set("gender", epc.bdf.gender);
+            lsService.set("userHeight", JSON.stringify(epc.bdf.height));
+            lsService.set("userGender", epc.bdf.gender);
             $rootScope.$broadcast("setBanner");
             epc.isShowDOB = true;
 
@@ -1605,8 +1613,6 @@
           case "wcFunction":
             epc.wcFunction();
             break;
-          default:
-            // getLocalData();
         }
 
         getLocalData();

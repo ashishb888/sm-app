@@ -119,8 +119,12 @@
       return $http.post(sc.ws + '/shortlist', req, sc.httpReq.config);
     }
 
-    function getProfile(userId) {
+    function getProfile(userId, isView) {
       logger.debug("getProfile() service");
+
+      if (isView === true)
+        return $http.get(sc.ws + '/users/' + userId + "/" + isView, sc.httpReq.config);
+
       return $http.get(sc.ws + '/users/' + userId, sc.httpReq.config);
     }
 
