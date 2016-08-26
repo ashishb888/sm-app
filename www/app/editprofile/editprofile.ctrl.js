@@ -564,9 +564,9 @@
             }
             epc.ownImgs = resp.data.images;
 
-            for (var i = 0; i < epc.ownImgs.length; i++) {
+            /*for (var i = 0; i < epc.ownImgs.length; i++) {
               epc.ownImgs[i].src = "data:image/jpg;base64," + epc.ownImgs[i].base64;
-            }
+            }*/
 
             if (epc.ownImgs && epc.ownImgs.length >= 1)
               epc.pp = epc.ownImgs[0].base64;
