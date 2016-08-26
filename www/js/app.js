@@ -28,11 +28,11 @@ var urls = {
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
-  'satellizer'
+  'satellizer', 'ion-gallery'
 ])
 
 .run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService,
-  $state, dbService, initAppService) {
+  $state, dbService, initAppService, eventsService, httpCallsService) {
   $ionicPlatform.ready(function() {
     utilService.getLogger().debug("run starts");
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -45,8 +45,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
-      //StatusBar.backgroundColorByName("purple");
-      StatusBar.backgroundColorByHexString("#886aea");
+      StatusBar.backgroundColorByName("purple");
+      //StatusBar.backgroundColorByHexString("#886aea");
     }
 
     // Init database
@@ -65,11 +65,13 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
     try {
       utilService.getLogger().debug("initApp function");
 
-      var promise = initAppService.initApp();
+      var promise = httpCallsService.initApp();
     } catch (exception) {
       utilService.getLogger().error("exception: " + exception);
     }
   });
+
+  eventsService.startEvents();
 
   // Check whether app is online or not.
   $rootScope.$on('checkNetwork', function() {

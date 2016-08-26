@@ -1,8 +1,8 @@
 (function() {
   angular.module('starter').service('hwBackBtnService', hwBackBtnService);
-  hwBackBtnService.$inject = ['$ionicPlatform', 'utilService', '$cordovaToast', '$timeout', '$ionicHistory', 'starterConfig', '$state'];
+  hwBackBtnService.$inject = ['$ionicPlatform', 'utilService', '$cordovaToast', '$timeout', '$ionicHistory', 'starterConfig', '$state', 'httpCallsService'];
 
-  function hwBackBtnService($ionicPlatform, utilService, $cordovaToast, $timeout, $ionicHistory, sConfig, $state) {
+  function hwBackBtnService($ionicPlatform, utilService, $cordovaToast, $timeout, $ionicHistory, sConfig, $state, httpCallsService) {
     var logger = utilService.getLogger();
     this.HWBackbtnDeregister = undefined;
 
@@ -43,6 +43,7 @@
               backBtnCnt = 0;
             }, 2000);
           } else {
+            httpCallsService.updateLastActive();
             navigator.app.exitApp();
           }
         } else {

@@ -89,7 +89,7 @@
 
         // var heightLocal = JSON.parse(lsService.get("height"));
 
-        if (lsService.get("height"))
+        if (lsService.get("userHeight"))
           mc.height = JSON.parse(lsService.get("userHeight"));
 
       } catch (exception) {

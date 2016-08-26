@@ -9,6 +9,7 @@
     "angular-messages": "^1.5.7",
     "angular-md5": "^0.1.10",
     "satellizer": "^0.15.4",
-    "moment": "^2.14.1"
+    "moment": "^2.14.1",
+    "ion-gallery": "^0.1.14"
   }
 }

@@ -938,6 +938,7 @@
         var promise = profileService.searchProfile(id);
         promise.then(function(sucResp) {
           try {
+            pc.searchId = "";
             var resp = sucResp.data;
             if (resp.status !== sConfig.httpStatus.SUCCESS) {
               utilService.toastMessage(resp.messages);
@@ -1010,7 +1011,9 @@
                 logger.error("exception: " + exception);
               }
             }, function(errResp) {});
+
             pc.isSearchByUserId = true;
+            pc.hideProfileFModal();
             pc.showProfileModal();
           } catch (exception) {
             logger.error("exception: " + exception);

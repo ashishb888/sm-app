@@ -9953,7 +9953,7 @@ a.button, a.icons, a.r-icons, a.l-icons {
 
 /* Overriding positive */
 .button.button-positive, .button-positive.icons, .button-positive.r-icons, .button-positive.l-icons {
-  background-color: #886aea !important; }
+  background-color: purple !important; }
 
 .topper {
   margin-top: 10%; }
@@ -10005,10 +10005,10 @@ a.button, a.icons, a.r-icons, a.l-icons {
   text-decoration: underline; }
 
 .txt-color {
-  color: #886aea !important; }
+  color: purple !important; }
 
 .signin-links, .signin-su, .signin-fp {
-  color: #886aea; }
+  color: purple; }
 
 .margin-auto {
   margin: auto !important; }
@@ -10138,5 +10138,41 @@ p.info {
 .large {
   font-size: large !important; }
 
+/* Overriding royal theme */
 .bg-clr {
-  background-color: #886aea !important; }
+  background-color: purple !important; }
+
+.bar.bar-royal {
+  border-color: #480047;
+  background-color: purple;
+  background-image: linear-gradient(0deg, #480047, #480047 50%, transparent 50%);
+  color: #fff; }
+
+.tabs-striped.tabs-background-royal .tabs {
+  background-color: purple;
+  background-image: none; }
+
+.button.button-royal, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons, .button-royal.r-icons, .button-royal.l-icons {
+  border-color: transparent;
+  background-color: purple;
+  color: #fff; }
+
+/*.bar-royal .button, .bar-royal .icons, .bar-royal .r-icons, .bar-royal .l-icons {
+    border-color: #480047;
+    background-color: purple;
+    color: #fff;
+}*/
+.button.button-royal.button-clear, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons, .button-royal.r-icons, .button-royal.l-icons {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  color: purple; }
+
+.button.button-royal.activated, .button-royal.activated.icons, .button-royal.activated.r-icons, .button-royal.activated.l-icons {
+  border-color: gray;
+  background-color: purple; }
+
+.tabs-background-royal .tabs, .tabs-background-royal > .tabs {
+  background-color: purple;
+  background-image: linear-gradient(0deg, #480047, #480047 50%, transparent 50%);
+  border-color: #480047; }

@@ -102,11 +102,11 @@
           // lsService.set("isSignedIn", true);
           lsService.set("_id", resp.data._id);
           lsService.set("userId", resp.data.userId);
-          lsService.set("location", JSON.stringify(resp.data.locationInfo));
+          lsService.set("userLocation", JSON.stringify(resp.data.locationInfo));
           lsService.set("dob", resp.data.basicDetails.dob);
-          lsService.set("height", JSON.stringify(resp.data.basicDetails.height));
+          lsService.set("userHeight", JSON.stringify(resp.data.basicDetails.height));
           lsService.set("fullName", resp.data.basicDetails.fullName);
-          lsService.set("gender", resp.data.basicDetails.gender);
+          lsService.set("userGender", resp.data.basicDetails.gender);
 
           if (resp.data.isDP !== true) {
             $ionicHistory.nextViewOptions({

@@ -59,7 +59,6 @@
         $auth.signup(req).then(function(sucResp) {
           var resp = sucResp.data;
           if (resp.status !== sConfig.httpStatus.SUCCESS) {
-            utilService.toastMessage(resp.messages);
             return;
           }
 
@@ -67,9 +66,10 @@
 
           lsService.set('jwtToken', JSON.stringify($auth.getPayload()));
           lsService.set("_id", resp.data._id);
+          utilService.toastMessage(resp.messages);
           lsService.set("userId", resp.data.userId);
           lsService.set("fullName", resp.data.basicDetails.fullName);
-          lsService.set("gender", resp.data.basicDetails.gender);
+          lsService.set("userGender", resp.data.basicDetails.gender);
 
           $rootScope.$broadcast("initApp");
 

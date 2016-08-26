@@ -1,6 +1,7 @@
 <ion-view view-title="Edit profile">
   <ion-content>
     <div class="card">
+      <ion-gallery ion-gallery-items="epc.ownImgs" ion-gallery-row="5"></ion-gallery>
       <div class="row" ng-show="epc.ownImgs.length == 0">
         <div class="col col-33 col-offset-33">
           <img class="grid-imgs" ng-src="{{epc.noavatar}}">
@@ -150,6 +151,12 @@
           <div class="col col-40">Aunt(s)</div>
           <div class="col col-60">{{epc.fif.nAunts}}</div>
         </div>
+      </div>
+
+      <div>
+        <button class="button button-full button-small button-stable">
+          Partner profiles preference
+        </button>
       </div>
 
       <!-- Profiles preference -->

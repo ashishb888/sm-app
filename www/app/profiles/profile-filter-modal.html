@@ -1,4 +1,4 @@
-<ion-modal-view class="pfilter-modal">
+<ion-modal-view>
   <ion-header-bar class="bar-royal">
     <h1 class="title txt-ctr-align">Search profiles
        <!--<i class="icon ion-android-close float-right xlarge" ng-click="pc.hideProfileFModal()"></i>-->
@@ -8,6 +8,38 @@
      </h1>
   </ion-header-bar>
   <ion-content>
+    <!-- Search by Id -->
+    <form name="seachByIdForm" novalidate>
+      <!--<div class="item-input-inset">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" ng-model="pc.searchId" placeholder="Search by ID" ng-required="true" ng-minlength="8" ng-maxlength="8">
+        </label>
+      </div>-->
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Search by ID</span>
+        <input type="text" placeholder="Search by ID" ng-model="pc.searchId" ng-required="true" ng-minlength="8" ng-maxlength="8">
+      </label>
+      <div class="padding">
+        <button class="button button-full button-small button-royal" ng-disabled="seachByIdForm.$invalid" ng-click="pc.searchProfile(pc.searchId)">
+          Search by ID
+        </button>
+      </div>
+    </form>
+
+    <!--<div class="padding-bottom txt-ctr-align">
+      <hr class="txt-color">
+      <label>OR</label>
+      <hr class="txt-color">
+    </div>-->
+
+    <div class="padding-bottom">
+      <button class="button button-full button-small button-stable">
+        OR
+      </button>
+    </div>
+
+    <!-- Profile filter form -->
     <form name="profilesFilterForm" novalidate>
       <div class="item row no-padding">
         <div class="col no-padding">

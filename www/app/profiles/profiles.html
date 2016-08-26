@@ -26,7 +26,7 @@
     </ion-tab>
   </ion-tabs>
 
-  <ion-content class="has-footer has-tabs has-subheader">
+  <ion-content class="has-tabs has-subheader">
     <!--<ion-refresher pulling-text="Fetch all profiles..." on-refresh="pc.pullRefresher()"
         pulling-icon="ion-android-refresh" spinner="ios">
     </ion-refresher>-->
@@ -57,7 +57,7 @@
 
   </ion-content>
   <div class="bar bar-footer" ng-show="pc.isFProfiles">
-    <button class="button button-royal button-full mtop0" ng-click="pc.triggerFunction()">View all profiles</button>
+    <button class="button button-royal button-full mtop0" ng-click="pc.triggerFunction(0)">View all profiles</button>
   </div>
 
   <div class="bar bar-footer item-input-inset" ng-hide="pc.isFProfiles || !pc.isCompleted">
@@ -65,7 +65,7 @@
       <i class="icon ion-ios-search placeholder-icon"></i>
       <input type="search" ng-model="pc.searchId" placeholder="Search by ID">
     </label>
-    <button class="button" ng-disabled="pc.searchId.length != 8" ng-click="pc.searchProfile(pc.searchId)">
+    <button class="button button-royal" ng-disabled="pc.searchId.length != 8" ng-click="pc.searchProfile(pc.searchId)">
       Search
     </button>
   </div>

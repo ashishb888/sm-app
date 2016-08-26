@@ -49,7 +49,7 @@
 
 /* Overriding positive */
 .button.button-positive {
-  background-color: $royal !important;
+  background-color: purple !important;
 }
 
 .topper {
@@ -113,11 +113,11 @@
 }
 
 .txt-color {
-  color: $royal !important;
+  color: purple !important;
 }
 
 .signin-links {
-  color: $royal;
+  color: purple;
   @extend .txt-underline;
   @extend .col;
   @extend .col-50;
@@ -314,6 +314,49 @@ p.info {
   font-size: large !important;
 }
 
+/* Overriding royal theme */
 .bg-clr {
-  background-color: $royal !important;
+  background-color: purple !important;
+}
+
+.bar.bar-royal {
+    border-color: #480047;
+    background-color: purple;
+    background-image: linear-gradient(0deg, #480047, #480047 50%, transparent 50%);
+    color: #fff;
+}
+
+.tabs-striped.tabs-background-royal .tabs {
+    background-color: purple;
+    background-image: none;
+}
+
+.button.button-royal, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons {
+    border-color: transparent;
+    background-color: purple;
+    color: #fff;
+}
+
+/*.bar-royal .button, .bar-royal .icons, .bar-royal .r-icons, .bar-royal .l-icons {
+    border-color: #480047;
+    background-color: purple;
+    color: #fff;
+}*/
+
+.button.button-royal.button-clear, .button-royal.icons, .button-royal.r-icons, .button-royal.l-icons {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    color: purple;
+}
+
+.button.button-royal.activated  {
+    border-color: gray;
+    background-color: purple;
+}
+
+.tabs-background-royal .tabs, .tabs-background-royal > .tabs {
+    background-color: purple;
+    background-image: linear-gradient(0deg, #480047, #480047 50%, transparent 50%);
+    border-color: #480047;
 }
