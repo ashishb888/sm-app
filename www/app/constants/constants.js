@@ -1,10 +1,11 @@
 angular.module('starter').constant('starterConfig', (function() {
   console.debug("env: " + env);
+
   var ws;
   var httpReq = {
     timeout: 60000,
     config: {
-      timeout: 60000 * 5,
+      timeout: 60000,
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
       }
@@ -108,7 +109,7 @@ angular.module('starter').constant('starterConfig', (function() {
     pp: "pp"
   };
   var picProps = {
-    quality: 100,
+    quality: 50,
     width: 400,
     height: 400
   };

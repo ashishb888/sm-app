@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  local: "/api",
-  /*local: "http://10.1.1.86:3000",*/
+  /*local: "/api",*/
+  local: "http://10.1.1.86:3000",
   /*local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",*/
   tcUrl: "",
   prodStaticResUrl: "",
@@ -32,7 +32,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
 ])
 
 .run(function($ionicPlatform, $rootScope, $ionicLoading, utilService, lsService,
-  $state, dbService, initAppService, eventsService, httpCallsService) {
+  $state, dbService, eventsService, httpCallsService, hwBackBtnService) {
   $ionicPlatform.ready(function() {
     utilService.getLogger().debug("run starts");
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -50,15 +50,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
     }
 
     // Init database
-    dbService.initDB()
+    //dbService.initDB()
 
-    /*window.addEventListener("online", function(e) {
-      console.log("Online");
-    }, false);
-
-    window.addEventListener("offline", function(e) {
-      console.log("Offline");
-    }, false);*/
+    hwBackBtnService.tapToExit();
   });
 
   $rootScope.$on('initApp', function(event) {

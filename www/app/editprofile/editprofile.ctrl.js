@@ -830,7 +830,7 @@
             logger.debug("sucResp: " + sucResp);
             //epc.ownImages.base64[index] = sucResp;
             epc.ownImgs.push({
-              src: sucResp,
+              base64: sucResp,
               _id: "local"
             });
 

@@ -59,6 +59,7 @@
         $auth.signup(req).then(function(sucResp) {
           var resp = sucResp.data;
           if (resp.status !== sConfig.httpStatus.SUCCESS) {
+            utilService.toastMessage(resp.messages);
             return;
           }
 

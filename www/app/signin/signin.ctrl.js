@@ -176,8 +176,6 @@
     function bootstrap() {
       logger.debug("bootstrap() start");
 
-      hwBackBtnService.tapToExit();
-
       switch (functionNm) {
         case "setView":
           setView();

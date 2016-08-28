@@ -1,3 +1,14 @@
+Keep image quality, timeout at server
+
+Add:
+  viewedAt
+  acceptedAt
+  rejectedAt
+  readButNotResponded
+
+Shortlist<====>Shown interest bug
+
+
 Galary plugin permissions
 Photo: When user add new images, but does not update, and press back it shows latest clicked images instead old one
 

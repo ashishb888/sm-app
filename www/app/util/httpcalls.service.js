@@ -39,6 +39,7 @@
         lsService.set("gender", JSON.stringify(resp.data.gender));
         lsService.set("district", JSON.stringify(resp.data.location.district));
         lsService.set("taluka", JSON.stringify(resp.data.location.taluka));
+        //lsService.set("timeout", JSON.stringify(resp.data.timeout));
 
         resp.data.age.splice(0, 0, "Any");
         resp.data.height.splice(0, 0, "Any");
