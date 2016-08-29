@@ -1,8 +1,11 @@
 (function() {
   angular.module('starter').factory('eventsService', eventsService);
-  eventsService.$inject = ['utilService', '$ionicPlatform', 'httpCallsService'];
+  eventsService.$inject = ['utilService', '$ionicPlatform',
+    'httpCallsService', '$cordovaNetwork', '$rootScope'
+  ];
 
-  function eventsService(utilService, $ionicPlatform, httpCallsService) {
+  function eventsService(utilService, $ionicPlatform, httpCallsService,
+    $cordovaNetwork, $rootScope) {
     // Variables section
     var es = this;
     var logger = utilService.getLogger();
@@ -38,6 +41,42 @@
 
     $ionicPlatform.on("exit", function() {
       logger.debug("$ionicPlatform exit");
+    });
+
+    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
+      try {
+        logger.debug("$cordovaNetwork:offline service");
+        logger.debug("currentStateName: " + $ionicHistory.currentStateName());
+
+        if (!sConfig.offlineStates.includes($ionicHistory.currentStateName())) {
+          $ionicHistory.nextViewOptions({
+            disableBack: true
+          });
+          $state.go(sConfig.appStates.retry, {
+            "state": sConfig.appStates.menu_profiles
+          });
+        }
+
+        us.toastMessage(sConfig.msgs.noConnMsg);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
+    });
+
+    $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
+      try {
+        logger.debug("$cordovaNetwork:online service");
+
+        $ionicHistory.nextViewOptions({
+          disableBack: true
+        });
+
+        $state.go(sConfig.appStates.menu_profiles);
+
+        us.toastMessage(sConfig.msgs.connMsg);
+      } catch (exception) {
+        logger.error("exception: " + exception);
+      }
     });
 
     return es;

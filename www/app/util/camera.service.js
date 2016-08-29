@@ -1,12 +1,19 @@
 (function() {
   angular.module('starter').factory('cameraService', cameraService);
 
-  cameraService.$inject = ['utilService', '$cordovaCamera', '$cordovaFile', 'starterConfig', '$cordovaImagePicker'];
+  cameraService.$inject = ['utilService', '$cordovaCamera', '$cordovaFile',
+    'starterConfig', '$cordovaImagePicker', 'lsService'
+  ];
 
-  function cameraService(utilService, $cordovaCamera, $cordovaFile, sConfig, $cordovaImagePicker) {
+  function cameraService(utilService, $cordovaCamera, $cordovaFile, sConfig,
+    $cordovaImagePicker, lsService) {
     var cs = this;
     var logger = utilService.getLogger();
     logger.debug("cameraService service");
+    var camProps = JSON.parse(lsService.get("camera"));
+    var quality = camProps.quality;
+    var width = camProps.width;
+    var height = camProps.height;
 
     // services
     cs.clickImage = clickImage;
@@ -34,9 +41,9 @@
           allowEdit: false,
           encodingType: Camera.EncodingType.JPEG,
           popoverOptions: CameraPopoverOptions,
-          quality: sConfig.picProps.quality,
-          targetWidth: sConfig.picProps.width,
-          targetHeight: sConfig.picProps.height,
+          quality: quality,
+          targetWidth: width,
+          targetHeight: height,
           correctOrientation: true
         }
         var imageData = {};
@@ -68,16 +75,16 @@
 
     function selectImage(nImgs) {
       try {
-        if(nImgs === undefined)
+        if (nImgs === undefined)
           nImgs = 5;
 
         var imageData = {};
         imageData.uri = [];
         var options = {
           maximumImagesCount: nImgs,
-          width: sConfig.picProps.width,
-          height: sConfig.picProps.height,
-          quality: sConfig.picProps.quality
+          width: width,
+          height: height,
+          quality: quality
         };
 
         return $cordovaImagePicker.getPictures(options)

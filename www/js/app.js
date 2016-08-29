@@ -12,8 +12,8 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
-  local: "http://10.1.1.86:3000",
+  local: "/api",
+  /*local: "http://10.1.1.86:3000",*/
   /*local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",*/
   tcUrl: "",
   prodStaticResUrl: "",
@@ -66,11 +66,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
   });
 
   eventsService.startEvents();
-
-  // Check whether app is online or not.
-  $rootScope.$on('checkNetwork', function() {
-    utilService.checkNetwork();
-  });
 
   /* Logs every request. */
   $rootScope.$on('logReqResp', function(event, data, key) {

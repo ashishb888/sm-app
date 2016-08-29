@@ -39,42 +39,6 @@
       }
     }
 
-    $rootScope.$on('$cordovaNetwork:offline', function(event, networkState) {
-      try {
-        logger.debug("$cordovaNetwork:offline service");
-        logger.debug("currentStateName: " + $ionicHistory.currentStateName());
-
-        if (!sConfig.offlineStates.includes($ionicHistory.currentStateName())) {
-          $ionicHistory.nextViewOptions({
-            disableBack: true
-          });
-          $state.go(sConfig.appStates.retry, {
-            "state": sConfig.appStates.menu_profiles
-          });
-        }
-
-        us.toastMessage(sConfig.msgs.noConnMsg);
-      } catch (exception) {
-        logger.error("exception: " + exception);
-      }
-    });
-
-    $rootScope.$on('$cordovaNetwork:online', function(event, networkState) {
-      try {
-        logger.debug("$cordovaNetwork:online service");
-
-        $ionicHistory.nextViewOptions({
-          disableBack: true
-        });
-
-        $state.go(sConfig.appStates.menu_profiles);
-
-        us.toastMessage(sConfig.msgs.connMsg);
-      } catch (exception) {
-        logger.error("exception: " + exception);
-      }
-    });
-
     //Toast messages
     function toastMessage(msg, state, title) {
       try {
