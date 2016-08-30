@@ -1,12 +1,14 @@
 (function() {
   angular.module('starter').factory('profileService', profileService);
-  profileService.$inject = ['$http', 'utilService', 'starterConfig'];
+  profileService.$inject = ['$http', 'utilService', 'starterConfig', 'lsService'];
 
-  function profileService($http, utilService, sc) {
+  function profileService($http, utilService, sConfig, lsService) {
     var logger = utilService.getLogger();
     var ps = this;
 
     logger.debug("profileService service");
+
+    var httpConfig = JSON.parse(lsService.get("httpConfig"));
 
     ps.updatePInfo = updatePInfo;
     ps.updateLocation = updateLocation;
@@ -36,131 +38,131 @@
     // Functions definations
     function getPaginateProfiles(page) {
       logger.debug("getPaginateProfiles() service");
-      return $http.get(sc.ws + '/users/paginate/' + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/users/paginate/' + page, httpConfig);
     }
 
     function getVisitors(page) {
       logger.debug("getVisitors() service");
-      return $http.get(sc.ws + '/visitors/' + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/visitors/' + page, httpConfig);
     }
 
     function getRejected(type, page) {
       logger.debug("getRejected() service");
-      return $http.get(sc.ws + '/reject/' + type + "/" + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/reject/' + type + "/" + page, httpConfig);
     }
 
     function getAccepted(type, page) {
       logger.debug("getAccepted() service");
-      return $http.get(sc.ws + '/accept/' + type + "/" + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/accept/' + type + "/" + page, httpConfig);
     }
 
     function reject(req) {
       logger.debug("reject() service");
-      return $http.post(sc.ws + '/reject', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/reject', req, httpConfig);
     }
 
     function accept(req) {
       logger.debug("accept() service");
-      return $http.post(sc.ws + '/accept', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/accept', req, httpConfig);
     }
 
     function updateProfilePreference(req) {
       logger.debug("updateProfilePreference() service");
-      return $http.post(sc.ws + '/profilepreference', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/profilepreference', req, httpConfig);
     }
 
     function filterProfiles(req) {
       logger.debug("filterProfiles() service");
-      return $http.post(sc.ws + '/filterprofiles', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/filterprofiles', req, httpConfig);
     }
 
     function getImgsById(id) {
       logger.debug("getImgsById() service");
-      return $http.get(sc.ws + '/images/' + id, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/images/' + id, httpConfig);
     }
 
     function getRequestsIn(page) {
       logger.debug("getRequestsIn() service");
-      return $http.get(sc.ws + '/requestsin/' + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/requestsin/' + page, httpConfig);
     }
 
     function getRequestsOut(page) {
       logger.debug("getRequestsOut() service");
-      return $http.get(sc.ws + '/requestsout/' + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/requestsout/' + page, httpConfig);
     }
 
     function getShortlist(page) {
       logger.debug("getShortlist() service");
-      return $http.get(sc.ws + '/shortlist/' + page, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/shortlist/' + page, httpConfig);
     }
 
     function getImgs(type, id) {
       logger.debug("getImgs() service");
-      return $http.get(sc.ws + '/images/' + type + "/" + id, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/images/' + type + "/" + id, httpConfig);
     }
 
     function disinterest(req) {
       logger.debug("disinterest() service");
-      return $http.post(sc.ws + '/disinterest', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/disinterest', req, httpConfig);
     }
 
     function interest(req) {
       logger.debug("interest() service");
-      return $http.post(sc.ws + '/interest', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/interest', req, httpConfig);
     }
 
     function unShortlist(req) {
       logger.debug("unShortlist() service");
-      return $http.post(sc.ws + '/unshortlist', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/unshortlist', req, httpConfig);
     }
 
     function shortlist(req) {
       logger.debug("shortlist() service");
-      return $http.post(sc.ws + '/shortlist', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/shortlist', req, httpConfig);
     }
 
     function getProfile(userId, isView) {
       logger.debug("getProfile() service");
 
       if (isView === true)
-        return $http.get(sc.ws + '/users/' + userId + "/" + isView, sc.httpReq.config);
+        return $http.get(sConfig.ws + '/users/' + userId + "/" + isView, httpConfig);
 
-      return $http.get(sc.ws + '/users/' + userId, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/users/' + userId, httpConfig);
     }
 
     function searchProfile(userId) {
       logger.debug("searchProfile() service");
-      return $http.get(sc.ws + '/users/search/' + userId, sc.httpReq.config);
+      return $http.get(sConfig.ws + '/users/search/' + userId, httpConfig);
     }
 
     /*function getProfiles() {
       logger.debug("getProfiles() service");
-      return $http.get(sc.ws + '/users', sc.httpReq.config);
+      return $http.get(sConfig.ws + '/users', httpConfig);
     }*/
     // Need to change
     function getProfiles(id) {
       logger.debug("getProfiles() service");
-      return $http.get(sc.ws + '/users', sc.httpReq.config);
+      return $http.get(sConfig.ws + '/users', httpConfig);
     }
 
     function updatePInfo(req) {
       logger.debug("updatePInfo() service");
-      return $http.post(sc.ws + '/pinfo', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/pinfo', req, httpConfig);
     }
 
     function updateLocation(req) {
       logger.debug("updateLocation() service");
-      return $http.post(sc.ws + '/location', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/location', req, httpConfig);
     }
 
     function updateFamily(req) {
       logger.debug("updateFamily() service");
-      return $http.post(sc.ws + '/family', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/family', req, httpConfig);
     }
 
     function updateProfession(req) {
       logger.debug("updateProfession() service");
-      return $http.post(sc.ws + '/profession', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/profession', req, httpConfig);
     }
 
     return ps;

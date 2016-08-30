@@ -82,7 +82,9 @@
         mc.fullName = lsService.get("fullName");
         mc.dp = lsService.get("dp");
         mc.userId = lsService.get("userId");
-        mc.location = JSON.parse(lsService.get("userLocation"));
+
+        if (lsService.get("userLocation"))
+          mc.location = JSON.parse(lsService.get("userLocation"));
 
         if (lsService.get("dob"))
           mc.age = moment().diff(lsService.get("dob"), "years");

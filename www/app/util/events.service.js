@@ -1,11 +1,11 @@
 (function() {
   angular.module('starter').factory('eventsService', eventsService);
   eventsService.$inject = ['utilService', '$ionicPlatform',
-    'httpCallsService', '$cordovaNetwork', '$rootScope'
+    'httpCallsService', '$cordovaNetwork', '$rootScope', '$ionicHistory'
   ];
 
   function eventsService(utilService, $ionicPlatform, httpCallsService,
-    $cordovaNetwork, $rootScope) {
+    $cordovaNetwork, $rootScope, $ionicHistory) {
     // Variables section
     var es = this;
     var logger = utilService.getLogger();

@@ -89,6 +89,8 @@
         }, function(errResp) {}).finally(function() {
           // $rootScope.$broadcast("setBanner");
         });*/
+        
+        $rootScope.$broadcast("initApp");
 
         $auth.login(req).then(function(sucResp) {
           var resp = sucResp.data;
@@ -116,8 +118,6 @@
             $state.go(sConfig.appStates.dp);
             return;
           }
-
-          $rootScope.$broadcast("initApp");
 
           lsService.set("dp", resp.data.dp);
           $state.go(sConfig.appStates.menu_profiles);

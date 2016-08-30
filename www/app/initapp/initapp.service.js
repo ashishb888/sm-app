@@ -4,12 +4,13 @@
   function initAppService($http, utilService, sConfig, lsService) {
     var logger = utilService.getLogger();
     var ia = this;
-
+    logger.debug("initAppService service");
+    var httpConfig = JSON.parse(lsService.get("httpConfig"));
     ia.initApp = initApp;
 
     function initApp() {
       logger.debug("initApp() service");
-      $http.get(sConfig.ws + '/initapp', sConfig.httpReq.config)
+      $http.get(sConfig.ws + '/initapp', httpConfig)
       .then(function(sucResp) {
         var resp = sucResp.data;
 

@@ -1,22 +1,25 @@
 (function() {
   angular.module('starter').factory('settingsService', settingsService);
-  settingsService.$inject = ['$http', 'utilService', 'starterConfig'];
+  settingsService.$inject = ['$http', 'utilService', 'starterConfig', 'lsService'];
 
-  function settingsService($http, utilService, sc) {
+  function settingsService($http, utilService, sConfig, lsService) {
     var logger = utilService.getLogger();
     var ss = this;
+    logger.debug("settingsService service");
+
+    var httpConfig = JSON.parse(lsService.get("httpConfig"));
 
     ss.updatePassword = updatePassword;
     ss.updatePhone = updatePhone;
 
     function updatePassword(req) {
       logger.debug("updatePassword() service");
-      return $http.post(sc.ws + '/password', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/password', req, httpConfig);
     }
 
     function updatePhone(req) {
       logger.debug("updatePhone() service");
-      return $http.post(sc.ws + '/phone', req, sc.httpReq.config);
+      return $http.post(sConfig.ws + '/phone', req, httpConfig);
     }
 
     return ss;
