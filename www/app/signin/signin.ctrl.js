@@ -89,7 +89,7 @@
         }, function(errResp) {}).finally(function() {
           // $rootScope.$broadcast("setBanner");
         });*/
-        
+
         $rootScope.$broadcast("initApp");
 
         $auth.login(req).then(function(sucResp) {
@@ -153,14 +153,14 @@
               return;
             }
 
-            if (resp.data.isDP !== true) {
+            /*if (resp.data.isDP !== true) {
               $ionicHistory.nextViewOptions({
                 disableBack: true
               });
 
               $state.go(sConfig.appStates.dp);
               return;
-            }
+            }*/
 
             $state.go(sConfig.appStates.menu_profiles);
           } catch (exception) {
