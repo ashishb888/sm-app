@@ -184,15 +184,16 @@
     </div>
   </ion-content>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isProfiles || pc.isVisitors">
-    <button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}&nbsp;</button>
-    <button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
+    <button ng-click="pc.shortlist(pc.profile._id)" class="button button-full icon-right button-royal" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}&nbsp;</button>
+    <!--<button ng-click="pc.interest(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>-->
   </div>
   <div class="bar bar-footer item-input-inset" ng-show="pc.isRequestsIn">
     <button ng-click="pc.accept(pc.profile._id)" class="button icon-right button-royal icon ion-checkmark-circled">Accept&nbsp;</button>
     <button ng-click="pc.reject(pc.profile._id)" class="button icon-right button-royal ion-close-circled">Reject&nbsp;</button>
   </div>
-  <div class="bar bar-footer" ng-show="pc.isSlProfiles">
-    <!--<button ng-click="pc.shortlist(pc.profile._id)" class="button icon-right button-royal" ng-class="{ 'ion-android-star': pc.isShortlist, 'ion-android-star-outline': !pc.isShortlist }">{{pc.shortlistBtn}}</button>-->
+
+  <!-- Disabled, as we are not using this feature. -->
+  <!--<div class="bar bar-footer" ng-show="pc.isSlProfiles">
     <button ng-click="pc.interest(pc.profile._id)" class="button button-full icon-right button-royal" ng-class="{ 'ion-ios-heart': pc.isInterest, 'ion-ios-heart-outline': !pc.isInterest }">{{pc.interestBtn}}&nbsp;</button>
-  </div>
+  </div>-->
 </ion-modal-view>
