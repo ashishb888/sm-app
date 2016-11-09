@@ -12,7 +12,7 @@ var urls = {
   prod: "",
   uat: "",
   dev: "",
-  /*local: "/api",*/
+  local: "/api",
   /*local: "http://10.1.1.86:3000",*/
   local: "http://ec2-52-41-241-164.us-west-2.compute.amazonaws.com/marryme",
   tcUrl: "",

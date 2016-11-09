@@ -1,11 +1,12 @@
 (function() {
   angular.module('starter').factory('eventsService', eventsService);
   eventsService.$inject = ['utilService', '$ionicPlatform',
-    'httpCallsService', '$cordovaNetwork', '$rootScope', '$ionicHistory'
+    'httpCallsService', '$cordovaNetwork', '$rootScope', '$ionicHistory',
+    '$state', 'starterConfig'
   ];
 
   function eventsService(utilService, $ionicPlatform, httpCallsService,
-    $cordovaNetwork, $rootScope, $ionicHistory) {
+    $cordovaNetwork, $rootScope, $ionicHistory, $state, sConfig) {
     // Variables section
     var es = this;
     var logger = utilService.getLogger();
@@ -57,7 +58,7 @@
           });
         }
 
-        us.toastMessage(sConfig.msgs.noConnMsg);
+        utilService.toastMessage(sConfig.msgs.noConnMsg);
       } catch (exception) {
         logger.error("exception: " + exception);
       }
@@ -73,7 +74,7 @@
 
         $state.go(sConfig.appStates.menu_profiles);
 
-        us.toastMessage(sConfig.msgs.connMsg);
+        utilService.toastMessage(sConfig.msgs.connMsg);
       } catch (exception) {
         logger.error("exception: " + exception);
       }
