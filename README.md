@@ -12,3 +12,9 @@ bower install
 ionic serve
 
 ```
+
+##Technologies used:
+
+```
+Ionic 1.3.x
+```
