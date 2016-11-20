@@ -11,7 +11,7 @@
     <form name="familyInfoForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
-          Family type
+          कुटुंब प्रकार
         </div>
         <select ng-required="true" ng-model="epc.fif.familyType">
           <option ng-repeat="ft in epc.familyType">{{ft}}</option>
@@ -19,7 +19,7 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Family values
+          कौटुंबिक मूल्ये
         </div>
         <select ng-required="true" ng-model="epc.fif.familyValues">
           <option ng-repeat="fv in epc.familyValues">{{fv}}</option>
@@ -27,15 +27,15 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Family status
+          कौटुंबिक स्थिती
         </div>
         <select ng-required="true" ng-model="epc.fif.familyStatus">
           <option ng-repeat="fs in epc.familyStatus">{{fs}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Brother(s)</span>
-        <input type="number" name="nBrothers" placeholder="Brother(s)" ng-model="epc.fif.nBrothers" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <span class="input-label">भाऊ</span>
+        <input type="number" name="nBrothers" placeholder="भाऊ" ng-model="epc.fif.nBrothers" ng-required="true" ng-minlength="1" ng-maxlength="2">
         <div class="app-error" ng-messages="familyInfoForm.nBrothers.$error" ng-if="familyInfoForm.nBrothers.$dirty">
           <div ng-message="required">Brother(s) is required.</div>
           <div ng-message="minlength">Brother(s) must be at least 1 characters long.</div>
@@ -43,8 +43,8 @@
         </div>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Sister(s)</span>
-        <input type="number" name="nSisters" placeholder="Sister(s)" ng-model="epc.fif.nSisters" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <span class="input-label">बहिणी</span>
+        <input type="number" name="nSisters" placeholder="बहिणी" ng-model="epc.fif.nSisters" ng-required="true" ng-minlength="1" ng-maxlength="2">
         <div class="app-error" ng-messages="familyInfoForm.nSisters.$error" ng-if="familyInfoForm.nSisters.$dirty">
           <div ng-message="required">Sister(s) is required.</div>
           <div ng-message="minlength">Sister(s) must be at least 1 characters long.</div>
@@ -52,8 +52,8 @@
         </div>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Uncle(s)</span>
-        <input type="number" name="nUncles" placeholder="Uncle(s)" ng-model="epc.fif.nUncles" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <span class="input-label">काका</span>
+        <input type="number" name="nUncles" placeholder="काका" ng-model="epc.fif.nUncles" ng-required="true" ng-minlength="1" ng-maxlength="2">
         <div class="app-error" ng-messages="familyInfoForm.nUncles.$error" ng-if="familyInfoForm.nUncles.$dirty">
           <div ng-message="required">Uncle(s) is required.</div>
           <div ng-message="minlength">Uncle(s) must be at least 1 characters long.</div>
@@ -61,8 +61,8 @@
         </div>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Aunt(s)</span>
-        <input type="number" name="nAunts" placeholder="Aunt(s)" ng-model="epc.fif.nAunts" ng-required="true" ng-minlength="1" ng-maxlength="2">
+        <span class="input-label">काकू</span>
+        <input type="number" name="nAunts" placeholder="काकू" ng-model="epc.fif.nAunts" ng-required="true" ng-minlength="1" ng-maxlength="2">
         <div class="app-error" ng-messages="familyInfoForm.nAunts.$error" ng-if="familyInfoForm.nAunts.$dirty">
           <div ng-message="required">Aunt(s) is required.</div>
           <div ng-message="minlength">Aunt(s) must be at least 1 characters long.</div>

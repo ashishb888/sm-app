@@ -11,7 +11,7 @@
     <form name="locationInfoForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
-          District
+          जिल्हा
         </div>
         <select ng-required="true" ng-model="epc.lif.district">
           <option ng-repeat="d in epc.district">{{d}}</option>
@@ -19,15 +19,15 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Taluqa
+          तालुका
         </div>
         <select ng-required="true" ng-model="epc.lif.taluqa">
           <option ng-repeat="t in epc.taluka[epc.lif.district]">{{t}}</option>
         </select>
       </label>
+      <span class="input-label">गाव</span>
+      <input type="text" name="town" placeholder="गाव" ng-model="epc.lif.town" ng-required="true" ng-minlength="3" ng-maxlength="15">
       <label class="item item-input item-floating-label">
-        <span class="input-label">Town</span>
-        <input type="text" name="town" placeholder="Town" ng-model="epc.lif.town" ng-required="true" ng-minlength="3" ng-maxlength="15">
         <div class="app-error" ng-messages="locationInfoForm.town.$error" ng-if="locationInfoForm.town.$dirty">
           <div ng-message="required">Town is required.</div>
           <div ng-message="minlength">Town must be at least 3 characters long.</div>

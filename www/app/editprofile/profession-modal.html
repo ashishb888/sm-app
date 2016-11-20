@@ -11,15 +11,15 @@
     <form name="professionInfoForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
-          Higher education
+          शिक्षण
         </div>
         <select ng-required="true" ng-model="epc.pif.hEducation">
           <option ng-repeat="e in epc.education">{{e}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label" ng-show="epc.pif.hEducation == 'Other'">
-        <span class="input-label">Other higher education</span>
-        <input type="text" name="oHEducation" placeholder="Other higher education" ng-model="epc.pif.oHEducation" ng-required="epc.pif.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
+        <span class="input-label">इतर शिक्षण</span>
+        <input type="text" name="oHEducation" placeholder="इतर शिक्षण" ng-model="epc.pif.oHEducation" ng-required="epc.pif.hEducation == 'Other'" ng-minlength="2" ng-maxlength="20">
         <div class="app-error" ng-messages="professionInfoForm.oHEducation.$error" ng-if="professionInfoForm.oHEducation.$dirty">
           <div ng-message="required">Other higher education is required.</div>
           <div ng-message="minlength">Other higher education must be at least 2 characters long.</div>
@@ -28,15 +28,15 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Occupation
+          व्यवसाय
         </div>
         <select ng-required="true" ng-model="epc.pif.occupation">
           <option ng-repeat="o in epc.occupation">{{o}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">{{epc.pif.occupation}} description</span>
-        <input type="text" name="occupationDesc" placeholder="{{epc.pif.occupation}} description" ng-model="epc.pif.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
+        <span class="input-label">{{epc.pif.occupation}} वर्णन</span>
+        <input type="text" name="occupationDesc" placeholder="{{epc.pif.occupation}} वर्णन" ng-model="epc.pif.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
         <div class="app-error" ng-messages="professionInfoForm.occupationDesc.$error" ng-if="professionInfoForm.occupationDesc.$dirty">
           <div ng-message="required">{{epc.pif.occupation}} description is required.</div>
           <div ng-message="minlength">{{epc.pif.occupation}} description must be at least 2 characters long.</div>
@@ -44,8 +44,8 @@
         </div>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Annual income</span>
-        <input type="number" name="aIncome" placeholder="Annual income" ng-model="epc.pif.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
+        <span class="input-label">वार्षिक उत्पन्न</span>
+        <input type="number" name="aIncome" placeholder="वार्षिक उत्पन्न" ng-model="epc.pif.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
         <div class="app-error" ng-messages="professionInfoForm.aIncome.$error" ng-if="professionInfoForm.aIncome.$dirty">
           <div ng-message="required">Annual income is required.</div>
           <div ng-message="minlength">Annual income must be at least 2 characters long.</div>

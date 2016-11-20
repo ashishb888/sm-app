@@ -10,8 +10,8 @@
     <!-- Update persional information -->
     <form name="basicDetailsForm" novalidate>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Full name</span>
-        <input type="text" name="fullName" placeholder="Full name" ng-model="epc.bdf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
+        <span class="input-label">पूर्ण नाव</span>
+        <input type="text" name="fullName" placeholder="पूर्ण नाव" ng-model="epc.bdf.fullName" ng-required="true" ng-minlength="5" ng-maxlength="20">
         <div class="app-error" ng-messages="basicDetailsForm.fullName.$error" ng-if="basicDetailsForm.fullName.$dirty">
           <div ng-message="required">Name is required.</div>
           <div ng-message="minlength">Name must be at least 5 characters long.</div>
@@ -19,8 +19,8 @@
         </div>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Date of birth</span>
-        <input type="date" name="dob" placeholder="Date of birth" ng-model="epc.bdf.dobLocal" ng-required="true">
+        <span class="input-label">जन्म तारीख</span>
+        <input type="date" name="dob" placeholder="जन्म तारीख" ng-model="epc.bdf.dobLocal" ng-required="true">
         <div class="app-error" ng-messages="basicDetailsForm.dob.$error" ng-if="basicDetailsForm.dob.$dirty">
           <div ng-message="required">Date of birth is required.</div>
         </div>
@@ -34,8 +34,8 @@
         </select>
       </label>-->
       <label class="item item-input item-floating-label">
-        <span class="input-label">Weight</span>
-        <input type="number" name="weight" placeholder="Weight" ng-model="epc.bdf.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
+        <span class="input-label">वजन</span>
+        <input type="number" name="weight" placeholder="वजन" ng-model="epc.bdf.weight" ng-required="true" ng-minlength="2" ng-maxlength="3">
         <div class="app-error" ng-messages="basicDetailsForm.weight.$error" ng-if="basicDetailsForm.weight.$dirty">
           <div ng-message="required">Weight is required.</div>
           <div ng-message="minlength">Weight must be at least 2 digits long.</div>
@@ -44,7 +44,7 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Height
+          उंची
         </div>
         <select ng-model="epc.bdf.height" ng-required="true">
           <option ng-repeat="h in epc.height">{{h}}</option>
@@ -52,7 +52,7 @@
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Complexion
+          वर्ण
         </div>
         <select ng-model="epc.bdf.complexion" ng-required="true">
           <option ng-repeat="c in epc.complexion">{{c}}</option>
@@ -61,7 +61,7 @@
 
       <label class="item item-input item-select">
         <div class="input-label">
-          Body type
+          शरीर सौष्ठव
         </div>
         <select ng-model="epc.bdf.bodyType" ng-required="true">
           <option ng-repeat="bt in epc.bodyType">{{bt}}</option>

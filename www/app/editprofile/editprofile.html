@@ -28,161 +28,161 @@
       </div>
       <div class="card">
         <div class="item item-divider">
-          Basic details
+          मूलभूत माहिती
           <i ng-click="epc.showBasicDetailsModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">Name</div>
+          <div class="col col-40">नाव</div>
           <div class="col col-60">{{epc.bdf.fullName}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Gender</div>
+          <div class="col col-40">लिंग</div>
           <div class="col col-60">{{epc.bdf.gender}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Date of birth</div>
+          <div class="col col-40">जन्म तारीख</div>
           <div class="col col-60" ng-show="epc.isShowDOB">{{epc.bdf.dobLocal | date: "d MMM yyyy"}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Height</div>
+          <div class="col col-40">उंची</div>
           <div class="col col-60">{{epc.bdf.height}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Weight</div>
+          <div class="col col-40">वजन</div>
           <div class="col col-60">{{epc.bdf.weight}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Body type</div>
+          <div class="col col-40">शरीर सौष्ठव</div>
           <div class="col col-60">{{epc.bdf.bodyType}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Complexion</div>
+          <div class="col col-40">वर्ण</div>
           <div class="col col-60">{{epc.bdf.complexion}}</div>
         </div>
       </div>
       <div class="card">
         <div class="item item-divider">
-          Religious information
+          धार्मिक माहिती
           <i ng-click="epc.showReligiousModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">Sub-caste</div>
+          <div class="col col-40">उपजाती</div>
           <div class="col col-60">{{epc.rif.subCaste}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Time of birth</div>
+          <div class="col col-40">जन्म वेळ</div>
           <div class="col col-60" ng-show="epc.isShowTOB">{{epc.rif.tobLocal | date: "h:mm a"}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Zodiac</div>
+          <div class="col col-40">राशी</div>
           <div class="col col-60">{{epc.rif.zodiac}}</div>
         </div>
       </div>
       <div class="card">
         <div class="item item-divider">
-          Professional information
+          व्यावसायिक माहिती
           <i ng-click="epc.showProfessionModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">Education</div>
+          <div class="col col-40">शिक्षण</div>
           <div class="col col-60">{{epc.pif.hEducation}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Occupation</div>
+          <div class="col col-40">व्यवसाय</div>
           <div class="col col-60">{{epc.pif.occupation}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Occupation desc</div>
+          <div class="col col-40">उद्योग वर्णन</div>
           <div class="col col-60">{{epc.pif.occupationDesc}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Annual income</div>
+          <div class="col col-40">वार्षिक उत्पन्न</div>
           <div class="col col-60">{{epc.pif.aIncome}}</div>
         </div>
       </div>
       <div class="card">
         <div class="item item-divider">
-          Location
+          पत्ता
           <i ng-click="epc.showLocationModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">District</div>
+          <div class="col col-40">जिल्हा</div>
           <div class="col col-60">{{epc.lif.district}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Taluqa</div>
+          <div class="col col-40">तालुका</div>
           <div class="col col-60">{{epc.lif.taluqa}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Town</div>
+          <div class="col col-40">गाव</div>
           <div class="col col-60">{{epc.lif.town}}</div>
         </div>
       </div>
       <div class="card">
         <div class="item item-divider">
-          Family details
+          कौटुंबिक माहिती
           <i ng-click="epc.showFamilyModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">Family type</div>
+          <div class="col col-40">कुटुंब प्रकार</div>
           <div class="col col-60">{{epc.fif.familyType}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Family values</div>
+          <div class="col col-40">कौटुंबिक मूल्ये</div>
           <div class="col col-60">{{epc.fif.familyValues}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Family status</div>
+          <div class="col col-40">कौटुंबिक स्थिती</div>
           <div class="col col-60">{{epc.fif.familyStatus}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Brother(s)</div>
+          <div class="col col-40">भाऊ</div>
           <div class="col col-60">{{epc.fif.nBrothers}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Sister(s)</div>
+          <div class="col col-40">बहिणी</div>
           <div class="col col-60">{{epc.fif.nSisters}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Uncle(s)</div>
+          <div class="col col-40">काका</div>
           <div class="col col-60">{{epc.fif.nUncles}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Aunt(s)</div>
+          <div class="col col-40">काकू</div>
           <div class="col col-60">{{epc.fif.nAunts}}</div>
         </div>
       </div>
 
       <div>
         <button class="button button-full button-small button-stable">
-          Partner profiles preference
+
         </button>
       </div>
 
       <!-- Profiles preference -->
       <div class="card">
         <div class="item item-divider">
-          Profiles preference
+          अपेक्षित जोडीदार
           <i ng-click="epc.showPPModal()" class="icon ion-edit float-right xlarge gray-clr"></i>
         </div>
         <div class="row">
-          <div class="col col-40">Age</div>
+          <div class="col col-40">वय</div>
           <div class="col col-60">{{epc.ppf.minAge}} - {{epc.ppf.maxAge}} Yrs</div>
         </div>
         <div class="row">
-          <div class="col col-40">Height</div>
+          <div class="col col-40">उंची</div>
           <div class="col col-60">{{epc.ppf.minHeight}} - {{epc.ppf.maxHeight}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Complexion</div>
+          <div class="col col-40">वर्ण</div>
           <div class="col col-60">{{epc.ppf.complexion}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Body type</div>
+          <div class="col col-40">शरीर सौष्ठव</div>
           <div class="col col-60">{{epc.ppf.bodyType}}</div>
         </div>
         <div class="row">
-          <div class="col col-40">Sub caste</div>
+          <div class="col col-40">उपजाती</div>
           <div class="col col-60">{{epc.ppf.subCaste}}</div>
         </div>
       </div>

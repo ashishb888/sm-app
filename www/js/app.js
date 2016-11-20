@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ngMessages', 'angular-md5',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
       //StatusBar.backgroundColorByName("purple");
-      StatusBar.backgroundColorByHexString("#886aea");
+      StatusBar.backgroundColorByHexString("#40316f");
     }
 
     // Init database

@@ -11,22 +11,22 @@
     <form name="religiousInfoForm" novalidate>
       <label class="item item-input item-select">
         <div class="input-label">
-          Sub-caste
+          उपजाती
         </div>
         <select ng-required="true" ng-model="epc.rif.subCaste">
           <option ng-repeat="sc in epc.subCaste">{{sc}}</option>
         </select>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Time of birth</span>
-        <input type="time" name="tob" placeholder="Time of birth" ng-model="epc.rif.tobLocal" ng-required="true">
+        <span class="input-label">जन्म वेळ</span>
+        <input type="time" name="tob" placeholder="जन्म वेळ" ng-model="epc.rif.tobLocal" ng-required="true">
         <div class="app-error" ng-messages="religiousInfoForm.tob.$error" ng-if="religiousInfoForm.tob.$dirty">
           <div ng-message="required">Time of birth is required.</div>
         </div>
       </label>
       <label class="item item-input item-select">
         <div class="input-label">
-          Zodiac
+          राशी
         </div>
         <select ng-required="true" ng-model="epc.rif.zodiac">
           <option ng-repeat="z in epc.zodiac">{{z}}</option>
