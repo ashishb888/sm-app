@@ -1375,9 +1375,11 @@
         var tobText = (epc.rif.tobLocal.getHours() + 1) + ":" + (epc.rif.tobLocal
           .getMinutes() + 1);
         epc.rif.tob = tobText
+        // epc.rif.zodiac = epc.rif.zodiac.split(" ")[0];
 
         // epc.rif.tob = new Date(epc.rif.tob);
         req.data.religiousInfo = epc.rif;
+        req.data.zodiac = epc.rif.zodiac.split(" ")[0];
 
         var promise = editProfileService.updateReligiousInfo(req);
 

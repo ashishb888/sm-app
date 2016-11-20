@@ -31,7 +31,8 @@
         lsService.set("complexion", JSON.stringify(resp.data.complexion));
         lsService.set("physicalStatus", JSON.stringify(resp.data.physicalStatus));
         lsService.set("subCaste", JSON.stringify(resp.data.subCaste));
-        lsService.set("zodiac", JSON.stringify(resp.data.zodiac));
+        // lsService.set("zodiac", JSON.stringify(resp.data.zodiac));
+        lsService.set("zodiac", JSON.stringify(resp.data.zodiacMarathi));
         lsService.set("education", JSON.stringify(resp.data.education));
         lsService.set("sideMenuTitles", JSON.stringify(resp.data.sideMenuTitles));
         lsService.set("familyType", JSON.stringify(resp.data.familyType));
