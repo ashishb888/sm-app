@@ -56,6 +56,7 @@
     epc.pif.hEducation;
     epc.pif.oHEducation;
     epc.pif.occupation;
+    epc.pif.occupationCheckBox = {};
 
     // Location form
     epc.lif = {};
@@ -209,16 +210,23 @@
 
     function imgActionSheet() {
       logger.debug("imgActionSheet function");
+      var menuButtons = [{
+        text: "<i class='txt-color icon ion-person'></i> Personal"
+      }];
+
+      if ("male" == lsService.get("userGender").toLowerCase()) {
+        menuButtons.push({
+          text: "<i class='txt-color icon ion-home'></i> Home"
+        });
+      }
+
+      menuButtons.push({
+        text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
+      });
 
       var hideImgActionSheet = $ionicActionSheet.show({
         titleText: "Upload images",
-        buttons: [{
-          text: "<i class='txt-color icon ion-person'></i> Personal"
-        }, {
-          text: "<i class='txt-color icon ion-home'></i> Home"
-        }, {
-          text: "<i class='txt-color icon ion-close-circled'></i> Cancel"
-        }],
+        buttons: menuButtons,
         /*cancelText: 'Cancel',*/
         cancel: function() {
           logger.debug("Cancelled");
@@ -521,7 +529,8 @@
           }
         }
         if (!req.data.base64 || req.data.base64.length === 0) {
-          utilService.toastMessage("No new images to upload.", null, sConfig.msgs.success);
+          utilService.toastMessage("No new images to upload.", null, sConfig.msgs
+            .success);
           return;
         }
         //req.data.base64 = epc.ownImages.base64;
@@ -1028,6 +1037,7 @@
         };
 
         req.data.professionInfo = epc.pif;
+        delete req.data.professionInfo.occupation;
         var promise = editProfileService.updateProfessionInfo(req);
 
         promise.then(function(sucResp) {
@@ -1375,7 +1385,7 @@
         var tobText = (epc.rif.tobLocal.getHours() + 1) + ":" + (epc.rif.tobLocal
           .getMinutes() + 1);
         epc.rif.tob = tobText
-        // epc.rif.zodiac = epc.rif.zodiac.split(" ")[0];
+          // epc.rif.zodiac = epc.rif.zodiac.split(" ")[0];
 
         // epc.rif.tob = new Date(epc.rif.tob);
         req.data.religiousInfo = epc.rif;

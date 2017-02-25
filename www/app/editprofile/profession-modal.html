@@ -26,15 +26,41 @@
           <div ng-message="maxlength">Other higher education can be at most 20 characters long.</div>
         </div>
       </label>
-      <label class="item item-input item-select">
+      <!--<label class="item item-input item-select">
         <div class="input-label">
           व्यवसाय
         </div>
         <select ng-required="true" ng-model="epc.pif.occupation">
           <option ng-repeat="o in epc.occupation">{{o}}</option>
         </select>
-      </label>
+      </label>-->
+      <div class="row">
+        <div class="pp-label">
+          व्यवसाय
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-30">
+          <ion-checkbox class="border-none" ng-model="epc.pif.occupationCheckBox.job">{{epc.occupation[0]}}</ion-checkbox>
+        </div>
+        <div class="col col-30">
+          <ion-checkbox class="border-none" ng-model="epc.pif.occupationCheckBox.farm">{{epc.occupation[1]}}</ion-checkbox>
+        </div>
+        <div class="col col-40">
+          <ion-checkbox class="border-none" ng-model="epc.pif.occupationCheckBox.business">{{epc.occupation[2]}}</ion-checkbox>
+        </div>
+      </div>
       <label class="item item-input item-floating-label">
+        <span class="input-label">व्यवसाय वर्णन</span>
+        <input type="text" name="occupationDesc" placeholder="व्यवसाय वर्णन" ng-model="epc.pif.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
+        <div class="app-error" ng-messages="professionInfoForm.occupationDesc.$error" ng-if="professionInfoForm.occupationDesc.$dirty">
+          <div ng-message="required">Occupation description is required.</div>
+          <div ng-message="minlength">Occupation description must be at least 2 characters long.</div>
+          <div ng-message="maxlength">Occupation description can be at most 100 characters long.</div>
+        </div>
+      </label>
+      <!--<label class="item item-input item-floating-label">
         <span class="input-label">{{epc.pif.occupation}} वर्णन</span>
         <input type="text" name="occupationDesc" placeholder="{{epc.pif.occupation}} वर्णन" ng-model="epc.pif.occupationDesc" ng-required="true" ng-minlength="2" ng-maxlength="100">
         <div class="app-error" ng-messages="professionInfoForm.occupationDesc.$error" ng-if="professionInfoForm.occupationDesc.$dirty">
@@ -42,7 +68,7 @@
           <div ng-message="minlength">{{epc.pif.occupation}} description must be at least 2 characters long.</div>
           <div ng-message="maxlength">{{epc.pif.occupation}} description can be at most 100 characters long.</div>
         </div>
-      </label>
+      </label>-->
       <label class="item item-input item-floating-label">
         <span class="input-label">वार्षिक उत्पन्न</span>
         <input type="number" name="aIncome" placeholder="वार्षिक उत्पन्न" ng-model="epc.pif.aIncome" ng-required="true" ng-minlength="2" ng-maxlength="20">
@@ -54,7 +80,8 @@
       </label>
 
       <div class="padding">
-        <button class="button button-small button-full button-royal" ng-disabled="professionInfoForm.$invalid" ng-click="epc.updateProfessionInfo()">
+        <button class="button button-small button-full button-royal" ng-disabled="professionInfoForm.$invalid"
+            ng-click="epc.updateProfessionInfo()">
           Update
         </button>
       </div>

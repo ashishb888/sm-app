@@ -10137,3 +10137,9 @@ p.info {
 
 .large {
   font-size: large !important; }
+
+.border-none {
+  border-style: none !important; }
+
+.pp-label {
+  margin-left: 10px; }

@@ -87,7 +87,14 @@
         </div>
         <div class="row">
           <div class="col col-40">व्यवसाय</div>
-          <div class="col col-60">{{pc.pif.occupation}}</div>
+          <div class="col col-60">
+            <span ng-if="pc.pif.occupationCheckBox.job">Job</span>
+            <span ng-if="pc.pif.occupationCheckBox.farm">
+              <span ng-if="pc.pif.occupationCheckBox.job">&</span> Farm
+            </span>
+            <span ng-if="pc.pif.occupationCheckBox.business">
+              <span ng-if="pc.pif.occupationCheckBox.farm || pc.pif.occupationCheckBox.job">&</span> Business</span>
+          </div>
         </div>
         <div class="row">
           <div class="col col-40">उद्योग वर्णन</div>

@@ -10,13 +10,15 @@
 
       <div class="row">
         <div class="col col-20" ng-repeat="img in epc.ownImgs">
-          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index)" />
+          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index)"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col col-20" ng-repeat="img in epc.homeImgs">
-          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index+5)" />
+          <img class="grid-imgs my-imgs" ng-src="data:image/jpg;base64,{{img.base64}}" ng-click="epc.largeImg('pp', $index+5)"
+          />
         </div>
       </div>
 
@@ -89,7 +91,14 @@
         </div>
         <div class="row">
           <div class="col col-40">व्यवसाय</div>
-          <div class="col col-60">{{epc.pif.occupation}}</div>
+          <div class="col col-60">
+            <span ng-if="epc.pif.occupationCheckBox.job">Job</span>
+            <span ng-if="epc.pif.occupationCheckBox.farm">
+              <span ng-if="epc.pif.occupationCheckBox.job">&</span> Farm
+            </span>
+            <span ng-if="epc.pif.occupationCheckBox.business">
+              <span ng-if="epc.pif.occupationCheckBox.farm || epc.pif.occupationCheckBox.job">&</span> Business</span>
+          </div>
         </div>
         <div class="row">
           <div class="col col-40">उद्योग वर्णन</div>

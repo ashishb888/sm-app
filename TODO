@@ -59,3 +59,19 @@ Check for shortlisted-->interested.
 Disable back button on welcome page.
 View profile images fix
 Set dp to rootScope at first upload
+
+
+19 Dec 2016
+  Profile progress.
+  Restriction on shortlisting, 5/M.
+  Male 10, female 5 images.
+  View the images in some gallary.
+  Marathi on basic details.
+  Check box for occupation.
+  Images varified flag.
+  Payment flag.
+  Validity of user.
+  Amount paid by user.
+  OTP
+  Images size validation (2 MB).
+  All field validation.
